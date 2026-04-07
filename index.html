@@ -27,7 +27,20 @@
     <div class="contenedor-buscador">
     <input type="text" id="buscador" placeholder="Buscar productos en LeopardX...">
 </div>
-      <section class="grid-productos">
+
+<div class="filtros-container">
+    <button class="btn-filtro active" onclick="filtrar('todos')">Inicio</button>
+    <button class="btn-filtro" onclick="filtrar('parlante')">Parlantes</button>
+    <button class="btn-filtro" onclick="filtrar('lampara')">Lámparas</button>
+    <button class="btn-filtro" onclick="filtrar('auricular')">Auriculares</button>
+    <button class="btn-filtro" onclick="filtrar('reloj')">Smartwatch</button>
+</div>
+
+<div class="productos-grid">
+    </div>
+    
+    /* Aca empieza las tarjetas para los productos*/
+<section class="grid-productos">
     <div class="card">
     <div class="envio-gratis">¡Más Vendido!</div>
     <img src="auricular.akg.jpg" alt="Auricular AKG">
