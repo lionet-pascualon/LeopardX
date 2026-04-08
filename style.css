@@ -279,3 +279,65 @@ header {
     color: #000;
 }
 
+/* Fondo general de la página */
+body {
+    background-color: #000000; /* Negro total para que resalten los LEDs */
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+/* El pie de página estilo la imagen que pasaste */
+footer {
+    background-color: #111111;
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+    border-top: 1px solid #333;
+    margin-top: 50px;
+}
+
+.footer-logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.footer-nav {
+    margin-bottom: 20px;
+}
+
+.footer-nav a {
+    color: #facc15; /* Dorado */
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.social-icons img {
+    width: 30px;
+    margin: 0 10px;
+    filter: invert(1); /* Para que los iconos negros se vean blancos */
+}
+
+/* El cuadrito de "Stay in the Loop" (Suscribirse) */
+.newsletter {
+    margin-top: 30px;
+}
+
+.newsletter input {
+    padding: 10px;
+    border-radius: 5px 0 0 5px;
+    border: none;
+    width: 200px;
+}
+
+.newsletter button {
+    padding: 10px 20px;
+    border-radius: 0 5px 5px 0;
+    border: none;
+    background-color: #ffffff;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+}
+
