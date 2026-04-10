@@ -212,6 +212,10 @@
         btn.textContent = 'Suscribirme';
         btn.style.background = '';
       }, 3000);
+      <form action="https://formspree.io/f/xkoplepe" method="POST">
+    <input type="email" name="email" placeholder="Tu correo..." required>
+    <button type="submit" class="newsletter-btn">Suscribirme</button>
+</form>
     }
  
     // Animación al hacer scroll
@@ -271,9 +275,8 @@ function actualizarCarrito() {
   // Mostramos el total formateado
   cartTotal.innerText = `$${totalAcumulado.toLocaleString('es-AR')}`;
 }
-    
-}
 
+}
 function actualizarCarrito() {
   const cartCount = document.getElementById('cartCount');
   const cartItems = document.getElementById('cartItems');
