@@ -1,160 +1,256 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo de Productos | Emprendimiento</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Catálogo de Productos | LeopardX</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 </head>
 <body>
-
-    <header>
-        <div class="header-top">
-           <div class="logo">Leopard<span>X</span></div>
-            <p class="welcome-text">¡Bienvenido a nuestro catálogo!</p>
+ 
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="navbar-inner">
+      <a href="#inicio" class="logo">LeopardX</a>
+      <nav class="nav-links">
+        <a href="#inicio"    class="nav-link active"  data-filter="all">Inicio</a>
+        <a href="#productos" class="nav-link"          data-filter="parlante">Parlantes</a>
+        <a href="#productos" class="nav-link"          data-filter="lampara">Lámparas</a>
+        <a href="#productos" class="nav-link"          data-filter="auricular">Auriculares</a>
+        <a href="#productos" class="nav-link"          data-filter="smartwatch">Smartwatch</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
     </div>
-    <div class="linea-decorativa"></div>
-    </header>
-            
-
-    <div class="contenedor-buscador">
-    <input type="text" id="buscador" placeholder="Buscar productos en LeopardX...">
-</div>
-
-<div class="filtros-container">
-    <button class="btn-filtro active" onclick="filtrar('todos')">Inicio</button>
-    <button class="btn-filtro" onclick="filtrar('parlante')">Parlantes</button>
-    <button class="btn-filtro" onclick="filtrar('lampara')">Lámparas</button>
-    <button class="btn-filtro" onclick="filtrar('auricular')">Auriculares</button>
-    <button class="btn-filtro" onclick="filtrar('reloj')">Smartwatch</button>
-</div>
-
-<div class="productos-grid">
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#inicio"    class="mobile-link" data-filter="all">Inicio</a>
+      <a href="#productos" class="mobile-link" data-filter="parlante">Parlantes</a>
+      <a href="#productos" class="mobile-link" data-filter="lampara">Lámparas</a>
+      <a href="#productos" class="mobile-link" data-filter="auricular">Auriculares</a>
+      <a href="#productos" class="mobile-link" data-filter="smartwatch">Smartwatch</a>
     </div>
-
-    
-<section class="grid-productos">
-    <div class="card">
-    <div class="envio-gratis">¡Más Vendido!</div>
-    <img src="auricular.akg.jpg" alt="Auricular AKG">
-    <div class="info">
-        <h3>Auriculares AKG - Sonido Premium</h3>
-        <p>Calidad de audio profesional, diseño ergonómico y bajos potentes.</p>
-        <span class="tags" style="display: none;">auriculares akg samsung cable musica sonido audio premium</span>
-        <div class="precio">$6.000</div>
-        <a href="https://wa.me/3512366414?text=Hola!%20Me%20interesan%20los%20auriculares%20AKG" class="btn-wa" target="_blank">Consultar WhatsApp</a>
+  </header>
+ 
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-glow"></div>
+    <div class="hero-grid-lines"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">&#9670; Tecnología Premium &#9670;</p>
+      <h1 class="hero-title">Bienvenido a<br><span class="hero-brand">LeopardX</span></h1>
+      <p class="hero-subtitle">Catálogo de productos tecnológicos al mejor precio</p>
+      <a href="#productos" class="hero-btn">Ver catálogo</a>
     </div>
-</div>
-
-<div class="card">
-    <div class="envio-gratis">¡Novedad!</div>
-    <img src="tws.M90.pro.inal.jpg" alt="TWS M90 Pro">
-    <div class="info">
-        <h3>TWS M90 Pro - Inalámbricos</h3>
-        <p>Bluetooth 5.3, estuche de carga con pantalla LED y sonido envolvente.</p>
-        <span class="tags" style="display: none;">auriculares tws m90 pro inalambrico bluetooth gamer musica bateria</span>
-        <div class="precio">$13.000</div>
-        <a href="https://wa.me/3512366414?text=Hola!%20Me%20interesan%20los%20TWS%20M90%20Pro" class="btn-wa" target="_blank">Consultar WhatsApp</a>
+  </section>
+ 
+  <!-- PRODUCTOS -->
+  <section class="productos-section" id="productos">
+    <div class="section-header">
+      <h2 class="section-title">Nuestros Productos</h2>
+      <p class="section-sub">Consultanos por WhatsApp con un solo clic</p>
     </div>
-</div>
-
-<div class="card">
-    <img src="smartwach.jpg" alt="Smartwatch">
-    <div class="info">
-        <h3>Smartwatch Inteligente</h3>
-        <p>Notificaciones, control de salud, deportes y pantalla táctil HD.</p>
-        <span class="tags" style="display: none;">smartwatch reloj inteligente digital hora salud deporte notificaciones practico</span>
-        <div class="precio">$19.000</div>
-        <a href="https://wa.me/3512366414?text=Hola!%20Me%20interesa%20el%20Smartwatch" class="btn-wa" target="_blank">Consultar WhatsApp</a>
-    </div>
-</div>
-
-<div class="card">
-    <img src="parlante.greatnice.jpg" alt="Parlante Greatnice">
-    <div class="info">
-        <h3>Parlante Greatnice RGB</h3>
-        <p>Potencia y luces LED. Ideal para llevar la música a todos lados.</p>
-        <span class="tags" style="display: none;">parlante greatnice bluetooth luces musica sonido fiesta portatil</span>
-        <div class="precio">$12.000</div>
-        <a href="https://wa.me/3512366414?text=Hola!%20Me%20interesa%20el%20parlante%20Greatnice" class="btn-wa" target="_blank">Consultar WhatsApp</a>
-    </div>
-</div>
-          
-        <div class="card">
-            <img src="proyector.astronauta.jpg" alt="Proyector Astronauta">
-            <div class="info">
-                <h3>Proyector Astronauta</h3>
-                <p>Nebulosa galáctica con control remoto.</p>
-                <span class="tags" style="display: none;">lampara proyector PROYECTOR galaxia espacio noche estrellas regalo niños proyector</span>
-                <div class="precio">$15.500</div>
-                <a href="https://wa.me/3512366414?text=Hola!%20Me%20interesa%20el%20producto" class="btn-wa">
-    Consultar WhatsApp
-</a>
-            </div>
+ 
+    <div class="grid" id="productGrid">
+ 
+      <div class="card" data-categoria="auricular">
+        <div class="card-badge badge-sell">Más Vendido</div>
+        <div class="card-img">
+          <img src="auricular.akg.jpg" alt="Auricular AKG" loading="lazy"/>
         </div>
-    </section>
-        <div class="mensaje-bienvenida">
-            <h1>Bienvenido al Catálogo</h1>
-            <p>Cargando productos de tecnología...</p>
+        <div class="card-body">
+          <h3 class="card-title">Auriculares AKG</h3>
+          <p class="card-desc">Calidad de audio profesional, diseño ergonómico y bajos potentes.</p>
+          <div class="card-footer">
+            <span class="card-price">$6.000</span>
+            <a class="card-btn" href="https://wa.me/3512366414?text=Hola!%20Me%20interesan%20los%20auriculares%20AKG" target="_blank">Consultar</a>
+          </div>
         </div>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 - Desarrollado por Milton</p>
-    </footer>
-
-    </div> 
-<a href="https://wa.me/3512366414" class="whatsapp-float" target="_blank">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-</a>
-    <script src="script.js"></script>
-
-<script>
-function filtrar(categoria) {
-    // 1. Buscamos todas las tarjetas de productos
-    const tarjetas = document.querySelectorAll('.card');
-    
-    // 2. Buscamos todos los botones para sacarles el brillo al que no está activo
-    const botones = document.querySelectorAll('.btn-filtro');
-    botones.forEach(btn => btn.classList.remove('active'));
-
-    // 3. Recorremos cada tarjeta para ver si la mostramos o la ocultamos
-    tarjetas.forEach(tarjeta => {
-        // Obtenemos el texto de las etiquetas (tags) que pusimos en cada producto
-        const etiquetas = tarjeta.querySelector('.tags').innerText.toLowerCase();
-        
-        if (categoria === 'todos') {
-            tarjeta.style.display = "block"; // Mostrar todo
-        } else if (etiquetas.includes(categoria)) {
-            tarjeta.style.display = "block"; // Mostrar si coincide la categoría
-        } else {
-            tarjeta.style.display = "none";  // Ocultar si no coincide
-        }
+      </div>
+ 
+      <div class="card" data-categoria="auricular">
+        <div class="card-badge badge-new">Novedad</div>
+        <div class="card-img">
+          <img src="tws.M90.pro.inal.jpg" alt="TWS M90 Pro" loading="lazy"/>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">TWS M90 Pro</h3>
+          <p class="card-desc">Bluetooth 5.3, estuche con pantalla LED y sonido envolvente.</p>
+          <div class="card-footer">
+            <span class="card-price">$13.000</span>
+            <a class="card-btn" href="https://wa.me/3512366414?text=Hola!%20Me%20interesan%20los%20TWS%20M90%20Pro" target="_blank">Consultar</a>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="card" data-categoria="smartwatch">
+        <div class="card-img">
+          <img src="smartwach.jpg" alt="Smartwatch" loading="lazy"/>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Smartwatch Inteligente</h3>
+          <p class="card-desc">Notificaciones, salud, deportes y pantalla táctil HD.</p>
+          <div class="card-footer">
+            <span class="card-price">$19.000</span>
+            <a class="card-btn" href="https://wa.me/3512366414?text=Hola!%20Me%20interesa%20el%20Smartwatch" target="_blank">Consultar</a>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="card" data-categoria="parlante">
+        <div class="card-img">
+          <img src="parlante.greatnice.jpg" alt="Parlante Greatnice" loading="lazy"/>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Parlante Greatnice RGB</h3>
+          <p class="card-desc">Potencia y luces LED. Ideal para llevar la música a todos lados.</p>
+          <div class="card-footer">
+            <span class="card-price">$12.000</span>
+            <a class="card-btn" href="https://wa.me/3512366414?text=Hola!%20Me%20interesa%20el%20parlante%20Greatnice" target="_blank">Consultar</a>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="card" data-categoria="lampara">
+        <div class="card-img">
+          <img src="proyector.astronauta.jpg" alt="Proyector Astronauta" loading="lazy"/>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Proyector Astronauta</h3>
+          <p class="card-desc">Nebulosa galáctica con control remoto. Ideal como regalo.</p>
+          <div class="card-footer">
+            <span class="card-price">$15.500</span>
+            <a class="card-btn" href="https://wa.me/3512366414?text=Hola!%20Me%20interesa%20el%20Proyector%20Astronauta" target="_blank">Consultar</a>
+          </div>
+        </div>
+      </div>
+ 
+    </div>
+ 
+    <p class="no-result" id="noResult" style="display:none;">No hay productos en esta categoría aún.</p>
+  </section>
+ 
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-logo">LeopardX</span>
+        <p class="footer-tagline">Tecnología accesible, calidad premium.</p>
+      </div>
+      <div class="footer-social">
+        <a href="https://wa.me/3512366414" class="social-link" target="_blank" aria-label="WhatsApp">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="22" height="22"/>
+        </a>
+        <a href="#" class="social-link" aria-label="Facebook">
+          <img src="https://img.icons8.com/ios-filled/50/ffffff/facebook-new.png" alt="Facebook" width="20" height="20"/>
+        </a>
+        <a href="#" class="social-link" aria-label="Instagram">
+          <img src="https://img.icons8.com/ios-filled/50/ffffff/instagram-new.png" alt="Instagram" width="20" height="20"/>
+        </a>
+      </div>
+    </div>
+    <div class="footer-newsletter">
+      <p class="newsletter-label">Recibí ofertas exclusivas</p>
+      <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+        <input type="email" placeholder="Tu email..." class="newsletter-input" required/>
+        <button type="submit" class="newsletter-btn">Suscribirme</button>
+      </form>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 LeopardX · Desarrollado por Milton</p>
+    </div>
+  </footer>
+ 
+  <!-- WhatsApp flotante -->
+  <a href="https://wa.me/3512366414" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="28" height="28"/>
+  </a>
+ 
+  <script>
+    // Filtro por categoría
+    const navLinks = document.querySelectorAll('[data-filter]');
+    const cards    = document.querySelectorAll('.card');
+    const noResult = document.getElementById('noResult');
+ 
+    navLinks.forEach(link => {
+      link.addEventListener('click', function () {
+        const filter = this.dataset.filter;
+        navLinks.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+        let visible = 0;
+        cards.forEach(card => {
+          if (filter === 'all' || card.dataset.categoria === filter) {
+            card.style.display = '';
+            card.classList.add('card-show');
+            visible++;
+          } else {
+            card.style.display = 'none';
+            card.classList.remove('card-show');
+          }
+        });
+        noResult.style.display = visible === 0 ? 'block' : 'none';
+      });
     });
-}
-</script>
+ 
+    // Hamburger
+    const hamburger  = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+      hamburger.classList.toggle('open');
+    });
+ 
+    // Newsletter
+    function handleNewsletter(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('button');
+      btn.textContent = '¡Listo!';
+      btn.style.background = '#a07010';
+      e.target.querySelector('input').value = '';
+      setTimeout(() => {
+        btn.textContent = 'Suscribirme';
+        btn.style.background = '';
+      }, 3000);
+    }
+ 
+    // Animación al hacer scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('card-visible');
+      });
+    }, { threshold: 0.1 });
+    cards.forEach(card => observer.observe(card));
+  </script>
 
-    <footer>
-    <div class="footer-logo">LeopardX</div>
-    
-    <div class="footer-nav">
-        <a href="#inicio">Home</a>
+    <div id="productModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <div class="modal-body">
+      <img id="modalImg" src="" alt="">
+      <div class="modal-info">
+        <h2 id="modalTitle"></h2>
+        <p id="modalDesc"></p>
+        <ul id="modalSpecs"></ul>
+        <div class="modal-price" id="modalPrice"></div>
+        <button class="btn-primary" onclick="agregarAlCarritoDesdeModal()">Agregar al Carrito</button>
+      </div>
     </div>
+  </div>
+</div>
 
-    <div class="social-icons">
-        <!-- Podés buscar iconos de Facebook/Instagram en icons8.com -->
-        <a href="#"><img src="https://img.icons8.com/ios-filled/50/ffffff/facebook-new.png" alt="Facebook"></a>
-        <a href="#"><img src="https://img.icons8.com/ios-filled/50/ffffff/instagram-new.png" alt="Instagram"></a>
-    </div>
+<div id="cartIcon" class="cart-float" onclick="toggleCart()">
+  <span>🛒</span>
+  <div id="cartCount">0</div>
+</div>
 
-    <div class="newsletter">
-        <h3>Dejanos tu mail para recibir ofertas exclusivas</h3>
-        <input type="email" placeholder="Email">
-        <button>Sign Up</button>
-    </div>
+<div id="cartPanel" class="cart-panel">
+  <h3>Tu Carrito</h3>
+  <div id="cartItems"></div>
+  <div class="cart-total">Total: <span id="cartTotal">$0</span></div>
+  <button class="btn-primary" onclick="finalizarCompra()">Finalizar por WhatsApp</button>
+  <button class="btn-secondary" onclick="toggleCart()">Cerrar</button>
+</div>
 
-    <p style="margin-top: 40px; color: #666;">© 2026</p>
-</footer>
-    
 </body>
 </html>
