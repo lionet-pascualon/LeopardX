@@ -276,7 +276,6 @@ function actualizarCarrito() {
   cartTotal.innerText = `$${totalAcumulado.toLocaleString('es-AR')}`;
 }
 
-}
 function actualizarCarrito() {
   const cartCount = document.getElementById('cartCount');
   const cartItems = document.getElementById('cartItems');
@@ -298,7 +297,16 @@ function toggleCart() {
 document.querySelector('.close-modal').onclick = () => {
   document.getElementById('productModal').style.display = 'none';
 };
-  
+
+// Asegúrate de que esto esté al final de tu script
+document.addEventListener('DOMContentLoaded', () => {
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+        card.style.display = 'block'; // Fuerza a que se vean al inicio
+        card.classList.add('card-show');
+    });
+});
+    
   </script>
 
     <div id="productModal" class="modal">
