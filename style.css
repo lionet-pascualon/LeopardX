@@ -548,3 +548,42 @@ img { max-width: 100%; display: block; }
 /* Panel del Carrito */
 .cart-panel { position: fixed; right: -350px; top: 0; width: 300px; height: 100%; background: var(--navy-mid); z-index: 1001; transition: 0.3s; padding: 20px; border-left: 1px solid var(--navy-border); box-shadow: -5px 0 15px rgba(0,0,0,0.5); }
 .cart-panel.open { right: 0; }
+
+/* Estilo del Boton */ 
+.cart-float {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem; /* A la izquierda para no pisar el WhatsApp */
+  background: var(--gold);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(201, 168, 76, 0.4);
+  transition: transform 0.3s ease;
+}
+
+.cart-float:hover {
+  transform: scale(1.1);
+}
+
+#cartCount {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #ff4444;
+  color: white;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  font-size: 12px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--navy-deep);
+}
