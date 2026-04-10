@@ -8,17 +8,19 @@
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 </head>
 <body>
- 
-  <!-- NAVBAR -->
+
+  <!-- ═══════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════ -->
   <header class="navbar">
     <div class="navbar-inner">
       <a href="#inicio" class="logo">LeopardX</a>
       <nav class="nav-links">
-        <a href="#inicio"    class="nav-link active"  data-filter="all">Inicio</a>
-        <a href="#productos" class="nav-link"          data-filter="parlante">Parlantes</a>
-        <a href="#productos" class="nav-link"          data-filter="lampara">Lámparas</a>
-        <a href="#productos" class="nav-link"          data-filter="auricular">Auriculares</a>
-        <a href="#productos" class="nav-link"          data-filter="smartwatch">Smartwatch</a>
+        <a href="#inicio"    class="nav-link active" data-filter="all">Inicio</a>
+        <a href="#productos" class="nav-link"         data-filter="parlante">Parlantes</a>
+        <a href="#productos" class="nav-link"         data-filter="lampara">Lámparas</a>
+        <a href="#productos" class="nav-link"         data-filter="auricular">Auriculares</a>
+        <a href="#productos" class="nav-link"         data-filter="smartwatch">Smartwatch</a>
       </nav>
       <button class="hamburger" id="hamburger" aria-label="Menú">
         <span></span><span></span><span></span>
@@ -32,8 +34,10 @@
       <a href="#productos" class="mobile-link" data-filter="smartwatch">Smartwatch</a>
     </div>
   </header>
- 
-  <!-- HERO -->
+
+  <!-- ═══════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════ -->
   <section class="hero" id="inicio">
     <div class="hero-glow"></div>
     <div class="hero-grid-lines"></div>
@@ -44,94 +48,138 @@
       <a href="#productos" class="hero-btn">Ver catálogo</a>
     </div>
   </section>
- 
-  <!-- PRODUCTOS -->
+
+  <!-- ═══════════════════════════════════════
+       PRODUCTOS
+  ═══════════════════════════════════════ -->
   <section class="productos-section" id="productos">
     <div class="section-header">
       <h2 class="section-title">Nuestros Productos</h2>
       <p class="section-sub">Consultanos por WhatsApp con un solo clic</p>
     </div>
- 
+
     <div class="grid" id="productGrid">
- 
-      <div class="card" data-categoria="auricular">
-        <div class="card-badge badge-sell">Más Vendido</div>
+
+      <!-- CARD: Auriculares AKG -->
+      <div class="card" data-categoria="auricular"
+           onclick="abrirModal('Auriculares AKG','$6.000','auricular.akg.jpg')">
         <div class="card-img">
           <img src="auricular.akg.jpg" alt="Auricular AKG" loading="lazy"/>
         </div>
         <div class="card-body">
-          <h3 class="card-title">Auriculares AKG</h3>
+          <div class="card-title-row">
+            <h3 class="card-title">Auriculares AKG</h3>
+            <span class="card-badge badge-sell">Más Vendido</span>
+          </div>
           <p class="card-desc">Calidad de audio profesional, diseño ergonómico y bajos potentes.</p>
           <div class="card-footer">
             <span class="card-price">$6.000</span>
-            <a class="card-btn" href="https://wa.me/3512366414?text=Hola!%20Me%20interesan%20los%20auriculares%20AKG" target="_blank">Consultar</a>
+            <a class="card-btn"
+               href="https://wa.me/3512366414?text=Hola!%20Me%20interesan%20los%20auriculares%20AKG"
+               target="_blank"
+               onclick="event.stopPropagation()">Consultar</a>
           </div>
         </div>
+        <div class="tags" style="display:none">auriculares akg audio premium</div>
       </div>
- 
-      <div class="card" data-categoria="auricular">
-        <div class="card-badge badge-new">Novedad</div>
+
+      <!-- CARD: TWS M90 Pro -->
+      <div class="card" data-categoria="auricular"
+           onclick="abrirModal('TWS M90 Pro','$13.000','tws.M90.pro.inal.jpg')">
         <div class="card-img">
           <img src="tws.M90.pro.inal.jpg" alt="TWS M90 Pro" loading="lazy"/>
         </div>
         <div class="card-body">
-          <h3 class="card-title">TWS M90 Pro</h3>
+          <div class="card-title-row">
+            <h3 class="card-title">TWS M90 Pro</h3>
+            <span class="card-badge badge-new">Novedad</span>
+          </div>
           <p class="card-desc">Bluetooth 5.3, estuche con pantalla LED y sonido envolvente.</p>
           <div class="card-footer">
             <span class="card-price">$13.000</span>
-            <a class="card-btn" href="https://wa.me/3512366414?text=Hola!%20Me%20interesan%20los%20TWS%20M90%20Pro" target="_blank">Consultar</a>
+            <a class="card-btn"
+               href="https://wa.me/3512366414?text=Hola!%20Me%20interesan%20los%20TWS%20M90%20Pro"
+               target="_blank"
+               onclick="event.stopPropagation()">Consultar</a>
           </div>
         </div>
+        <div class="tags" style="display:none">auriculares tws m90 inalambrico bluetooth</div>
       </div>
- 
-      <div class="card" data-categoria="smartwatch">
+
+      <!-- CARD: Smartwatch -->
+      <div class="card" data-categoria="smartwatch"
+           onclick="abrirModal('Smartwatch Inteligente','$19.000','smartwach.jpg')">
         <div class="card-img">
           <img src="smartwach.jpg" alt="Smartwatch" loading="lazy"/>
         </div>
         <div class="card-body">
-          <h3 class="card-title">Smartwatch Inteligente</h3>
+          <div class="card-title-row">
+            <h3 class="card-title">Smartwatch Inteligente</h3>
+          </div>
           <p class="card-desc">Notificaciones, salud, deportes y pantalla táctil HD.</p>
           <div class="card-footer">
             <span class="card-price">$19.000</span>
-            <a class="card-btn" href="https://wa.me/3512366414?text=Hola!%20Me%20interesa%20el%20Smartwatch" target="_blank">Consultar</a>
+            <a class="card-btn"
+               href="https://wa.me/3512366414?text=Hola!%20Me%20interesa%20el%20Smartwatch"
+               target="_blank"
+               onclick="event.stopPropagation()">Consultar</a>
           </div>
         </div>
+        <div class="tags" style="display:none">smartwatch reloj inteligente salud deporte</div>
       </div>
- 
-      <div class="card" data-categoria="parlante">
+
+      <!-- CARD: Parlante Greatnice -->
+      <div class="card" data-categoria="parlante"
+           onclick="abrirModal('Parlante Greatnice RGB','$12.000','parlante.greatnice.jpg')">
         <div class="card-img">
           <img src="parlante.greatnice.jpg" alt="Parlante Greatnice" loading="lazy"/>
         </div>
         <div class="card-body">
-          <h3 class="card-title">Parlante Greatnice RGB</h3>
+          <div class="card-title-row">
+            <h3 class="card-title">Parlante Greatnice RGB</h3>
+          </div>
           <p class="card-desc">Potencia y luces LED. Ideal para llevar la música a todos lados.</p>
           <div class="card-footer">
             <span class="card-price">$12.000</span>
-            <a class="card-btn" href="https://wa.me/3512366414?text=Hola!%20Me%20interesa%20el%20parlante%20Greatnice" target="_blank">Consultar</a>
+            <a class="card-btn"
+               href="https://wa.me/3512366414?text=Hola!%20Me%20interesa%20el%20parlante%20Greatnice"
+               target="_blank"
+               onclick="event.stopPropagation()">Consultar</a>
           </div>
         </div>
+        <div class="tags" style="display:none">parlante greatnice bluetooth luces musica</div>
       </div>
- 
-      <div class="card" data-categoria="lampara">
+
+      <!-- CARD: Proyector Astronauta -->
+      <div class="card" data-categoria="lampara"
+           onclick="abrirModal('Proyector Astronauta','$15.500','proyector.astronauta.jpg')">
         <div class="card-img">
           <img src="proyector.astronauta.jpg" alt="Proyector Astronauta" loading="lazy"/>
         </div>
         <div class="card-body">
-          <h3 class="card-title">Proyector Astronauta</h3>
+          <div class="card-title-row">
+            <h3 class="card-title">Proyector Astronauta</h3>
+          </div>
           <p class="card-desc">Nebulosa galáctica con control remoto. Ideal como regalo.</p>
           <div class="card-footer">
             <span class="card-price">$15.500</span>
-            <a class="card-btn" href="https://wa.me/3512366414?text=Hola!%20Me%20interesa%20el%20Proyector%20Astronauta" target="_blank">Consultar</a>
+            <a class="card-btn"
+               href="https://wa.me/3512366414?text=Hola!%20Me%20interesa%20el%20Proyector%20Astronauta"
+               target="_blank"
+               onclick="event.stopPropagation()">Consultar</a>
           </div>
         </div>
+        <div class="tags" style="display:none">lampara proyector galaxia estrellas regalo</div>
       </div>
- 
+
     </div>
- 
+
     <p class="no-result" id="noResult" style="display:none;">No hay productos en esta categoría aún.</p>
   </section>
- 
-  <!-- FOOTER -->
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
   <footer class="footer">
     <div class="footer-top">
       <div class="footer-brand">
@@ -150,29 +198,207 @@
         </a>
       </div>
     </div>
+
+    <!-- NEWSLETTER con Formspree — reemplazá YOUR_FORM_ID con tu ID real -->
     <div class="footer-newsletter">
       <p class="newsletter-label">Recibí ofertas exclusivas</p>
-      <form class="newsletter-form" onsubmit="handleNewsletter(event)">
-        <input type="email" placeholder="Tu email..." class="newsletter-input" required/>
+      <form
+        class="newsletter-form"
+        action="https://formspree.io/f/xkoplepe"
+        method="POST"
+        id="newsletterForm">
+        <input type="email" name="email" placeholder="Tu email..." class="newsletter-input" required/>
         <button type="submit" class="newsletter-btn">Suscribirme</button>
       </form>
+      <p class="newsletter-ok" id="newsletterOk" style="display:none;">
+        ¡Gracias! Te anotamos 🎉
+      </p>
     </div>
+
     <div class="footer-bottom">
       <p>© 2026 LeopardX · Desarrollado por Milton</p>
     </div>
   </footer>
- 
+
+  <!-- ═══════════════════════════════════════
+       MODAL DE PRODUCTO
+  ═══════════════════════════════════════ -->
+  <div id="productModal" class="modal" onclick="cerrarModalFuera(event)">
+    <div class="modal-content">
+      <button class="close-modal" onclick="cerrarModal()" aria-label="Cerrar">&times;</button>
+      <div class="modal-body">
+        <img id="modalImg" src="" alt="Producto"/>
+        <div class="modal-info">
+          <h2 id="modalTitle"></h2>
+          <p id="modalDesc"></p>
+          <ul id="modalSpecs"></ul>
+          <div class="modal-price" id="modalPrice"></div>
+          <a id="modalWaBtn" class="btn-primary" href="#" target="_blank">
+            Consultar por WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       CARRITO FLOTANTE
+  ═══════════════════════════════════════ -->
+  <div id="cartIcon" class="cart-float" onclick="toggleCart()" role="button" aria-label="Ver carrito">
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="var(--navy-deep)">
+      <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96C5 14.1 5.9 15 7 15h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1 1 0 0 0 20 3H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+    </svg>
+    <span id="cartCount">0</span>
+  </div>
+
+  <!-- Panel del carrito -->
+  <div id="cartPanel" class="cart-panel">
+    <div class="cart-header">
+      <h3>Tu Carrito</h3>
+      <button class="cart-close" onclick="toggleCart()" aria-label="Cerrar carrito">&times;</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-total-container">
+      Total estimado: <span id="cartTotal">$0</span>
+    </div>
+    <a id="cartWaBtn" class="btn-primary" href="#" target="_blank">
+      Finalizar por WhatsApp
+    </a>
+  </div>
+
   <!-- WhatsApp flotante -->
   <a href="https://wa.me/3512366414" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="28" height="28"/>
   </a>
- 
+
+  <!-- ═══════════════════════════════════════
+       SCRIPTS
+  ═══════════════════════════════════════ -->
   <script>
-    // Filtro por categoría
+    /* ── Datos detallados por producto ── */
+    const detallesProductos = {
+      "Auriculares AKG": {
+        desc: "Sonido de estudio profesional. Ideal para música, gaming y llamadas.",
+        specs: ["Cable reforzado 1.2m", "Cancelación pasiva de ruido", "Bajos profundos y potentes", "Compatible con todos los dispositivos"]
+      },
+      "TWS M90 Pro": {
+        desc: "Libertad total sin cables. Bluetooth 5.3 con latencia ultra baja.",
+        specs: ["Bluetooth 5.3", "Estuche de carga con pantalla LED", "Autonomía 6h + 24h con estuche", "Resistente al sudor"]
+      },
+      "Smartwatch Inteligente": {
+        desc: "Tu compañero de salud y estilo en la muñeca.",
+        specs: ["Sensor cardíaco y SpO2", "Resistente al agua IP68", "Batería hasta 7 días", "Compatible Android e iOS"]
+      },
+      "Parlante Greatnice RGB": {
+        desc: "Potencia sonora con show de luces LED incluido.",
+        specs: ["Luces RGB multicolor", "Bluetooth 5.0", "Batería recargable", "Portátil y resistente"]
+      },
+      "Proyector Astronauta": {
+        desc: "Transforma cualquier habitación en una galaxia.",
+        specs: ["Nebulosa y estrellas giratorias", "Control remoto incluido", "Ideal para regalo", "360° de rotación"]
+      }
+    };
+
+    let carrito = [];
+    let productoActual = {};
+
+    /* ── Modal ── */
+    function abrirModal(titulo, precio, img) {
+      productoActual = { titulo, precio, img };
+      document.getElementById('modalTitle').innerText = titulo;
+      document.getElementById('modalPrice').innerText = precio;
+      document.getElementById('modalImg').src = img;
+      document.getElementById('modalImg').alt = titulo;
+
+      const info = detallesProductos[titulo] || {
+        desc: "Producto de alta calidad LeopardX.",
+        specs: ["Garantía incluida"]
+      };
+      document.getElementById('modalDesc').innerText = info.desc;
+      document.getElementById('modalSpecs').innerHTML =
+        info.specs.map(s => `<li>${s}</li>`).join('');
+
+      const waText = encodeURIComponent(`Hola! Me interesa: ${titulo} (${precio})`);
+      document.getElementById('modalWaBtn').href =
+        `https://wa.me/3512366414?text=${waText}`;
+
+      document.getElementById('productModal').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function cerrarModal() {
+      document.getElementById('productModal').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    function cerrarModalFuera(e) {
+      if (e.target === document.getElementById('productModal')) cerrarModal();
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') cerrarModal();
+    });
+
+    /* ── Carrito ── */
+    function agregarAlCarrito() {
+      if (!productoActual.titulo) return;
+      carrito.push({ ...productoActual });
+      actualizarCarrito();
+      cerrarModal();
+      toggleCart();
+    }
+
+    function eliminarDelCarrito(index) {
+      carrito.splice(index, 1);
+      actualizarCarrito();
+    }
+
+    function actualizarCarrito() {
+      const cartCount = document.getElementById('cartCount');
+      const cartItems = document.getElementById('cartItems');
+      const cartTotal = document.getElementById('cartTotal');
+      const cartWaBtn = document.getElementById('cartWaBtn');
+
+      cartCount.innerText = carrito.length;
+
+      if (carrito.length === 0) {
+        cartItems.innerHTML = '<p class="cart-empty">Tu carrito está vacío</p>';
+        cartTotal.innerText = '$0';
+        cartWaBtn.href = '#';
+        return;
+      }
+
+      let total = 0;
+      cartItems.innerHTML = carrito.map((item, i) => {
+        const valor = parseInt(item.precio.replace(/\D/g, ''));
+        total += valor;
+        return `
+          <div class="cart-item">
+            <div class="cart-item-info">
+              <span class="cart-item-name">${item.titulo}</span>
+              <span class="cart-item-price">${item.precio}</span>
+            </div>
+            <button class="cart-item-remove" onclick="eliminarDelCarrito(${i})" aria-label="Eliminar">✕</button>
+          </div>`;
+      }).join('');
+
+      cartTotal.innerText = `$${total.toLocaleString('es-AR')}`;
+
+      const listaWa = carrito.map(i => `• ${i.titulo} (${i.precio})`).join('%0A');
+      const totalWa = `$${total.toLocaleString('es-AR')}`;
+      cartWaBtn.href =
+        `https://wa.me/3512366414?text=Hola!%20Quiero%20consultar%20por:%0A${listaWa}%0A%0ATotal%20estimado:%20${totalWa}`;
+    }
+
+    function toggleCart() {
+      document.getElementById('cartPanel').classList.toggle('open');
+    }
+
+    /* ── Filtros del navbar ── */
     const navLinks = document.querySelectorAll('[data-filter]');
     const cards    = document.querySelectorAll('.card');
     const noResult = document.getElementById('noResult');
- 
+
     navLinks.forEach(link => {
       link.addEventListener('click', function () {
         const filter = this.dataset.filter;
@@ -192,164 +418,83 @@
         noResult.style.display = visible === 0 ? 'block' : 'none';
       });
     });
- 
-    // Hamburger
+
+    /* ── Buscador ── */
+    document.addEventListener('keyup', e => {
+      if (e.target.matches('#buscador')) {
+        const texto = e.target.value.toLowerCase();
+        let visible = 0;
+        cards.forEach(card => {
+          const contenido = card.textContent.toLowerCase();
+          if (contenido.includes(texto)) {
+            card.style.display = '';
+            card.classList.remove('filtro');
+            visible++;
+          } else {
+            card.style.display = 'none';
+            card.classList.add('filtro');
+          }
+        });
+        noResult.style.display = visible === 0 ? 'block' : 'none';
+      }
+    });
+
+    /* ── Hamburger ── */
     const hamburger  = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
     hamburger.addEventListener('click', () => {
       mobileMenu.classList.toggle('open');
       hamburger.classList.toggle('open');
     });
- 
-    // Newsletter
-    function handleNewsletter(e) {
-      e.preventDefault();
-      const btn = e.target.querySelector('button');
-      btn.textContent = '¡Listo!';
-      btn.style.background = '#a07010';
-      e.target.querySelector('input').value = '';
-      setTimeout(() => {
-        btn.textContent = 'Suscribirme';
-        btn.style.background = '';
-      }, 3000);
+
+    /* ── Newsletter con Formspree ──
+       Enviamos con fetch para mostrar mensaje sin recargar la página */
+    const newsletterForm = document.getElementById('newsletterForm');
+    if (newsletterForm) {
+      newsletterForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const btn   = this.querySelector('button');
+        const datos = new FormData(this);
+
+        btn.textContent = 'Enviando...';
+        btn.disabled = true;
+
+        try {
+          const res = await fetch(this.action, {
+            method: 'POST',
+            body: datos,
+            headers: { 'Accept': 'application/json' }
+          });
+
+          if (res.ok) {
+            this.style.display = 'none';
+            document.getElementById('newsletterOk').style.display = 'block';
+          } else {
+            btn.textContent = 'Error, intentá de nuevo';
+            btn.disabled = false;
+          }
+        } catch {
+          btn.textContent = 'Sin conexión, intentá de nuevo';
+          btn.disabled = false;
+        }
+      });
     }
- 
-    // Animación al hacer scroll
-    const observer = new IntersectionObserver((entries) => {
+
+    /* ── Animación scroll para cards ── */
+    const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) entry.target.classList.add('card-visible');
       });
     }, { threshold: 0.1 });
     cards.forEach(card => observer.observe(card));
-  
-  let carrito = [];
-let productoActual = {};
 
-// Datos detallados (esto podrías ampliarlo por cada producto)
-const detallesProductos = {
-  "Auriculares AKG": { desc: "Sonido de estudio profesional.", specs: ["Cable reforzado", "Cancelación pasiva", "Bajos profundos"] },
-  "Smartwatch Inteligente": { desc: "Tu compañero de salud ideal.", specs: ["Sensor cardíaco", "Resistente al agua IP68", "Batería 7 días"] }
-};
-
-function abrirModal(titulo, precio, img) {
-  productoActual = { titulo, precio, img };
-  document.getElementById('modalTitle').innerText = titulo;
-  document.getElementById('modalPrice').innerText = precio;
-  document.getElementById('modalImg').src = img;
-  
-  const infoExtra = detallesProductos[titulo] || { desc: "Producto de alta calidad LeopardX.", specs: ["Garantía oficial"] };
-  document.getElementById('modalDesc').innerText = infoExtra.desc;
-  
-  const specsUl = document.getElementById('modalSpecs');
-  specsUl.innerHTML = infoExtra.specs.map(s => `<li>🔹 ${s}</li>`).join('');
-  
-  document.getElementById('productModal').style.display = 'block';
-}
-
-function actualizarCarrito() {
-  const cartCount = document.getElementById('cartCount');
-  const cartItems = document.getElementById('cartItems');
-  const cartTotal = document.getElementById('cartTotal');
-  
-  cartCount.innerText = carrito.length;
-  
-  let totalAcumulado = 0;
-  cartItems.innerHTML = carrito.map((item, index) => {
-    // Limpiamos el precio (sacamos $ y puntos) para sumar
-    const valor = parseInt(item.precio.replace(/\D/g, ''));
-    totalAcumulado += valor;
-    
-    return `
-      <div class="cart-item">
-        <span>${item.titulo}</span>
-        <span class="gold-text">${item.precio}</span>
-        <button onclick="eliminarDelCarrito(${index})">✕</button>
-      </div>
-    `;
-  }).join('');
-  
-  // Mostramos el total formateado
-  cartTotal.innerText = `$${totalAcumulado.toLocaleString('es-AR')}`;
-}
-
-function actualizarCarrito() {
-  const cartCount = document.getElementById('cartCount');
-  const cartItems = document.getElementById('cartItems');
-  cartCount.innerText = carrito.length;
-  
-  cartItems.innerHTML = carrito.map((item, index) => `
-    <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-      <span>${item.titulo}</span>
-      <span>${item.precio}</span>
-    </div>
-  `).join('');
-}
-
-function toggleCart() {
-  document.getElementById('cartPanel').classList.toggle('open');
-}
-
-// Cerrar modal al tocar la X
-document.querySelector('.close-modal').onclick = () => {
-  document.getElementById('productModal').style.display = 'none';
-};
-
-// Asegúrate de que esto esté al final de tu script
-document.addEventListener('DOMContentLoaded', () => {
-    const cards = document.querySelectorAll('.card');
-    cards.forEach(card => {
-        card.style.display = 'block'; // Fuerza a que se vean al inicio
+    /* ── Mostrar cards al cargar ── */
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.card').forEach(card => {
         card.classList.add('card-show');
+      });
     });
-});
-    
   </script>
 
-    <div id="productModal" class="modal">
-  <div class="modal-content">
-    <span class="close-modal">&times;</span>
-    <div class="modal-body">
-      <img id="modalImg" src="" alt="">
-      <div class="modal-info">
-        <h2 id="modalTitle"></h2>
-        <p id="modalDesc"></p>
-        <ul id="modalSpecs"></ul>
-        <div class="modal-price" id="modalPrice"></div>
-        <button class="btn-primary" onclick="agregarAlCarritoDesdeModal()">Agregar al Carrito</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="cartIcon" class="cart-float" onclick="toggleCart()">
-  <span>🛒</span>
-  <div id="cartCount">0</div>
-</div>
-
-<div id="cartPanel" class="cart-panel">
-  <h3>Tu Carrito</h3>
-  <div id="cartItems"></div>
-  <div class="cart-total-container">Total estimado: <span id="cartTotal">$0</span></div>
-  <button class="btn-primary" onclick="finalizarCompra()">Finalizar por WhatsApp</button>
-  <button class="btn-secondary" onclick="toggleCart()">Cerrar</button>
-</div>
-
-// Esto es para que se vea bien el carrito
-<div id="cartIcon" class="cart-float" onclick="toggleCart()">
-  <svg viewBox="0 0 24 24" width="28" height="28" fill="var(--navy-deep)">
-    <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
-  </svg>
-  <div id="cartCount">0</div>
-</div>
-
-   
-<div class="newsletter">
-  <h3>Stay in the Loop</h3>
-  <form action="https://formspree.io/f/xkoplepe" method="POST" onsubmit="handleNewsletter(event)">
-    <input type="email" name="email" placeholder="Tu correo..." required>
-    <button type="submit" class="newsletter-btn">Suscribirme</button>
-  </form>
-</div>
-  
 </body>
 </html>
