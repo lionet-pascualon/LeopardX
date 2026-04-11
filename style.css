@@ -486,6 +486,7 @@ img { max-width: 100%; display: block; }
     background: #05080f; /* Un negro más profundo */
     display: flex;
     justify-content: center;
+    align-items: center; /* Esto centra verticalmente (opcional) */
 }
 
 .container-trust {
@@ -540,7 +541,8 @@ img { max-width: 100%; display: block; }
         padding: 40px 20px;
     }
     .trust-icon svg {
-        width: 60px;
-        height: 60px;
-    }
+    width: 50px;  /* ESTA ES LA LÍNEA QUE FALTA */
+    height: 50px; /* ESTA TAMBIÉN */
+    flex-shrink: 0;
+    filter: drop-shadow(0 0 5px var(--gold)); /* Opcional: un brillito */
 }
