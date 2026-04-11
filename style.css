@@ -480,69 +480,36 @@ img { max-width: 100%; display: block; }
   .modal-price { font-size: 1.6rem; }
 }
 
-/* DISEÑO PROFESIONAL PARA LA GARANTÍA */
+/* DISEÑO INTEGRADO PARA LA GARANTÍA */
 .trust-badge-section {
-    padding: 60px 20px;
-    background: #05080f; /* Un negro más profundo */
+    padding: 20px 20px 60px 20px; /* Menos espacio arriba para que se pegue a los productos */
+    background: transparent; /* Borramos el fondo negro para que use el de la página */
     display: flex;
     justify-content: center;
-    align-items: center; /* Esto centra verticalmente (opcional) */
 }
 
 .container-trust {
-    max-width: 1000px;
+    max-width: 1200px; /* Lo igualamos al ancho de tu grid de productos */
     width: 100%;
 }
 
 .trust-card {
-    background: rgba(15, 23, 42, 0.6);
-    border: 1px solid rgba(160, 112, 16, 0.3); /* Dorado con transparencia */
-    border-left: 4px solid var(--gold); /* Una barra lateral dorada */
+    /* Usamos un fondo oscuro pero con transparencia para que se vea moderno */
+    background: rgba(10, 15, 28, 0.7); 
+    border: 1px solid rgba(160, 112, 16, 0.2);
+    border-left: 4px solid var(--gold);
     padding: 30px;
     display: flex;
     align-items: center;
     gap: 25px;
-    border-radius: 8px;
-    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3); /* Una sombrita para dar profundidad */
 }
 
 .trust-icon svg {
     width: 50px;
     height: 50px;
     flex-shrink: 0;
-}
-
-.trust-info h3 {
-    color: var(--gold);
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 22px;
-    text-transform: uppercase;
-    margin-bottom: 8px;
-    letter-spacing: 1.5px;
-}
-
-.trust-info p {
-    color: #94a3b8;
-    font-size: 16px;
-    line-height: 1.5;
-    margin: 0;
-}
-
-.trust-info p span {
-    color: #f8fafc; /* Texto casi blanco para resaltar puntos clave */
-    font-weight: 500;
-}
-
-/* Ajuste para celulares */
-@media (max-width: 768px) {
-    .trust-card {
-        flex-direction: column;
-        text-align: center;
-        padding: 40px 20px;
-    }
-    .trust-icon svg {
-    width: 50px;  /* ESTA ES LA LÍNEA QUE FALTA */
-    height: 50px; /* ESTA TAMBIÉN */
-    flex-shrink: 0;
-    filter: drop-shadow(0 0 5px var(--gold)); /* Opcional: un brillito */
+    filter: drop-shadow(0 0 8px var(--gold));
 }
