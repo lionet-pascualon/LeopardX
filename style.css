@@ -480,48 +480,67 @@ img { max-width: 100%; display: block; }
   .modal-price { font-size: 1.6rem; }
 }
 
-.calidad-garantia {
-    background: linear-gradient(135deg, var(--navy-deep) 0%, #0a0f1a 100%);
-    padding: 40px 20px;
-    border-top: 1px solid var(--gold);
-    border-bottom: 1px solid var(--gold);
-    margin-top: 50px;
-    text-align: center;
-}
-
-.garantia-content {
-    max-width: 800px;
-    margin: 0 auto;
+/* DISEÑO PROFESIONAL PARA LA GARANTÍA */
+.trust-badge-section {
+    padding: 60px 20px;
+    background: #05080f; /* Un negro más profundo */
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+}
+
+.container-trust {
+    max-width: 1000px;
+    width: 100%;
+}
+
+.trust-card {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(160, 112, 16, 0.3); /* Dorado con transparencia */
+    border-left: 4px solid var(--gold); /* Una barra lateral dorada */
+    padding: 30px;
+    display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 25px;
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
 }
 
-.garantia-icon {
-    font-size: 40px;
-    filter: drop-shadow(0 0 10px var(--gold));
+.trust-icon svg {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
 }
 
-.garantia-text h3 {
+.trust-info h3 {
     color: var(--gold);
     font-family: 'Rajdhani', sans-serif;
-    font-size: 24px;
-    margin-bottom: 10px;
+    font-size: 22px;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    margin-bottom: 8px;
+    letter-spacing: 1.5px;
 }
 
-.garantia-text p {
-    color: #cbd5e1; /* Un gris claro para que sea legible */
-    line-height: 1.6;
+.trust-info p {
+    color: #94a3b8;
     font-size: 16px;
+    line-height: 1.5;
+    margin: 0;
 }
 
-/* Para que en PC se vea uno al lado del otro */
-@media (min-width: 768px) {
-    .garantia-content {
-        flex-direction: row;
-        text-align: left;
+.trust-info p span {
+    color: #f8fafc; /* Texto casi blanco para resaltar puntos clave */
+    font-weight: 500;
+}
+
+/* Ajuste para celulares */
+@media (max-width: 768px) {
+    .trust-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 40px 20px;
+    }
+    .trust-icon svg {
+        width: 60px;
+        height: 60px;
     }
 }
