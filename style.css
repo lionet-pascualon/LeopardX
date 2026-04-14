@@ -1,473 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeopardX | Premium Store</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
 
-/* =============================================
-   LeopardX — style.css (TU VERSIÓN ORIGINAL RESTAURADA)
-   ============================================= */
+    <nav class="navbar">
+        <a href="#" class="logo">LEOPARD X</a>
+        <div class="nav-links">
+            <a href="#" class="nav-link active" data-filter="all">Todos</a>
+            <a href="#" class="nav-link" data-filter="audio">Audio</a>
+            <a href="#" class="nav-link" data-filter="smart">Smartwatches</a>
+        </div>
+        <div class="auth-container">
+            <input type="text" id="buscador" class="newsletter-input" placeholder="Buscar producto..." style="margin-right: 15px;">
+            <button class="login-btn-premium" onclick="abrirAuth()">
+                <span>Mi Cuenta</span>
+            </button>
+        </div>
+    </nav>
 
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap');
+    <header class="hero">
+        <div class="hero-glow"></div>
+        <div class="hero-grid-lines"></div>
+        <div class="hero-content">
+            <p class="hero-eyebrow">Tecnología Premium</p>
+            <h1 class="hero-title">Elevá tu <span class="hero-brand">Estilo</span></h1>
+            <p class="hero-subtitle">Descubrí la mejor selección de gadgets y accesorios tecnológicos.</p>
+        </div>
+    </header>
 
-/* ═══ VARIABLES ═══ */
-:root {
-  --navy-deep:   #0A0E1A;
-  --navy-mid:    #111827;
-  --navy-card:   #1A2235;
-  --navy-border: #2A3550;
+    <main class="productos-section">
+        <div class="section-header">
+            <h2 class="section-title" id="sectionTitle">Nuestros Productos</h2>
+            <p class="section-sub" id="sectionSub">Tocá un producto para ver más detalles</p>
+        </div>
 
-  --gold:        #C9A84C;
-  --gold-light:  #E2C97E;
-  --gold-dark:   #9A7A28;
-  --gold-glow:   rgba(201,168,76,0.15);
-  --gold-border: rgba(201,168,76,0.35);
+        <div class="product-filter-container">
+            <div class="tabs">
+                <button class="tab-btn active" onclick="filterProducts('oficial', event)">LeopardX Oficial</button>
+                <button class="tab-btn" onclick="filterProducts('others', event)">Otros Vendedores</button>
+            </div>
+        </div>
 
-  --text-bright: #E8ECF4;
-  --text-main:   #C4CEDE;
-  --text-muted:  #6B7A96;
-  --text-dim:    #3D4E6A;
+        <p id="noResult" class="no-result" style="display: none;">No se encontraron productos.</p>
 
-  --radius-sm:   6px;
-  --radius-md:   10px;
-  --radius-lg:   16px;
+        <div id="productGrid" class="grid">
+            <div class="card" data-categoria="audio" onclick="abrirModal('Auriculares AKG', '$25.000', 'https://via.placeholder.com/280x210/1A2235/C9A84C?text=AKG')">
+                <div class="card-img"><img src="https://via.placeholder.com/280x210/1A2235/C9A84C?text=AKG" alt="Auriculares AKG"></div>
+                <div class="card-body">
+                    <div class="card-title-row">
+                        <h3 class="card-title">Auriculares AKG</h3>
+                        <span class="card-badge badge-sell">Más vendido</span>
+                    </div>
+                    <p class="card-desc">Sonido de estudio profesional. Ideal para música, gaming y llamadas.</p>
+                    <div class="card-footer">
+                        <span class="card-price">$25.000</span>
+                        <button class="card-btn">Ver Detalles</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card" data-categoria="audio" onclick="abrirModal('TWS M90 Pro', '$18.500', 'https://via.placeholder.com/280x210/1A2235/C9A84C?text=TWS+M90')">
+                <div class="card-img"><img src="https://via.placeholder.com/280x210/1A2235/C9A84C?text=TWS+M90" alt="TWS M90 Pro"></div>
+                <div class="card-body">
+                    <div class="card-title-row">
+                        <h3 class="card-title">TWS M90 Pro</h3>
+                        <span class="card-badge badge-new">Nuevo</span>
+                    </div>
+                    <p class="card-desc">Libertad total sin cables. Bluetooth 5.3 con latencia ultra baja.</p>
+                    <div class="card-footer">
+                        <span class="card-price">$18.500</span>
+                        <button class="card-btn">Ver Detalles</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  --shadow-card:  0 2px 16px rgba(0,0,0,0.35);
-  --shadow-hover: 0 6px 28px rgba(0,0,0,0.5), 0 0 0 1px var(--gold-border);
-  --transition:   0.25s ease;
-}
+        <div id="othersGrid" class="grid" style="display: none;">
+            <p class="other-empty">Próximamente se sumarán nuevos vendedores a la comunidad LeopardX.</p>
+        </div>
+    </main>
 
-/* ═══ RESET ═══ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html  { scroll-behavior: smooth; }
-body  {
-  background: var(--navy-deep);
-  color: var(--text-main);
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 400;
-  line-height: 1.6;
-  min-height: 100vh;
-}
-a   { text-decoration: none; color: inherit; }
-img { max-width: 100%; display: block; }
+    <section class="trust-badge-section">
+        <div class="container-trust">
+            <div class="trust-card">
+                <div class="trust-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                </div>
+                <div class="trust-info">
+                    <h3>Compra 100% Segura</h3>
+                    <p>Tus datos están protegidos. Todos nuestros productos cuentan con <span>garantía oficial</span>.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-/* ═══ NAVBAR ═══ */
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 5%;
-    background: #000;
-    position: sticky; top: 0; z-index: 100;
-    border-bottom: 1px solid var(--gold-border);
-}
+    <div class="cart-float" onclick="toggleCart()">
+        <svg width="24" height="24" fill="#0A0E1A" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        <span id="cartCount">0</span>
+    </div>
 
-.logo {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 1.7rem; font-weight: 700;
-  color: var(--gold); letter-spacing: 0.1em;
-}
+    <div class="cart-overlay" id="cartOverlay" onclick="cerrarCarrito()"></div>
+    <div class="cart-panel" id="cartPanel">
+        <div class="cart-header">
+            <h3>Tu Carrito</h3>
+            <button class="cart-close" onclick="cerrarCarrito()">&times;</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p class="cart-empty">Tu carrito está vacío</p>
+        </div>
+        <div class="cart-footer-panel">
+            <div class="cart-total-container" style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                <span style="color: var(--text-bright); font-size: 1rem;">Total estimado:</span>
+                <span id="cartTotal">$0</span>
+            </div>
+            <a href="#" id="cartWaBtn" class="btn-finalizar disabled" target="_blank">Pedir por WhatsApp</a>
+        </div>
+    </div>
 
-.nav-links { display: flex; gap: 0.15rem; align-items: center; }
-.nav-link {
-  font-size: 13px; color: var(--text-muted);
-  padding: 6px 14px; border-radius: var(--radius-sm);
-  transition: color var(--transition), background var(--transition);
-}
-.nav-link:hover { color: var(--gold); }
-.nav-link.active {
-  color: var(--gold);
-  background: var(--gold-glow);
-  border: 1px solid var(--gold-border);
-}
+    <div class="product-modal" id="productModal" onclick="cerrarModalFuera(event)">
+        <div class="modal-content">
+            <button class="close-modal" onclick="cerrarModal()">&times;</button>
+            <div class="modal-body">
+                <img id="modalImg" src="" alt="">
+                <div class="modal-info">
+                    <h2 id="modalTitle">Título</h2>
+                    <div class="modal-price" id="modalPrice">$0</div>
+                    <p id="modalDesc">Descripción</p>
+                    <ul id="modalSpecs"></ul>
+                    <button class="btn-carrito" onclick="agregarAlCarrito()">Agregar al Carrito</button>
+                    <a href="#" id="modalWaBtn" class="btn-whatsapp" target="_blank">Consultar por WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-.hamburger {
-  display: none; flex-direction: column; gap: 5px;
-  background: none; border: none; cursor: pointer; padding: 4px; margin-left: auto;
-}
-.hamburger span {
-  display: block; width: 22px; height: 2px;
-  background: var(--text-muted); border-radius: 2px; transition: all var(--transition);
-}
-.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); background: var(--gold); }
-.hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); background: var(--gold); }
+    <div class="warning-modal" id="warningModal" onclick="if(event.target === this) cerrarWarning()">
+        <div class="warning-modal-content">
+            <h3>Aviso Importante</h3>
+            <p>Estás por ver productos de vendedores externos.</p>
+            <div class="warning-info-box">
+                <p style="font-size: 12px; margin: 0;">LeopardX no se responsabiliza por las transacciones realizadas con terceros. Verificá la reputación del vendedor.</p>
+            </div>
+            <button class="btn-accept" onclick="cerrarWarning()">Entendido</button>
+        </div>
+    </div>
 
-.mobile-menu {
-  display: none; flex-direction: column;
-  background: var(--navy-mid);
-  padding: 0.75rem 1.5rem 1rem; gap: 0.1rem;
-  border-bottom: 1px solid var(--gold-border);
-}
-.mobile-menu.open { display: flex; }
-.mobile-link {
-  font-size: 14px; color: var(--text-muted);
-  padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.04);
-  transition: color var(--transition), padding-left var(--transition);
-}
-.mobile-link:hover { color: var(--gold); padding-left: 6px; }
+    <div id="authModal" class="auth-modal" onclick="if(event.target === this) cerrarAuth()">
+        <div class="auth-card">
+            <button class="close-modal" onclick="cerrarAuth()">&times;</button>
+            <h2>Iniciar Sesión</h2>
+            <input type="email" placeholder="Correo electrónico">
+            <input type="password" placeholder="Contraseña">
+            <button>Entrar a mi Cuenta</button>
+        </div>
+    </div>
 
-/* BOTON DORADO LLAMATIVO CUENTA (Tu versión original) */
-.auth-container {
-    display: flex;
-    align-items: center;
-}
-
-.login-btn-premium {
-    background: linear-gradient(135deg, #ffb300 0%, #ff8f00 100%);
-    color: #000;
-    border: none;
-    padding: 12px 28px;
-    font-family: 'Rajdhani', sans-serif;
-    font-weight: 800;
-    font-size: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-radius: 5px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 4px 15px rgba(255, 179, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.login-btn-premium:hover {
-    transform: scale(1.05) translateY(-2px);
-    box-shadow: 0 0 25px rgba(255, 179, 0, 0.6);
-    background: linear-gradient(135deg, #ffca28 0%, #ffb300 100%);
-}
-
-.login-btn-premium i { font-size: 1.2rem; }
-
-/* ═══ HERO ═══ */
-.hero {
-  position: relative; overflow: hidden;
-  background: var(--navy-deep);
-  padding: 5.5rem 1.5rem 5rem; text-align: center;
-}
-.hero-glow {
-  position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
-  width: 600px; height: 600px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(201,168,76,0.13) 0%, transparent 65%);
-  pointer-events: none;
-}
-.hero-grid-lines {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
-  background-size: 60px 60px; pointer-events: none;
-}
-.hero-content { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
-.hero-eyebrow {
-  font-family: 'Rajdhani', sans-serif; font-size: 12px; font-weight: 500;
-  letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--gold); margin-bottom: 1.25rem; opacity: 0.85;
-}
-.hero-title {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: clamp(2.6rem, 7vw, 4.5rem); font-weight: 600;
-  color: var(--text-bright); line-height: 1.1; margin-bottom: 1.25rem; letter-spacing: 0.03em;
-}
-.hero-brand { color: var(--gold); display: block; }
-.hero-subtitle { font-size: 15px; font-weight: 300; color: var(--text-muted); margin-bottom: 2.25rem; }
-.hero-btn {
-  display: inline-block; background: transparent; color: var(--gold);
-  font-family: 'Rajdhani', sans-serif; font-size: 14px; font-weight: 600;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 12px 36px; border: 1px solid var(--gold-border); border-radius: var(--radius-sm);
-  transition: background var(--transition), color var(--transition), box-shadow var(--transition);
-}
-.hero-btn:hover { background: var(--gold); color: var(--navy-deep); box-shadow: 0 0 20px rgba(201,168,76,0.3); }
-
-/* ═══ SECCIÓN PRODUCTOS ═══ */
-.productos-section { max-width: 1100px; margin: 0 auto; padding: 3rem 1.5rem 4rem; }
-.section-header    { text-align: center; margin-bottom: 2rem; }
-.section-title {
-  font-family: 'Rajdhani', sans-serif;
-  font-size: clamp(1.7rem, 4vw, 2.5rem); font-weight: 600;
-  color: var(--text-bright); letter-spacing: 0.05em; margin-bottom: 0.4rem;
-}
-.section-sub { font-size: 14px; color: var(--text-muted); }
-
-/* ═══ PESTAÑAS ═══ */
-.product-filter-container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 2rem;
-}
-.tabs {
-  display: flex;
-  background: rgba(255,255,255,0.04);
-  padding: 5px;
-  border-radius: 50px;
-  border: 1px solid var(--gold-border);
-  gap: 4px;
-}
-.tab-btn {
-  background: transparent;
-  border: none;
-  color: var(--text-muted);
-  padding: 9px 22px;
-  cursor: pointer;
-  border-radius: 50px;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  transition: background var(--transition), color var(--transition);
-}
-.tab-btn:hover  { color: var(--gold); }
-.tab-btn.active { background: var(--gold); color: var(--navy-deep); }
-
-/* ═══ GRID ═══ */
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
-
-.other-empty {
-  grid-column: 1 / -1;
-  text-align: center;
-  padding: 3rem 1rem;
-  color: var(--text-muted);
-  font-size: 15px;
-  line-height: 2;
-}
-
-/* ═══ CARDS ═══ */
-.card {
-  position: relative; background: var(--navy-card);
-  border: 1px solid var(--navy-border); border-radius: var(--radius-lg);
-  overflow: hidden; box-shadow: var(--shadow-card); cursor: pointer;
-  opacity: 0; transform: translateY(18px);
-  transition: box-shadow var(--transition), transform var(--transition),
-              border-color var(--transition), opacity 0.4s ease;
-}
-.card-visible, .card-show { opacity: 1; transform: translateY(0); }
-.card:hover { box-shadow: var(--shadow-hover); transform: translateY(-4px); border-color: var(--gold-border); }
-
-.card-img {
-  background: var(--navy-mid); aspect-ratio: 4/3; overflow: hidden;
-  border-bottom: 1px solid var(--navy-border);
-}
-.card-img img {
-  width: 100%; height: 100%; object-fit: cover;
-  transition: transform 0.4s ease, opacity 0.3s ease; opacity: 0.9;
-}
-.card:hover .card-img img { transform: scale(1.05); opacity: 1; }
-
-.card-body { padding: 1rem 1.1rem 1.1rem; }
-.card-title-row {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 8px; margin-bottom: 0.35rem; flex-wrap: wrap;
-}
-.card-title {
-  font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: 600;
-  color: var(--text-bright); letter-spacing: 0.03em; flex: 1;
-}
-.card-badge {
-  font-family: 'Rajdhani', sans-serif; font-size: 10px; font-weight: 600;
-  letter-spacing: 0.07em; text-transform: uppercase;
-  padding: 3px 9px; border-radius: 20px; white-space: nowrap; flex-shrink: 0;
-}
-.badge-sell { background: rgba(201,168,76,0.18); color: var(--gold-light); border: 1px solid rgba(201,168,76,0.45); }
-.badge-new  { background: rgba(59,130,246,0.15); color: #93C5FD; border: 1px solid rgba(59,130,246,0.35); }
-
-.card-desc   { font-size: 13px; color: var(--text-muted); line-height: 1.55; margin-bottom: 1rem; }
-.card-footer { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; }
-.card-price  { font-family: 'Rajdhani', sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--gold); }
-.card-btn {
-  font-size: 12px; font-weight: 500; background: transparent; color: var(--gold);
-  padding: 6px 16px; border-radius: var(--radius-sm); border: 1px solid var(--gold-border);
-  white-space: nowrap; cursor: pointer;
-  transition: background var(--transition), color var(--transition);
-}
-.card-btn:hover { background: var(--gold); color: var(--navy-deep); }
-
-.no-result { text-align: center; color: var(--text-muted); font-size: 15px; padding: 2.5rem 0; }
-
-/* ═══ GARANTÍA (CON EL TAMAÑO CORREGIDO DEL ICONO) ═══ */
-.trust-badge-section {
-  padding: 0 1.5rem 3rem;
-  display: flex; justify-content: center;
-}
-.container-trust { max-width: 1100px; width: 100%; }
-.trust-card {
-  background: rgba(10,15,28,0.7);
-  border: 1px solid rgba(160,112,16,0.2);
-  border-left: 4px solid var(--gold);
-  padding: 28px 30px;
-  display: flex; align-items: center; gap: 25px;
-  border-radius: var(--radius-lg);
-  backdrop-filter: blur(5px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-.trust-icon svg { width: 50px; height: 50px; flex-shrink: 0; filter: drop-shadow(0 0 8px var(--gold)); } /* <--- ESTO ES LO QUE SE HABIA BORRADO */
-.trust-info h3 { font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--text-bright); margin-bottom: 0.4rem; }
-.trust-info p  { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
-.trust-info span { color: var(--gold); }
-
-/* ═══ FOOTER ═══ */
-.footer {
-  background: var(--navy-mid); border-top: 1px solid var(--gold-border);
-  color: var(--text-muted); padding: 2.5rem 1.5rem 1.5rem;
-}
-.footer-top {
-  max-width: 1100px; margin: 0 auto;
-  display: flex; justify-content: space-between; align-items: flex-start;
-  gap: 1.5rem; padding-bottom: 2rem;
-  border-bottom: 1px solid rgba(255,255,255,0.05); flex-wrap: wrap;
-}
-.footer-logo {
-  font-family: 'Rajdhani', sans-serif; font-size: 1.6rem; font-weight: 700;
-  color: var(--gold); letter-spacing: 0.1em; display: block; margin-bottom: 0.4rem;
-}
-.footer-tagline { font-size: 13px; color: var(--text-muted); }
-.footer-social   { display: flex; gap: 0.75rem; align-items: center; }
-.social-link {
-  display: flex; align-items: center; justify-content: center;
-  width: 38px; height: 38px; border-radius: 50%;
-  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
-  transition: background var(--transition), border-color var(--transition);
-}
-.social-link:hover { background: var(--gold-glow); border-color: var(--gold-border); }
-
-.footer-newsletter {
-  max-width: 1100px; margin: 0 auto; padding: 1.75rem 0 1.5rem;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
-}
-.newsletter-label { font-size: 13px; color: var(--text-muted); margin-bottom: 0.75rem; }
-.newsletter-form  { display: flex; gap: 0.5rem; max-width: 380px; flex-wrap: wrap; }
-.newsletter-input {
-  flex: 1; min-width: 180px; background: rgba(255,255,255,0.05);
-  border: 1px solid var(--navy-border); border-radius: var(--radius-sm);
-  padding: 9px 14px; font-size: 13px; color: var(--text-bright);
-  font-family: 'DM Sans', sans-serif; outline: none;
-  transition: border-color var(--transition);
-}
-.newsletter-input::placeholder { color: var(--text-dim); }
-.newsletter-input:focus { border-color: var(--gold-border); }
-.newsletter-btn {
-  background: var(--gold); color: var(--navy-deep);
-  border: none; border-radius: var(--radius-sm);
-  padding: 9px 20px; font-size: 13px; font-weight: 500;
-  cursor: pointer; font-family: 'DM Sans', sans-serif;
-  transition: background var(--transition); white-space: nowrap;
-}
-.newsletter-btn:hover    { background: var(--gold-dark); color: #fff; }
-.newsletter-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-.newsletter-ok { font-size: 14px; color: var(--gold); padding: 0.5rem 0; }
-
-.footer-bottom {
-  max-width: 1100px; margin: 1.25rem auto 0;
-  display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; font-size: 12px; color: var(--text-dim);
-}
-.footer-terms { color: var(--gold); font-size: 12px; text-decoration: none; opacity: 0.8; transition: opacity var(--transition); }
-.footer-terms:hover { opacity: 1; text-decoration: underline; }
-
-/* ═══ WHATSAPP FLOTANTE ═══ */
-.whatsapp-float {
-  position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
-  background: #25D366; width: 52px; height: 52px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 4px 16px rgba(37,211,102,0.35);
-  transition: transform var(--transition), box-shadow var(--transition);
-}
-.whatsapp-float:hover { transform: scale(1.08); box-shadow: 0 6px 22px rgba(37,211,102,0.5); }
-
-/* ═══ MODAL AVISO — OTROS VENDEDORES ═══ */
-.warning-modal {
-  display: none;
-  position: fixed; inset: 0; z-index: 400;
-  background: rgba(0,0,0,0.85); backdrop-filter: blur(5px);
-  align-items: center; justify-content: center;
-}
-.warning-modal.open { display: flex; }
-.warning-modal-content {
-  background: var(--navy-card); border: 2px solid var(--gold-border); border-radius: var(--radius-lg);
-  padding: 2rem; width: 90%; max-width: 420px; text-align: center; color: var(--text-bright);
-}
-.warning-modal-content h3 {
-  font-family: 'Rajdhani', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--gold); margin-bottom: 0.75rem;
-}
-.warning-modal-content p { font-size: 14px; color: var(--text-muted); margin-bottom: 0.75rem; }
-.warning-info-box {
-  background: rgba(255,255,255,0.04); border: 1px solid var(--navy-border); border-radius: var(--radius-md);
-  padding: 0.75rem 1rem; margin: 1rem 0; text-align: left;
-}
-.btn-accept {
-  background: var(--gold); color: var(--navy-deep); border: none; border-radius: var(--radius-sm);
-  padding: 11px 28px; font-size: 14px; font-weight: 700; font-family: 'Rajdhani', sans-serif; cursor: pointer;
-}
-
-/* ═══ MODAL DE PRODUCTO ═══ */
-.product-modal {
-  display: none; position: fixed; inset: 0; z-index: 300;
-  background: rgba(0,0,0,0.85); backdrop-filter: blur(4px);
-  align-items: center; justify-content: center; padding: 1rem; overflow-y: auto;
-}
-.modal-content {
-  background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: var(--radius-lg);
-  width: 100%; max-width: 780px; padding: 2rem; position: relative; margin: auto;
-}
-.close-modal {
-  position: absolute; top: 12px; right: 12px;
-  background: rgba(255,255,255,0.08); border: 1px solid var(--navy-border); color: var(--gold);
-  border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer;
-}
-.modal-body { display: flex; gap: 2rem; flex-wrap: wrap; }
-.modal-body img { width: 280px; max-width: 100%; border-radius: var(--radius-md); object-fit: cover; flex-shrink: 0; }
-.modal-info { flex: 1; min-width: 200px; }
-.modal-info h2 { font-family: 'Rajdhani', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--text-bright); margin-bottom: 0.75rem; }
-.modal-info p  { font-size: 14px; color: var(--text-muted); margin-bottom: 1rem; }
-.modal-info ul { list-style: none; margin-bottom: 1.25rem; }
-.modal-info ul li { font-size: 13px; color: var(--text-main); padding: 5px 0 5px 1.2rem; position: relative; border-bottom: 1px solid rgba(255,255,255,0.05); }
-.modal-info ul li::before { content: '▸'; position: absolute; left: 0; color: var(--gold); }
-.modal-price { font-family: 'Rajdhani', sans-serif; font-size: 2rem; font-weight: 700; color: var(--gold); margin-bottom: 1.25rem; }
-.btn-carrito, .btn-whatsapp { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 13px 20px; border-radius: var(--radius-sm); border: none; cursor: pointer; width: 100%; margin-bottom: 10px; }
-.btn-carrito { background: var(--gold); color: var(--navy-deep); font-weight: 600; }
-.btn-whatsapp { background: transparent; color: #4ADE80; border: 1px solid rgba(74,222,128,0.35); }
-
-/* ═══ CARRITO ═══ */
-.cart-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 198; }
-.cart-overlay.open { display: block; }
-.cart-float {
-  position: fixed; bottom: 1.5rem; left: 1.5rem; background: var(--gold); width: 56px; height: 56px;
-  border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 200; box-shadow: 0 4px 20px rgba(201,168,76,0.4);
-}
-#cartCount {
-  position: absolute; top: 0; right: 0; background: #e03535; color: #fff; border-radius: 50%; width: 22px; height: 22px; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; border: 2px solid var(--navy-deep);
-}
-.cart-panel {
-  position: fixed; top: 0; right: -110%; width: 340px; height: 100%; background: var(--navy-mid); z-index: 199; transition: right 0.3s ease; border-left: 1px solid var(--gold-border); box-shadow: -4px 0 24px rgba(0,0,0,0.6); display: flex; flex-direction: column;
-}
-.cart-panel.open { right: 0; }
-.cart-header { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--navy-border); }
-.cart-header h3 { font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--gold); }
-.cart-close { background: none; border: none; font-size: 1.8rem; color: var(--text-muted); cursor: pointer; }
-.cart-items { flex: 1; overflow-y: auto; padding: 1rem 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
-.cart-item { display: flex; align-items: center; gap: 10px; background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: var(--radius-md); padding: 0.6rem; }
-.cart-item-img { width: 48px; height: 48px; border-radius: 6px; object-fit: cover; }
-.cart-item-info { display: flex; flex-direction: column; flex: 1; }
-.cart-item-name { font-size: 13px; color: var(--text-bright); }
-.cart-item-price { font-size: 12px; color: var(--gold); font-weight: 600; }
-.cart-item-remove { background: none; border: none; color: var(--text-muted); cursor: pointer; }
-.cart-footer-panel { padding: 1rem 1.5rem; border-top: 1px solid var(--navy-border); }
-.cart-total-container span { color: var(--gold); font-weight: 700; font-size: 1.15rem; }
-.btn-finalizar { background: #25D366; color: #fff; padding: 13px; border-radius: var(--radius-sm); text-align: center; font-weight: 600; display: block; margin-top: 10px; }
-
-/* ═══ RESPONSIVE MÓVIL (Tu original) ═══ */
-@media (max-width: 768px) {
-  .nav-links  { display: none; }
-  .hamburger  { display: flex; }
-  .grid       { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
-  .modal-body { flex-direction: column; }
-}
-@media (max-width: 480px) {
-  .grid       { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-  .login-btn-premium span { display: none; }
-  .login-btn-premium { padding: 10px; }
-}
-
-/* ═══ ESTILOS DEL MODAL DE LOGIN (SEGUROS) ═══ */
-.auth-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 500; align-items: center; justify-content: center; backdrop-filter: blur(5px); }
-.auth-card { background: var(--navy-card); border: 1px solid var(--gold); border-radius: var(--radius-lg); padding: 2rem; width: 90%; max-width: 400px; text-align: center; position: relative; }
-.auth-card h2 { font-family: 'Rajdhani', sans-serif; color: var(--gold); margin-bottom: 1.5rem; font-size: 1.8rem; }
-.auth-card input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--navy-border); padding: 12px; color: white; border-radius: var(--radius-sm); margin-bottom: 15px; font-family: 'DM Sans', sans-serif; outline: none; }
-.auth-card input:focus { border-color: var(--gold); }
-.auth-card button { width: 100%; background: var(--gold); color: var(--navy-deep); font-weight: 700; padding: 12px; border: none; border-radius: var(--radius-sm); cursor: pointer; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; }
+    <script src="script.js"></script>
+</body>
+</html>
