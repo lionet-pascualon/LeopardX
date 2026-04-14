@@ -1,168 +1,161 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LeopardX | Premium Store</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-</head>
-<body>
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap');
 
-    <nav class="navbar">
-        <a href="#" class="logo">LEOPARD X</a>
-        <div class="nav-links">
-            <a href="#" class="nav-link active" data-filter="all">Todos</a>
-            <a href="#" class="nav-link" data-filter="audio">Audio</a>
-            <a href="#" class="nav-link" data-filter="smart">Smartwatches</a>
-        </div>
-        <div class="auth-container">
-            <input type="text" id="buscador" class="newsletter-input" placeholder="Buscar producto..." style="margin-right: 15px;">
-            <button class="login-btn-premium" onclick="abrirAuth()">
-                <span>Mi Cuenta</span>
-            </button>
-        </div>
-    </nav>
+:root {
+  --navy-deep:   #0A0E1A;
+  --navy-mid:    #111827;
+  --navy-card:   #1A2235;
+  --navy-border: #2A3550;
+  --gold:        #C9A84C;
+  --gold-light:  #E2C97E;
+  --gold-dark:   #9A7A28;
+  --gold-glow:   rgba(201,168,76,0.15);
+  --gold-border: rgba(201,168,76,0.35);
+  --text-bright: #E8ECF4;
+  --text-main:   #C4CEDE;
+  --text-muted:  #6B7A96;
+  --text-dim:    #3D4E6A;
+  --radius-sm:   6px;
+  --radius-md:   10px;
+  --radius-lg:   16px;
+  --shadow-card:  0 2px 16px rgba(0,0,0,0.35);
+  --shadow-hover: 0 6px 28px rgba(0,0,0,0.5), 0 0 0 1px var(--gold-border);
+  --transition:   0.25s ease;
+}
 
-    <header class="hero">
-        <div class="hero-glow"></div>
-        <div class="hero-grid-lines"></div>
-        <div class="hero-content">
-            <p class="hero-eyebrow">Tecnología Premium</p>
-            <h1 class="hero-title">Elevá tu <span class="hero-brand">Estilo</span></h1>
-            <p class="hero-subtitle">Descubrí la mejor selección de gadgets y accesorios tecnológicos.</p>
-        </div>
-    </header>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html  { scroll-behavior: smooth; }
+body  { background: var(--navy-deep); color: var(--text-main); font-family: 'DM Sans', sans-serif; min-height: 100vh; line-height: 1.6; }
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
 
-    <main class="productos-section">
-        <div class="section-header">
-            <h2 class="section-title" id="sectionTitle">Nuestros Productos</h2>
-            <p class="section-sub" id="sectionSub">Tocá un producto para ver más detalles</p>
-        </div>
+/* NAVBAR */
+.navbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 5%; background: var(--navy-deep);
+    position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--gold-border);
+}
+.logo { font-family: 'Rajdhani', sans-serif; font-size: 1.7rem; font-weight: 700; color: var(--gold); letter-spacing: 0.1em; }
+.nav-links { display: flex; gap: 0.5rem; align-items: center; }
+.nav-link { font-size: 14px; color: var(--text-muted); padding: 8px 14px; border-radius: var(--radius-sm); transition: all var(--transition); }
+.nav-link:hover { color: var(--gold); }
+.nav-link.active { color: var(--gold); background: var(--gold-glow); border: 1px solid var(--gold-border); }
 
-        <div class="product-filter-container">
-            <div class="tabs">
-                <button class="tab-btn active" onclick="filterProducts('oficial', event)">LeopardX Oficial</button>
-                <button class="tab-btn" onclick="filterProducts('others', event)">Otros Vendedores</button>
-            </div>
-        </div>
+/* BOTON CUENTA PREMIUM */
+.auth-container { display: flex; align-items: center; }
+.login-btn-premium {
+    background: linear-gradient(135deg, #ffb300 0%, #ff8f00 100%);
+    color: #000; border: none; padding: 10px 24px;
+    font-family: 'Rajdhani', sans-serif; font-weight: 800; font-size: 1rem;
+    text-transform: uppercase; border-radius: 5px; cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 179, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+.login-btn-premium:hover { transform: scale(1.05) translateY(-2px); box-shadow: 0 0 25px rgba(255, 179, 0, 0.6); }
 
-        <p id="noResult" class="no-result" style="display: none;">No se encontraron productos.</p>
+/* HERO */
+.hero { position: relative; padding: 5rem 1.5rem; text-align: center; overflow: hidden; }
+.hero-glow { position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(201,168,76,0.13) 0%, transparent 65%); pointer-events: none; }
+.hero-eyebrow { font-family: 'Rajdhani', sans-serif; font-size: 12px; color: var(--gold); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; }
+.hero-title { font-family: 'Rajdhani', sans-serif; font-size: 3.5rem; font-weight: 700; color: var(--text-bright); line-height: 1.1; margin-bottom: 1rem; }
+.hero-brand { color: var(--gold); }
+.hero-subtitle { color: var(--text-muted); font-size: 1.1rem; }
 
-        <div id="productGrid" class="grid">
-            <div class="card" data-categoria="audio" onclick="abrirModal('Auriculares AKG', '$25.000', 'https://via.placeholder.com/280x210/1A2235/C9A84C?text=AKG')">
-                <div class="card-img"><img src="https://via.placeholder.com/280x210/1A2235/C9A84C?text=AKG" alt="Auriculares AKG"></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3 class="card-title">Auriculares AKG</h3>
-                        <span class="card-badge badge-sell">Más vendido</span>
-                    </div>
-                    <p class="card-desc">Sonido de estudio profesional. Ideal para música, gaming y llamadas.</p>
-                    <div class="card-footer">
-                        <span class="card-price">$25.000</span>
-                        <button class="card-btn">Ver Detalles</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="card" data-categoria="audio" onclick="abrirModal('TWS M90 Pro', '$18.500', 'https://via.placeholder.com/280x210/1A2235/C9A84C?text=TWS+M90')">
-                <div class="card-img"><img src="https://via.placeholder.com/280x210/1A2235/C9A84C?text=TWS+M90" alt="TWS M90 Pro"></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3 class="card-title">TWS M90 Pro</h3>
-                        <span class="card-badge badge-new">Nuevo</span>
-                    </div>
-                    <p class="card-desc">Libertad total sin cables. Bluetooth 5.3 con latencia ultra baja.</p>
-                    <div class="card-footer">
-                        <span class="card-price">$18.500</span>
-                        <button class="card-btn">Ver Detalles</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+/* PRODUCTOS & TABS */
+.productos-section { max-width: 1100px; margin: 0 auto; padding: 3rem 1.5rem; }
+.section-header { text-align: center; margin-bottom: 2rem; }
+.section-title { font-family: 'Rajdhani', sans-serif; font-size: 2.2rem; color: var(--text-bright); }
+.product-filter-container { display: flex; justify-content: center; margin-bottom: 2rem; }
+.tabs { display: flex; background: rgba(255,255,255,0.04); padding: 5px; border-radius: 50px; border: 1px solid var(--gold-border); gap: 4px; }
+.tab-btn { background: transparent; border: none; color: var(--text-muted); padding: 9px 22px; cursor: pointer; border-radius: 50px; font-family: 'Rajdhani', sans-serif; font-size: 14px; font-weight: 600; }
+.tab-btn.active { background: var(--gold); color: var(--navy-deep); }
 
-        <div id="othersGrid" class="grid" style="display: none;">
-            <p class="other-empty">Próximamente se sumarán nuevos vendedores a la comunidad LeopardX.</p>
-        </div>
-    </main>
+/* GRID & CARDS */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
+.card {
+  background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: var(--radius-lg);
+  overflow: hidden; cursor: pointer; opacity: 0; transform: translateY(18px);
+  transition: all var(--transition), opacity 0.4s ease;
+}
+.card-visible, .card-show { opacity: 1; transform: translateY(0); }
+.card:hover { border-color: var(--gold-border); transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+.card-img { background: var(--navy-mid); aspect-ratio: 4/3; overflow: hidden; border-bottom: 1px solid var(--navy-border); }
+.card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.card:hover .card-img img { transform: scale(1.05); }
+.card-body { padding: 1.2rem; }
+.card-title-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+.card-title { font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; color: var(--text-bright); }
+.card-badge { font-family: 'Rajdhani', sans-serif; font-size: 10px; padding: 3px 8px; border-radius: 20px; text-transform: uppercase; }
+.badge-sell { background: rgba(201,168,76,0.18); color: var(--gold-light); border: 1px solid var(--gold-border); }
+.badge-new { background: rgba(59,130,246,0.15); color: #93C5FD; border: 1px solid rgba(59,130,246,0.35); }
+.card-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 1rem; }
+.card-footer { display: flex; justify-content: space-between; align-items: center; }
+.card-price { font-family: 'Rajdhani', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--gold); }
+.card-btn { background: transparent; color: var(--gold); border: 1px solid var(--gold-border); padding: 6px 14px; border-radius: var(--radius-sm); font-size: 12px; cursor: pointer; transition: 0.3s; }
+.card-btn:hover { background: var(--gold); color: var(--navy-deep); }
 
-    <section class="trust-badge-section">
-        <div class="container-trust">
-            <div class="trust-card">
-                <div class="trust-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                    </svg>
-                </div>
-                <div class="trust-info">
-                    <h3>Compra 100% Segura</h3>
-                    <p>Tus datos están protegidos. Todos nuestros productos cuentan con <span>garantía oficial</span>.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+/* TRUST SHIELD (CORREGIDO A 50PX) */
+.trust-badge-section { padding: 0 1.5rem 3rem; display: flex; justify-content: center; }
+.trust-card { background: var(--navy-card); border-left: 4px solid var(--gold); padding: 25px; display: flex; align-items: center; gap: 20px; border-radius: var(--radius-lg); }
+.trust-icon svg { width: 50px; height: 50px; flex-shrink: 0; filter: drop-shadow(0 0 8px var(--gold)); }
+.trust-info h3 { font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; color: var(--text-bright); }
+.trust-info p { font-size: 13px; color: var(--text-muted); }
 
-    <div class="cart-float" onclick="toggleCart()">
-        <svg width="24" height="24" fill="#0A0E1A" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-        <span id="cartCount">0</span>
-    </div>
+/* MODALES GLOBALES */
+.product-modal, .warning-modal, .auth-modal {
+  display: none; position: fixed; inset: 0; z-index: 300;
+  background: rgba(0,0,0,0.85); backdrop-filter: blur(4px);
+  align-items: center; justify-content: center; padding: 1rem;
+}
+.warning-modal.open { display: flex; }
+.modal-content, .warning-modal-content, .auth-card {
+  background: var(--navy-card); border: 1px solid var(--gold-border);
+  border-radius: var(--radius-lg); padding: 2rem; width: 100%; position: relative;
+}
+.modal-content { max-width: 780px; }
+.warning-modal-content, .auth-card { max-width: 400px; text-align: center; }
+.close-modal { position: absolute; top: 12px; right: 12px; background: rgba(255,255,255,0.08); border: none; color: var(--gold); width: 35px; height: 35px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; }
 
-    <div class="cart-overlay" id="cartOverlay" onclick="cerrarCarrito()"></div>
-    <div class="cart-panel" id="cartPanel">
-        <div class="cart-header">
-            <h3>Tu Carrito</h3>
-            <button class="cart-close" onclick="cerrarCarrito()">&times;</button>
-        </div>
-        <div class="cart-items" id="cartItems">
-            <p class="cart-empty">Tu carrito está vacío</p>
-        </div>
-        <div class="cart-footer-panel">
-            <div class="cart-total-container" style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                <span style="color: var(--text-bright); font-size: 1rem;">Total estimado:</span>
-                <span id="cartTotal">$0</span>
-            </div>
-            <a href="#" id="cartWaBtn" class="btn-finalizar disabled" target="_blank">Pedir por WhatsApp</a>
-        </div>
-    </div>
+/* MODAL PRODUCTO ESPECIFICO */
+.modal-body { display: flex; gap: 2rem; flex-wrap: wrap; }
+.modal-body img { width: 280px; border-radius: var(--radius-md); object-fit: cover; }
+.modal-info { flex: 1; min-width: 200px; }
+.modal-info h2 { font-family: 'Rajdhani', sans-serif; font-size: 1.8rem; color: var(--text-bright); margin-bottom: 10px; }
+.modal-price { font-family: 'Rajdhani', sans-serif; font-size: 2rem; color: var(--gold); font-weight: 700; margin-bottom: 15px; }
+.modal-info ul li { font-size: 13px; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-main); }
+.btn-carrito, .btn-whatsapp { width: 100%; padding: 12px; border-radius: var(--radius-sm); border: none; font-weight: 700; cursor: pointer; margin-bottom: 10px; }
+.btn-carrito { background: var(--gold); color: var(--navy-deep); }
+.btn-whatsapp { background: transparent; border: 1px solid #4ADE80; color: #4ADE80; }
 
-    <div class="product-modal" id="productModal" onclick="cerrarModalFuera(event)">
-        <div class="modal-content">
-            <button class="close-modal" onclick="cerrarModal()">&times;</button>
-            <div class="modal-body">
-                <img id="modalImg" src="" alt="">
-                <div class="modal-info">
-                    <h2 id="modalTitle">Título</h2>
-                    <div class="modal-price" id="modalPrice">$0</div>
-                    <p id="modalDesc">Descripción</p>
-                    <ul id="modalSpecs"></ul>
-                    <button class="btn-carrito" onclick="agregarAlCarrito()">Agregar al Carrito</button>
-                    <a href="#" id="modalWaBtn" class="btn-whatsapp" target="_blank">Consultar por WhatsApp</a>
-                </div>
-            </div>
-        </div>
-    </div>
+/* MODAL AUTH ESPECIFICO */
+.auth-card h2 { font-family: 'Rajdhani', sans-serif; color: var(--gold); margin-bottom: 1.5rem; font-size: 1.8rem; }
+.auth-card input { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--navy-border); padding: 12px; color: white; border-radius: var(--radius-sm); margin-bottom: 15px; outline: none; }
+.auth-card input:focus { border-color: var(--gold); }
+.auth-card button { width: 100%; background: var(--gold); color: var(--navy-deep); font-weight: 700; padding: 12px; border: none; border-radius: var(--radius-sm); cursor: pointer; font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; }
 
-    <div class="warning-modal" id="warningModal" onclick="if(event.target === this) cerrarWarning()">
-        <div class="warning-modal-content">
-            <h3>Aviso Importante</h3>
-            <p>Estás por ver productos de vendedores externos.</p>
-            <div class="warning-info-box">
-                <p style="font-size: 12px; margin: 0;">LeopardX no se responsabiliza por las transacciones realizadas con terceros. Verificá la reputación del vendedor.</p>
-            </div>
-            <button class="btn-accept" onclick="cerrarWarning()">Entendido</button>
-        </div>
-    </div>
+/* CARRITO */
+.cart-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 198; }
+.cart-overlay.open { display: block; }
+.cart-float { position: fixed; bottom: 1.5rem; left: 1.5rem; background: var(--gold); width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 200; }
+#cartCount { position: absolute; top: 0; right: 0; background: #e03535; color: #fff; border-radius: 50%; width: 22px; height: 22px; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+.cart-panel { position: fixed; top: 0; right: -110%; width: 340px; height: 100%; background: var(--navy-mid); z-index: 199; transition: right 0.3s ease; border-left: 1px solid var(--gold-border); display: flex; flex-direction: column; }
+.cart-panel.open { right: 0; }
+.cart-header { display: flex; justify-content: space-between; padding: 1.25rem 1.5rem; border-bottom: 1px solid var(--navy-border); }
+.cart-header h3 { font-family: 'Rajdhani', sans-serif; color: var(--gold); font-size: 1.2rem; }
+.cart-items { flex: 1; overflow-y: auto; padding: 1rem 1.5rem; display: flex; flex-direction: column; gap: 10px; }
+.cart-item { display: flex; gap: 10px; background: var(--navy-card); padding: 10px; border-radius: var(--radius-sm); border: 1px solid var(--navy-border); }
+.cart-item-img { width: 48px; height: 48px; border-radius: 6px; object-fit: cover; }
+.cart-item-info { flex: 1; display: flex; flex-direction: column; }
+.cart-item-name { font-size: 13px; color: var(--text-bright); }
+.cart-item-price { font-size: 12px; color: var(--gold); font-weight: 700; }
+.cart-footer-panel { padding: 1rem 1.5rem; border-top: 1px solid var(--navy-border); }
+.btn-finalizar { background: #25D366; color: #fff; padding: 12px; text-align: center; border-radius: var(--radius-sm); font-weight: 700; display: block; }
+.btn-finalizar.disabled { pointer-events: none; opacity: 0.5; }
 
-    <div id="authModal" class="auth-modal" onclick="if(event.target === this) cerrarAuth()">
-        <div class="auth-card">
-            <button class="close-modal" onclick="cerrarAuth()">&times;</button>
-            <h2>Iniciar Sesión</h2>
-            <input type="email" placeholder="Correo electrónico">
-            <input type="password" placeholder="Contraseña">
-            <button>Entrar a mi Cuenta</button>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+  .modal-body { flex-direction: column; }
+  .login-btn-premium span { display: none; }
+  .login-btn-premium::after { content: '👤'; font-size: 1.2rem; }
+}
