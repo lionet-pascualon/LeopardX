@@ -596,3 +596,44 @@ img { max-width: 100%; display: block; }
   .modal-price { font-size: 1.6rem; }
 }
 
+
+/* ═══ BOTON DORADO LLAMATIVO CUENTA ═══ */
+.login-btn-premium {
+    background: linear-gradient(135deg, #ffb300 0%, #ff8f00 100%);
+    color: #000;
+    border: none;
+    padding: 12px 28px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 15px rgba(255, 179, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.login-btn-premium:hover {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 0 25px rgba(255, 179, 0, 0.6);
+    background: linear-gradient(135deg, #ffca28 0%, #ffb300 100%);
+}
+
+.login-btn-premium i {
+    font-size: 1.2rem;
+}
+
+/* Ajuste para móviles: si el header es muy chico, ocultamos el texto y dejamos el icono */
+@media (max-width: 600px) {
+    .login-btn-premium span {
+        display: none;
+    }
+    .login-btn-premium {
+        padding: 10px;
+    }
+}
