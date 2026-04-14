@@ -46,16 +46,28 @@
   </section>
 
   <!-- PRODUCTOS -->
-    <div class="modal-content">
-    <h3>🚀 LeopardX Community</h3>
-    <p>Estás explorando productos de <strong>vendedores independientes</strong> que forman parte de nuestra red.</p>
-    <div class="info-box">
-        <p>✅ Vendedores calificados por la comunidad.</p>
-        <p>📦 Gestión de envío a cargo del vendedor.</p>
+    <div class="product-filter-container">
+    <div class="tabs">
+        <button class="tab-btn active" onclick="filterProducts('official', event)">Nuestros Productos</button>
+        <button class="tab-btn" onclick="filterProducts('others', event)">Otros Vendedores</button>
     </div>
-    <button class="btn-accept" onclick="closeWarning()">¡Quiero ver!</button>
 </div>
-    
+
+<div id="warningModal" class="modal">
+    <div class="modal-content">
+        <h3>🚀 LeopardX Community</h3>
+        <p>Estás explorando productos de <strong>vendedores independientes</strong> que forman parte de nuestra red.</p>
+        <div class="info-box">
+            <p>✅ Vendedores calificados por la comunidad.</p>
+            <p>📦 Gestión de envío a cargo del vendedor.</p>
+        </div>
+        <button class="btn-accept" onclick="closeWarning()">¡Quiero ver!</button>
+    </div>
+</div>
+
+
+
+  
     <div class="grid" id="productGrid">
 
       <div class="card" data-categoria="auricular"
