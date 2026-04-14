@@ -22,6 +22,23 @@
         <a href="#productos" class="nav-link"         data-filter="auricular">Auriculares</a>
         <a href="#productos" class="nav-link"         data-filter="smartwatch">Smartwatch</a>
       </nav>
+      <!-- Botón de sesión — arriba a la derecha -->
+      <div class="auth-nav" id="authNav">
+        <!-- Estado: no logueado -->
+        <button class="auth-nav-btn" id="btnOpenAuth" onclick="openAuth()">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" style="flex-shrink:0">
+            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+          </svg>
+          Ingresar
+        </button>
+        <!-- Estado: logueado (oculto por defecto) -->
+        <div class="auth-user" id="authUser" style="display:none">
+          <span class="auth-avatar" id="authAvatar">?</span>
+          <span class="auth-email"  id="authEmailDisplay"></span>
+          <button class="auth-logout" id="btnLogout" onclick="cerrarSesion()">Salir</button>
+        </div>
+      </div>
+
       <button class="hamburger" id="hamburger" aria-label="Menú">
         <span></span><span></span><span></span>
       </button>
@@ -324,6 +341,160 @@
   <a href="https://wa.me/3512366414" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
     <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="28" height="28"/>
   </a>
+
+  <!-- ═══════════════════════════════════════
+       MODAL DE AUTENTICACIÓN — FIREBASE
+  ═══════════════════════════════════════ -->
+  <div id="authModal" class="auth-modal" onclick="cerrarAuthFuera(event)">
+    <div class="auth-modal-content">
+
+      <button class="auth-close" onclick="closeAuth()" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        </svg>
+      </button>
+
+      <!-- Logo pequeño -->
+      <div class="auth-logo">LeopardX</div>
+
+      <h2 class="auth-title" id="authTitle">Crear Cuenta</h2>
+      <p class="auth-subtitle" id="authSubtitle">Registrate para guardar tu carrito y más</p>
+
+      <form id="authForm" class="auth-form" onsubmit="return false">
+        <div class="auth-field">
+          <label for="authEmail">Correo electrónico</label>
+          <input type="email" id="authEmail" placeholder="tucorreo@mail.com" required autocomplete="email"/>
+        </div>
+        <div class="auth-field">
+          <label for="authPassword">
+            Contraseña
+            <span class="auth-hint">(mínimo 6 caracteres)</span>
+          </label>
+          <div class="auth-password-wrap">
+            <input type="password" id="authPassword" placeholder="••••••" required
+                   minlength="6" autocomplete="current-password"/>
+            <button type="button" class="auth-eye" onclick="togglePasswordVisibility()" aria-label="Ver contraseña">
+              <svg id="eyeIcon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <p class="auth-error" id="authError"></p>
+
+        <button type="submit" class="auth-submit" id="authBtn" onclick="submitAuth()">
+          Registrarse
+        </button>
+      </form>
+
+      <p class="auth-switch" id="authSwitch">
+        ¿Ya tenés cuenta? <span onclick="toggleAuthMode()">Iniciá Sesión</span>
+      </p>
+
+    </div>
+  </div>
+
+  <!-- Scripts Firebase (ES modules) -->
+  <script type="module">
+    import { initializeApp }                          from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword,
+             signInWithEmailAndPassword, signOut,
+             onAuthStateChanged }                     from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+
+    /* ── Configuración de Firebase ──
+       Reemplazá estos valores con los de tu proyecto en Firebase Console */
+    const firebaseConfig = {
+      apiKey:            "TU_API_KEY",
+      authDomain:        "TU_PROYECTO.firebaseapp.com",
+      projectId:         "TU_PROYECTO_ID",
+      storageBucket:     "TU_PROYECTO.appspot.com",
+      messagingSenderId: "TU_SENDER_ID",
+      appId:             "TU_APP_ID"
+    };
+
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    /* ── Modo: registro o login ── */
+    let isLoginMode = false;
+
+    window.toggleAuthMode = function () {
+      isLoginMode = !isLoginMode;
+      document.getElementById('authTitle').innerText    = isLoginMode ? "Iniciar Sesión"   : "Crear Cuenta";
+      document.getElementById('authSubtitle').innerText = isLoginMode ? "Bienvenido de nuevo a LeopardX" : "Registrate para guardar tu carrito y más";
+      document.getElementById('authBtn').innerText      = isLoginMode ? "Entrar"           : "Registrarse";
+      document.getElementById('authSwitch').innerHTML   = isLoginMode
+        ? "¿No tenés cuenta? <span onclick='toggleAuthMode()'>Registrate</span>"
+        : "¿Ya tenés cuenta? <span onclick='toggleAuthMode()'>Iniciá Sesión</span>";
+      document.getElementById('authError').innerText = '';
+    };
+
+    /* ── Enviar formulario ── */
+    window.submitAuth = async function () {
+      const email    = document.getElementById('authEmail').value.trim();
+      const password = document.getElementById('authPassword').value;
+      const errorEl  = document.getElementById('authError');
+      const btn      = document.getElementById('authBtn');
+
+      if (!email || !password) return;
+      if (password.length < 6) {
+        errorEl.innerText = 'La contraseña debe tener al menos 6 caracteres.';
+        return;
+      }
+
+      btn.disabled    = true;
+      btn.innerText   = 'Cargando...';
+      errorEl.innerText = '';
+
+      try {
+        if (isLoginMode) {
+          await signInWithEmailAndPassword(auth, email, password);
+        } else {
+          await createUserWithEmailAndPassword(auth, email, password);
+        }
+        closeAuth();
+      } catch (err) {
+        btn.disabled  = false;
+        btn.innerText = isLoginMode ? 'Entrar' : 'Registrarse';
+        // Mensajes de error en español
+        const errores = {
+          'auth/email-already-in-use':    'Ese correo ya está registrado. Iniciá sesión.',
+          'auth/invalid-email':           'El correo ingresado no es válido.',
+          'auth/wrong-password':          'Contraseña incorrecta. Intentá de nuevo.',
+          'auth/user-not-found':          'No existe una cuenta con ese correo.',
+          'auth/too-many-requests':       'Demasiados intentos. Intentá más tarde.',
+          'auth/network-request-failed':  'Sin conexión. Revisá tu internet.',
+        };
+        errorEl.innerText = errores[err.code] || 'Ocurrió un error. Intentá de nuevo.';
+      }
+    };
+
+    /* ── Cerrar sesión ── */
+    window.cerrarSesion = async function () {
+      await signOut(auth);
+    };
+
+    /* ── Observer: actualiza navbar según estado de sesión ── */
+    onAuthStateChanged(auth, user => {
+      const btnOpen   = document.getElementById('btnOpenAuth');
+      const authUser  = document.getElementById('authUser');
+      const avatar    = document.getElementById('authAvatar');
+      const emailDisp = document.getElementById('authEmailDisplay');
+
+      if (user) {
+        // Usuario logueado
+        btnOpen.style.display  = 'none';
+        authUser.style.display = 'flex';
+        emailDisp.innerText    = user.email;
+        avatar.innerText       = user.email[0].toUpperCase();
+      } else {
+        // No logueado
+        btnOpen.style.display  = '';
+        authUser.style.display = 'none';
+      }
+    });
+  </script>
 
   <script src="script.js"></script>
 
