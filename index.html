@@ -1,168 +1,331 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LeopardX | Premium Store</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Catálogo de Productos | LeopardX</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 </head>
 <body>
 
-    <nav class="navbar">
-        <a href="#" class="logo">LEOPARD X</a>
-        <div class="nav-links">
-            <a href="#" class="nav-link active" data-filter="all">Todos</a>
-            <a href="#" class="nav-link" data-filter="audio">Audio</a>
-            <a href="#" class="nav-link" data-filter="smart">Smartwatches</a>
+  <!-- ═══════════════════════════════════════
+       NAVBAR
+  ═══════════════════════════════════════ -->
+  <header class="navbar">
+    <div class="navbar-inner">
+      <a href="#inicio" class="logo">LeopardX</a>
+      <nav class="nav-links">
+        <a href="#inicio"    class="nav-link active" data-filter="all">Inicio</a>
+        <a href="#productos" class="nav-link"         data-filter="parlante">Parlantes</a>
+        <a href="#productos" class="nav-link"         data-filter="lampara">Lámparas</a>
+        <a href="#productos" class="nav-link"         data-filter="auricular">Auriculares</a>
+        <a href="#productos" class="nav-link"         data-filter="smartwatch">Smartwatch</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#inicio"    class="mobile-link" data-filter="all">Inicio</a>
+      <a href="#productos" class="mobile-link" data-filter="parlante">Parlantes</a>
+      <a href="#productos" class="mobile-link" data-filter="lampara">Lámparas</a>
+      <a href="#productos" class="mobile-link" data-filter="auricular">Auriculares</a>
+      <a href="#productos" class="mobile-link" data-filter="smartwatch">Smartwatch</a>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════
+       HERO
+  ═══════════════════════════════════════ -->
+  <section class="hero" id="inicio">
+    <div class="hero-glow"></div>
+    <div class="hero-grid-lines"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">&#9670; Tecnología Premium &#9670;</p>
+      <h1 class="hero-title">Bienvenido a<br><span class="hero-brand">LeopardX</span></h1>
+      <p class="hero-subtitle">Catálogo de productos tecnológicos al mejor precio</p>
+      <a href="#productos" class="hero-btn">Ver catálogo</a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       PRODUCTOS
+  ═══════════════════════════════════════ -->
+  <section class="productos-section" id="productos">
+
+    <!-- Pestañas Nuestros / Otros vendedores -->
+    <div class="product-filter-container">
+      <div class="tabs">
+        <button class="tab-btn active" onclick="filterProducts('official', event)">Nuestros Productos</button>
+        <button class="tab-btn"        onclick="filterProducts('others',   event)">Otros Vendedores</button>
+      </div>
+    </div>
+
+    <!-- Subtítulo dinámico -->
+    <div class="section-header">
+      <h2 class="section-title" id="sectionTitle">Nuestros Productos</h2>
+      <p class="section-sub" id="sectionSub">Tocá un producto para ver más detalles</p>
+    </div>
+
+    <!-- Grid de productos oficiales -->
+    <div class="grid" id="productGrid">
+
+      <div class="card" data-categoria="auricular"
+           onclick="abrirModal('Auriculares AKG','$6.000','auricular.akg.jpg')">
+        <div class="card-img">
+          <img src="auricular.akg.jpg" alt="Auricular AKG" loading="lazy"/>
         </div>
-        <div class="auth-container">
-            <input type="text" id="buscador" class="newsletter-input" placeholder="Buscar producto..." style="margin-right: 15px;">
-            <button class="login-btn-premium" onclick="abrirAuth()">
-                <span>Mi Cuenta</span>
+        <div class="card-body">
+          <div class="card-title-row">
+            <h3 class="card-title">Auriculares AKG</h3>
+            <span class="card-badge badge-sell">Más Vendido</span>
+          </div>
+          <p class="card-desc">Calidad de audio profesional, diseño ergonómico y bajos potentes.</p>
+          <div class="card-footer">
+            <span class="card-price">$6.000</span>
+            <button class="card-btn" onclick="event.stopPropagation(); abrirModal('Auriculares AKG','$6.000','auricular.akg.jpg')">Ver más</button>
+          </div>
+        </div>
+        <div class="tags" style="display:none">auriculares akg audio premium</div>
+      </div>
+
+      <div class="card" data-categoria="auricular"
+           onclick="abrirModal('TWS M90 Pro','$13.000','tws.M90.pro.inal.jpg')">
+        <div class="card-img">
+          <img src="tws.M90.pro.inal.jpg" alt="TWS M90 Pro" loading="lazy"/>
+        </div>
+        <div class="card-body">
+          <div class="card-title-row">
+            <h3 class="card-title">TWS M90 Pro</h3>
+            <span class="card-badge badge-new">Novedad</span>
+          </div>
+          <p class="card-desc">Bluetooth 5.3, estuche con pantalla LED y sonido envolvente.</p>
+          <div class="card-footer">
+            <span class="card-price">$13.000</span>
+            <button class="card-btn" onclick="event.stopPropagation(); abrirModal('TWS M90 Pro','$13.000','tws.M90.pro.inal.jpg')">Ver más</button>
+          </div>
+        </div>
+        <div class="tags" style="display:none">auriculares tws m90 inalambrico bluetooth</div>
+      </div>
+
+      <div class="card" data-categoria="smartwatch"
+           onclick="abrirModal('Smartwatch Inteligente','$19.000','smartwach.jpg')">
+        <div class="card-img">
+          <img src="smartwach.jpg" alt="Smartwatch" loading="lazy"/>
+        </div>
+        <div class="card-body">
+          <div class="card-title-row">
+            <h3 class="card-title">Smartwatch Inteligente</h3>
+          </div>
+          <p class="card-desc">Notificaciones, salud, deportes y pantalla táctil HD.</p>
+          <div class="card-footer">
+            <span class="card-price">$19.000</span>
+            <button class="card-btn" onclick="event.stopPropagation(); abrirModal('Smartwatch Inteligente','$19.000','smartwach.jpg')">Ver más</button>
+          </div>
+        </div>
+        <div class="tags" style="display:none">smartwatch reloj inteligente salud deporte</div>
+      </div>
+
+      <div class="card" data-categoria="parlante"
+           onclick="abrirModal('Parlante Greatnice RGB','$12.000','parlante.greatnice.jpg')">
+        <div class="card-img">
+          <img src="parlante.greatnice.jpg" alt="Parlante Greatnice" loading="lazy"/>
+        </div>
+        <div class="card-body">
+          <div class="card-title-row">
+            <h3 class="card-title">Parlante Greatnice RGB</h3>
+          </div>
+          <p class="card-desc">Potencia y luces LED. Ideal para llevar la música a todos lados.</p>
+          <div class="card-footer">
+            <span class="card-price">$12.000</span>
+            <button class="card-btn" onclick="event.stopPropagation(); abrirModal('Parlante Greatnice RGB','$12.000','parlante.greatnice.jpg')">Ver más</button>
+          </div>
+        </div>
+        <div class="tags" style="display:none">parlante greatnice bluetooth luces musica</div>
+      </div>
+
+      <div class="card" data-categoria="lampara"
+           onclick="abrirModal('Proyector Astronauta','$15.500','proyector.astronauta.jpg')">
+        <div class="card-img">
+          <img src="proyector.astronauta.jpg" alt="Proyector Astronauta" loading="lazy"/>
+        </div>
+        <div class="card-body">
+          <div class="card-title-row">
+            <h3 class="card-title">Proyector Astronauta</h3>
+          </div>
+          <p class="card-desc">Nebulosa galáctica con control remoto. Ideal como regalo.</p>
+          <div class="card-footer">
+            <span class="card-price">$15.500</span>
+            <button class="card-btn" onclick="event.stopPropagation(); abrirModal('Proyector Astronauta','$15.500','proyector.astronauta.jpg')">Ver más</button>
+          </div>
+        </div>
+        <div class="tags" style="display:none">lampara proyector galaxia estrellas regalo</div>
+      </div>
+
+    </div>
+
+    <!-- Grid de otros vendedores (oculto por defecto) -->
+    <div class="grid" id="othersGrid" style="display:none">
+      <div class="other-empty">
+        <p>🚀 ¡Próximamente!</p>
+        <p>Los productos de la comunidad LeopardX aparecerán aquí.</p>
+      </div>
+    </div>
+
+    <p class="no-result" id="noResult" style="display:none;">No hay productos en esta categoría aún.</p>
+
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       GARANTÍA
+  ═══════════════════════════════════════ -->
+  <section class="trust-badge-section">
+    <div class="container-trust">
+      <div class="trust-card">
+        <div class="trust-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <div class="trust-info">
+          <h3>Garantía de Excelencia LeopardX</h3>
+          <p>Nuestro equipo realiza un <span>control de calidad de antelación</span> antes de poner cada artículo a la venta. Así aseguramos tu seguridad de compra y tu mejor confort con una <span>devolución de hasta 20 días</span>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="footer-logo">LeopardX</span>
+        <p class="footer-tagline">Tecnología accesible, calidad premium.</p>
+      </div>
+      <div class="footer-social">
+        <a href="https://wa.me/3512366414" class="social-link" target="_blank" aria-label="WhatsApp">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="22" height="22"/>
+        </a>
+        <a href="#" class="social-link" aria-label="Facebook">
+          <img src="https://img.icons8.com/ios-filled/50/ffffff/facebook-new.png" alt="Facebook" width="20" height="20"/>
+        </a>
+        <a href="#" class="social-link" aria-label="Instagram">
+          <img src="https://img.icons8.com/ios-filled/50/ffffff/instagram-new.png" alt="Instagram" width="20" height="20"/>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-newsletter">
+      <p class="newsletter-label">Recibí ofertas exclusivas</p>
+      <form class="newsletter-form" action="https://formspree.io/f/xkoplepe" method="POST" id="newsletterForm">
+        <input type="email" name="email" placeholder="Tu email..." class="newsletter-input" required/>
+        <button type="submit" class="newsletter-btn">Suscribirme</button>
+      </form>
+      <p class="newsletter-ok" id="newsletterOk" style="display:none;">¡Gracias! Te anotamos 🎉</p>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 LeopardX · Desarrollado por Milton</p>
+      <!-- Términos centrados en el pie -->
+      <a href="terminos.html" class="footer-terms">Términos y Condiciones para Vendedores</a>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════
+       MODAL AVISO — OTROS VENDEDORES
+       (usa clase "warning-modal", NO "modal")
+  ═══════════════════════════════════════ -->
+  <div id="warningModal" class="warning-modal" onclick="cerrarWarningFuera(event)">
+    <div class="warning-modal-content">
+      <h3>🚀 LeopardX Community</h3>
+      <p>Estás explorando productos de <strong>vendedores independientes</strong> que forman parte de nuestra red.</p>
+      <div class="warning-info-box">
+        <p>✅ Vendedores calificados por la comunidad.</p>
+        <p>📦 Gestión de envío a cargo del vendedor.</p>
+      </div>
+      <button class="btn-accept" onclick="cerrarWarning()">¡Quiero ver!</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       MODAL DE PRODUCTO
+  ═══════════════════════════════════════ -->
+  <div id="productModal" class="product-modal" onclick="cerrarModalFuera(event)">
+    <div class="modal-content">
+      <button class="close-modal" onclick="cerrarModal()" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        </svg>
+      </button>
+      <div class="modal-body">
+        <img id="modalImg" src="" alt="Producto"/>
+        <div class="modal-info">
+          <h2 id="modalTitle"></h2>
+          <p id="modalDesc"></p>
+          <ul id="modalSpecs"></ul>
+          <div class="modal-price" id="modalPrice"></div>
+          <div class="modal-actions">
+            <button class="btn-carrito" onclick="agregarAlCarrito()">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="flex-shrink:0">
+                <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96C5 14.1 5.9 15 7 15h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1 1 0 0 0 20 3H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+              </svg>
+              Agregar al carrito
             </button>
+            <a id="modalWaBtn" class="btn-whatsapp" href="#" target="_blank">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="flex-shrink:0">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.534 5.845L.057 23.998l6.305-1.654A11.954 11.954 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.643-.518-5.148-1.418l-.368-.219-3.821 1.002.981-3.736-.24-.386A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+              </svg>
+              Consultar por WhatsApp
+            </a>
+          </div>
         </div>
-    </nav>
-
-    <header class="hero">
-        <div class="hero-glow"></div>
-        <div class="hero-grid-lines"></div>
-        <div class="hero-content">
-            <p class="hero-eyebrow">Tecnología Premium</p>
-            <h1 class="hero-title">Elevá tu <span class="hero-brand">Estilo</span></h1>
-            <p class="hero-subtitle">Descubrí la mejor selección de gadgets y accesorios tecnológicos.</p>
-        </div>
-    </header>
-
-    <main class="productos-section">
-        <div class="section-header">
-            <h2 class="section-title" id="sectionTitle">Nuestros Productos</h2>
-            <p class="section-sub" id="sectionSub">Tocá un producto para ver más detalles</p>
-        </div>
-
-        <div class="product-filter-container">
-            <div class="tabs">
-                <button class="tab-btn active" onclick="filterProducts('oficial', event)">LeopardX Oficial</button>
-                <button class="tab-btn" onclick="filterProducts('others', event)">Otros Vendedores</button>
-            </div>
-        </div>
-
-        <p id="noResult" class="no-result" style="display: none;">No se encontraron productos.</p>
-
-        <div id="productGrid" class="grid">
-            <div class="card" data-categoria="audio" onclick="abrirModal('Auriculares AKG', '$25.000', 'https://via.placeholder.com/280x210/1A2235/C9A84C?text=AKG')">
-                <div class="card-img"><img src="https://via.placeholder.com/280x210/1A2235/C9A84C?text=AKG" alt="Auriculares AKG"></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3 class="card-title">Auriculares AKG</h3>
-                        <span class="card-badge badge-sell">Más vendido</span>
-                    </div>
-                    <p class="card-desc">Sonido de estudio profesional. Ideal para música, gaming y llamadas.</p>
-                    <div class="card-footer">
-                        <span class="card-price">$25.000</span>
-                        <button class="card-btn">Ver Detalles</button>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="card" data-categoria="audio" onclick="abrirModal('TWS M90 Pro', '$18.500', 'https://via.placeholder.com/280x210/1A2235/C9A84C?text=TWS+M90')">
-                <div class="card-img"><img src="https://via.placeholder.com/280x210/1A2235/C9A84C?text=TWS+M90" alt="TWS M90 Pro"></div>
-                <div class="card-body">
-                    <div class="card-title-row">
-                        <h3 class="card-title">TWS M90 Pro</h3>
-                        <span class="card-badge badge-new">Nuevo</span>
-                    </div>
-                    <p class="card-desc">Libertad total sin cables. Bluetooth 5.3 con latencia ultra baja.</p>
-                    <div class="card-footer">
-                        <span class="card-price">$18.500</span>
-                        <button class="card-btn">Ver Detalles</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="othersGrid" class="grid" style="display: none;">
-            <p class="other-empty">Próximamente se sumarán nuevos vendedores a la comunidad LeopardX.</p>
-        </div>
-    </main>
-
-    <section class="trust-badge-section">
-        <div class="container-trust">
-            <div class="trust-card">
-                <div class="trust-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                    </svg>
-                </div>
-                <div class="trust-info">
-                    <h3>Compra 100% Segura</h3>
-                    <p>Tus datos están protegidos. Todos nuestros productos cuentan con <span>garantía oficial</span>.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div class="cart-float" onclick="toggleCart()">
-        <svg width="24" height="24" fill="#0A0E1A" viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
-        <span id="cartCount">0</span>
+      </div>
     </div>
+  </div>
 
-    <div class="cart-overlay" id="cartOverlay" onclick="cerrarCarrito()"></div>
-    <div class="cart-panel" id="cartPanel">
-        <div class="cart-header">
-            <h3>Tu Carrito</h3>
-            <button class="cart-close" onclick="cerrarCarrito()">&times;</button>
-        </div>
-        <div class="cart-items" id="cartItems">
-            <p class="cart-empty">Tu carrito está vacío</p>
-        </div>
-        <div class="cart-footer-panel">
-            <div class="cart-total-container" style="display: flex; justify-content: space-between; margin-bottom: 15px;">
-                <span style="color: var(--text-bright); font-size: 1rem;">Total estimado:</span>
-                <span id="cartTotal">$0</span>
-            </div>
-            <a href="#" id="cartWaBtn" class="btn-finalizar disabled" target="_blank">Pedir por WhatsApp</a>
-        </div>
+  <!-- Overlay carrito -->
+  <div id="cartOverlay" class="cart-overlay" onclick="toggleCart()"></div>
+
+  <!-- ═══════════════════════════════════════
+       CARRITO FLOTANTE
+  ═══════════════════════════════════════ -->
+  <div id="cartIcon" class="cart-float" onclick="toggleCart()" role="button" aria-label="Ver carrito">
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="var(--navy-deep)">
+      <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96C5 14.1 5.9 15 7 15h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1 1 0 0 0 20 3H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
+    </svg>
+    <span id="cartCount">0</span>
+  </div>
+
+  <div id="cartPanel" class="cart-panel">
+    <div class="cart-header">
+      <h3>Tu Carrito</h3>
+      <button class="cart-close" onclick="toggleCart()" aria-label="Cerrar carrito">&times;</button>
     </div>
-
-    <div class="product-modal" id="productModal" onclick="cerrarModalFuera(event)">
-        <div class="modal-content">
-            <button class="close-modal" onclick="cerrarModal()">&times;</button>
-            <div class="modal-body">
-                <img id="modalImg" src="" alt="">
-                <div class="modal-info">
-                    <h2 id="modalTitle">Título</h2>
-                    <div class="modal-price" id="modalPrice">$0</div>
-                    <p id="modalDesc">Descripción</p>
-                    <ul id="modalSpecs"></ul>
-                    <button class="btn-carrito" onclick="agregarAlCarrito()">Agregar al Carrito</button>
-                    <a href="#" id="modalWaBtn" class="btn-whatsapp" target="_blank">Consultar por WhatsApp</a>
-                </div>
-            </div>
-        </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-footer-panel">
+      <div class="cart-total-container">
+        Total estimado: <span id="cartTotal">$0</span>
+      </div>
+      <a id="cartWaBtn" class="btn-finalizar disabled" href="#" target="_blank">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" style="flex-shrink:0">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.534 5.845L.057 23.998l6.305-1.654A11.954 11.954 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.643-.518-5.148-1.418l-.368-.219-3.821 1.002.981-3.736-.24-.386A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+        </svg>
+        Finalizar por WhatsApp
+      </a>
     </div>
+  </div>
 
-    <div class="warning-modal" id="warningModal" onclick="if(event.target === this) cerrarWarning()">
-        <div class="warning-modal-content">
-            <h3>Aviso Importante</h3>
-            <p>Estás por ver productos de vendedores externos.</p>
-            <div class="warning-info-box">
-                <p style="font-size: 12px; margin: 0;">LeopardX no se responsabiliza por las transacciones realizadas con terceros. Verificá la reputación del vendedor.</p>
-            </div>
-            <button class="btn-accept" onclick="cerrarWarning()">Entendido</button>
-        </div>
-    </div>
+  <!-- WhatsApp flotante -->
+  <a href="https://wa.me/3512366414" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="28" height="28"/>
+  </a>
 
-    <div id="authModal" class="auth-modal" onclick="if(event.target === this) cerrarAuth()">
-        <div class="auth-card">
-            <button class="close-modal" onclick="cerrarAuth()">&times;</button>
-            <h2>Iniciar Sesión</h2>
-            <input type="email" placeholder="Correo electrónico">
-            <input type="password" placeholder="Contraseña">
-            <button>Entrar a mi Cuenta</button>
-        </div>
-    </div>
+  <script src="script.js"></script>
 
-    <script src="script.js"></script>
 </body>
 </html>
