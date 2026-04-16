@@ -356,6 +356,35 @@ if (newsletterForm) {
   });
 }
 
+async function cargarProductosDesdeFirebase() {
+    const querySnapshot = await getDocs(collection(db, "productos"));
+    const contenedor = document.getElementById('contenedor-productos'); // El ID de tu div de productos
+    contenedor.innerHTML = ""; // Vaciamos lo que haya
+
+    querySnapshot.forEach((doc) => {
+        const producto = doc.data();
+        
+        // Lógica de Stock: si es 0, aplicamos clase 'agotado'
+        const estaAgotado = producto.stock === 0;
+        const claseGris = estaAgotado ? 'producto-agotado' : '';
+        const textoBoton = estaAgotado ? 'Sin Stock' : 'Ver Detalle';
+        const atributoBoton = estaAgotado ? 'disabled' : '';
+
+        // Dibujamos el producto en el HTML
+        contenedor.innerHTML += `
+            <div class="card-producto ${claseGris}">
+                <img src="${producto.img}" alt="${producto.nombre}">
+                <h3>${producto.nombre}</h3>
+                <p class="precio">$${producto.precio.toLocaleString('es-AR')}</p>
+                <button onclick="abrirModal('${producto.nombre}', '${producto.precio}', '${producto.img}')" ${atributoBoton}>
+                    ${textoBoton}
+                </button>
+            </div>
+        `;
+    });
+}
+
+
 /* ═══════════════════════════════════════
    ANIMACIÓN CARDS AL SCROLL
 ═══════════════════════════════════════ */
@@ -370,4 +399,9 @@ cards.forEach(card => cardObserver.observe(card));
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.card').forEach(card => card.classList.add('card-show'));
 
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    actualizarCarrito();
+    cargarProductosDesdeFirebase(); // Esto trae tus productos de la nube
 });
