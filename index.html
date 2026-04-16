@@ -1,504 +1,114 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Catálogo de Productos | LeopardX</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8">
+  <title>LeopardX</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Firebase + App -->
+  <script type="module" src="app.js"></script>
 </head>
+
 <body>
 
-  <!-- ═══════════════════════════════════════
-       NAVBAR
-  ═══════════════════════════════════════ -->
-  <header class="navbar">
-    <div class="navbar-inner">
-      <a href="#inicio" class="logo">LeopardX</a>
-      <nav class="nav-links">
-        <a href="#inicio"    class="nav-link active" data-filter="all">Inicio</a>
-        <a href="#productos" class="nav-link"         data-filter="parlante">Parlantes</a>
-        <a href="#productos" class="nav-link"         data-filter="lampara">Lámparas</a>
-        <a href="#productos" class="nav-link"         data-filter="auricular">Auriculares</a>
-        <a href="#productos" class="nav-link"         data-filter="smartwatch">Smartwatch</a>
-      </nav>
-      <!-- Botón de sesión — arriba a la derecha -->
-      <div class="auth-nav" id="authNav">
-        <!-- Estado: no logueado -->
-        <button class="auth-nav-btn" id="btnOpenAuth" onclick="openAuth()">
-          <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" style="flex-shrink:0">
-            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
-          </svg>
-          Ingresar
-        </button>
-        <!-- Estado: logueado (oculto por defecto) -->
-        <div class="auth-user" id="authUser" style="display:none">
-          <span class="auth-avatar" id="authAvatar">?</span>
-          <span class="auth-email"  id="authEmailDisplay"></span>
-          <button class="auth-logout" id="btnLogout" onclick="cerrarSesion()">Salir</button>
-        </div>
-      </div>
+<!-- NAV -->
+<header class="navbar">
+  <h1 class="logo">LeopardX</h1>
+</header>
 
-      <button class="hamburger" id="hamburger" aria-label="Menú">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-    <div class="mobile-menu" id="mobileMenu">
-      <a href="#inicio"    class="mobile-link" data-filter="all">Inicio</a>
-      <a href="#productos" class="mobile-link" data-filter="parlante">Parlantes</a>
-      <a href="#productos" class="mobile-link" data-filter="lampara">Lámparas</a>
-      <a href="#productos" class="mobile-link" data-filter="auricular">Auriculares</a>
-      <a href="#productos" class="mobile-link" data-filter="smartwatch">Smartwatch</a>
-    </div>
-  </header>
+<!-- HERO -->
+<section class="hero">
+  <h2>Catálogo tecnológico</h2>
+  <p>Productos propios y de la comunidad</p>
+</section>
 
-  <!-- ═══════════════════════════════════════
-       HERO
-  ═══════════════════════════════════════ -->
-  <section class="hero" id="inicio">
-    <div class="hero-glow"></div>
-    <div class="hero-grid-lines"></div>
-    <div class="hero-content">
-      <p class="hero-eyebrow">&#9670; Tecnología Premium &#9670;</p>
-      <h1 class="hero-title">Bienvenido a<br><span class="hero-brand">LeopardX</span></h1>
-      <p class="hero-subtitle">Catálogo de productos tecnológicos al mejor precio</p>
-      <a href="#productos" class="hero-btn">Ver catálogo</a>
-    </div>
-  </section>
+<!-- PRODUCTOS -->
+<section>
+  <h2>Nuestros Productos</h2>
+  <div class="grid" id="productGrid"></div>
+</section>
 
-  <!-- ═══════════════════════════════════════
-       PRODUCTOS
-  ═══════════════════════════════════════ -->
-  <section class="productos-section" id="productos">
+<section>
+  <h2>Otros Vendedores</h2>
+  <div class="grid" id="othersGrid"></div>
+</section>
 
-    <!-- Pestañas Nuestros / Otros vendedores -->
-    <div class="contenedor-productos">
-      <div class="tabs">
-        <button class="tab-btn active" onclick="filterProducts('official', event)">Nuestros Productos</button>
-        <button class="tab-btn"        onclick="filterProducts('others',   event)">Otros Vendedores</button>
-      </div>
-    </div>
+<!-- FORMULARIO PRODUCTO -->
+<section class="form-section">
+  <h2>Publicar producto</h2>
 
-    <!-- Subtítulo dinámico -->
-    <div class="section-header">
-      <h2 class="section-title" id="sectionTitle">Nuestros Productos</h2>
-      <p class="section-sub" id="sectionSub">Tocá un producto para ver más detalles</p>
-    </div>
+  <input id="nombre" placeholder="Nombre del producto">
+  <input id="precio" placeholder="Precio">
+  <input id="img" placeholder="URL imagen">
+  <textarea id="desc" placeholder="Descripción"></textarea>
+  <input id="vendedor" placeholder="Nombre del negocio">
 
-    <!-- Grid de productos oficiales -->
-    <div class="grid" id="productGrid">
+  <button onclick="subirProducto()">Publicar</button>
+</section>
 
-      <div class="card" data-categoria="auricular"
-           onclick="abrirModal('Auriculares AKG','$6.000','auricular.akg.jpg')">
-        <div class="card-img">
-          <img src="auricular.akg.jpg" alt="Auricular AKG" loading="lazy"/>
-        </div>
-        <div class="card-body">
-          <div class="card-title-row">
-            <h3 class="card-title">Auriculares AKG</h3>
-            <span class="card-badge badge-sell">Más Vendido</span>
-          </div>
-          <p class="card-desc">Calidad de audio profesional, diseño ergonómico y bajos potentes.</p>
-          <div class="card-footer">
-            <span class="card-price">$6.000</span>
-            <button class="card-btn" onclick="event.stopPropagation(); abrirModal('Auriculares AKG','$6.000','auricular.akg.jpg')">Ver más</button>
-          </div>
-        </div>
-        <div class="tags" style="display:none">auriculares akg audio premium</div>
-      </div>
+<!-- FORMULARIO VENDEDOR -->
+<section class="form-section">
+  <h2>Ser vendedor</h2>
 
-      <div class="card" data-categoria="auricular"
-           onclick="abrirModal('TWS M90 Pro','$13.000','tws.M90.pro.inal.jpg')">
-        <div class="card-img">
-          <img src="tws.M90.pro.inal.jpg" alt="TWS M90 Pro" loading="lazy"/>
-        </div>
-        <div class="card-body">
-          <div class="card-title-row">
-            <h3 class="card-title">TWS M90 Pro</h3>
-            <span class="card-badge badge-new">Novedad</span>
-          </div>
-          <p class="card-desc">Bluetooth 5.3, estuche con pantalla LED y sonido envolvente.</p>
-          <div class="card-footer">
-            <span class="card-price">$13.000</span>
-            <button class="card-btn" onclick="event.stopPropagation(); abrirModal('TWS M90 Pro','$13.000','tws.M90.pro.inal.jpg')">Ver más</button>
-          </div>
-        </div>
-        <div class="tags" style="display:none">auriculares tws m90 inalambrico bluetooth</div>
-      </div>
+  <input id="nombreVendedor" placeholder="Nombre del negocio">
+  <input id="emailVendedor" placeholder="Email">
 
-      <div class="card" data-categoria="smartwatch"
-           onclick="abrirModal('Smartwatch Inteligente','$19.000','smartwach.jpg')">
-        <div class="card-img">
-          <img src="smartwach.jpg" alt="Smartwatch" loading="lazy"/>
-        </div>
-        <div class="card-body">
-          <div class="card-title-row">
-            <h3 class="card-title">Smartwatch Inteligente</h3>
-          </div>
-          <p class="card-desc">Notificaciones, salud, deportes y pantalla táctil HD.</p>
-          <div class="card-footer">
-            <span class="card-price">$19.000</span>
-            <button class="card-btn" onclick="event.stopPropagation(); abrirModal('Smartwatch Inteligente','$19.000','smartwach.jpg')">Ver más</button>
-          </div>
-        </div>
-        <div class="tags" style="display:none">smartwatch reloj inteligente salud deporte</div>
-      </div>
+  <label>
+    <input type="checkbox" id="aceptaTerminos">
+    Acepto los términos y condiciones
+  </label>
 
-      <div class="card" data-categoria="parlante"
-           onclick="abrirModal('Parlante Greatnice RGB','$12.000','parlante.greatnice.jpg')">
-        <div class="card-img">
-          <img src="parlante.greatnice.jpg" alt="Parlante Greatnice" loading="lazy"/>
-        </div>
-        <div class="card-body">
-          <div class="card-title-row">
-            <h3 class="card-title">Parlante Greatnice RGB</h3>
-          </div>
-          <p class="card-desc">Potencia y luces LED. Ideal para llevar la música a todos lados.</p>
-          <div class="card-footer">
-            <span class="card-price">$12.000</span>
-            <button class="card-btn" onclick="event.stopPropagation(); abrirModal('Parlante Greatnice RGB','$12.000','parlante.greatnice.jpg')">Ver más</button>
-          </div>
-        </div>
-        <div class="tags" style="display:none">parlante greatnice bluetooth luces musica</div>
-      </div>
+  <button onclick="enviarSolicitud()">Enviar solicitud</button>
+</section>
 
-      <div class="card" data-categoria="lampara"
-           onclick="abrirModal('Proyector Astronauta','$15.500','proyector.astronauta.jpg')">
-        <div class="card-img">
-          <img src="proyector.astronauta.jpg" alt="Proyector Astronauta" loading="lazy"/>
-        </div>
-        <div class="card-body">
-          <div class="card-title-row">
-            <h3 class="card-title">Proyector Astronauta</h3>
-          </div>
-          <p class="card-desc">Nebulosa galáctica con control remoto. Ideal como regalo.</p>
-          <div class="card-footer">
-            <span class="card-price">$15.500</span>
-            <button class="card-btn" onclick="event.stopPropagation(); abrirModal('Proyector Astronauta','$15.500','proyector.astronauta.jpg')">Ver más</button>
-          </div>
-        </div>
-        <div class="tags" style="display:none">lampara proyector galaxia estrellas regalo</div>
-      </div>
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 LeopardX</p>
+</footer>
 
-    </div>
+<!-- FUNCIONES GLOBALES -->
+<script type="module">
+  import { agregarProducto } from './productos.js';
+  import { registrarVendedor } from './vendedores.js';
 
-    <!-- Grid de otros vendedores (oculto por defecto) -->
-    <div class="grid" id="othersGrid" style="display:none">
-      <div class="other-empty">
-        <p>🚀 ¡Próximamente!</p>
-        <p>Los productos de la comunidad LeopardX aparecerán aquí.</p>
-      </div>
-    </div>
+  window.subirProducto = async function () {
+    const producto = {
+      nombre: document.getElementById('nombre').value,
+      precio: document.getElementById('precio').value,
+      img: document.getElementById('img').value,
+      descripcion: document.getElementById('desc').value,
+      vendedor: document.getElementById('vendedor').value,
+      esVendedor: true
+    };
 
-    <p class="no-result" id="noResult" style="display:none;">No hay productos en esta categoría aún.</p>
+    if (!producto.nombre || !producto.precio) {
+      alert("Completa los campos");
+      return;
+    }
 
-  </section>
-
-  <!-- ═══════════════════════════════════════
-       GARANTÍA
-  ═══════════════════════════════════════ -->
-  <section class="trust-badge-section">
-    <div class="container-trust">
-      <div class="trust-card">
-        <div class="trust-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-          </svg>
-        </div>
-        <div class="trust-info">
-          <h3>Garantía de Excelencia LeopardX</h3>
-          <p>Nuestro equipo realiza un <span>control de calidad de antelación</span> antes de poner cada artículo a la venta. Así aseguramos tu seguridad de compra y tu mejor confort con una <span>devolución de hasta 20 días</span>.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════
-       FOOTER
-  ═══════════════════════════════════════ -->
-  <footer class="footer">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <span class="footer-logo">LeopardX</span>
-        <p class="footer-tagline">Tecnología accesible, calidad premium.</p>
-      </div>
-      <div class="footer-social">
-        <a href="https://wa.me/3512366414" class="social-link" target="_blank" aria-label="WhatsApp">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="22" height="22"/>
-        </a>
-        <a href="#" class="social-link" aria-label="Facebook">
-          <img src="https://img.icons8.com/ios-filled/50/ffffff/facebook-new.png" alt="Facebook" width="20" height="20"/>
-        </a>
-        <a href="#" class="social-link" aria-label="Instagram">
-          <img src="https://img.icons8.com/ios-filled/50/ffffff/instagram-new.png" alt="Instagram" width="20" height="20"/>
-        </a>
-      </div>
-    </div>
-
-    <div class="footer-newsletter">
-      <p class="newsletter-label">Recibí ofertas exclusivas</p>
-      <form class="newsletter-form" action="https://formspree.io/f/xkoplepe" method="POST" id="newsletterForm">
-        <input type="email" name="email" placeholder="Tu email..." class="newsletter-input" required/>
-        <button type="submit" class="newsletter-btn">Suscribirme</button>
-      </form>
-      <p class="newsletter-ok" id="newsletterOk" style="display:none;">¡Gracias! Te anotamos 🎉</p>
-    </div>
-
-    <div class="footer-bottom">
-      <p>© 2026 LeopardX · Desarrollado por Milton Pascualon</p>
-      <!-- Términos centrados en el pie -->
-      <a href="terminos.html" class="footer-terms">Términos y Condiciones para Vendedores</a>
-    </div>
-  </footer>
-
-  <!-- ═══════════════════════════════════════
-       MODAL AVISO — OTROS VENDEDORES
-       (usa clase "warning-modal", NO "modal")
-  ═══════════════════════════════════════ -->
-  <div id="warningModal" class="warning-modal" onclick="cerrarWarningFuera(event)">
-    <div class="warning-modal-content">
-      <h3>🚀 LeopardX Community</h3>
-      <p>Estás explorando productos de <strong>vendedores independientes</strong> que forman parte de nuestra red.</p>
-      <div class="warning-info-box">
-        <p>✅ Vendedores calificados por la comunidad.</p>
-        <p>📦 Gestión de envío a cargo del vendedor.</p>
-      </div>
-      <button class="btn-accept" onclick="cerrarWarning()">¡Quiero ver!</button>
-    </div>
-  </div>
-
-  <!-- ═══════════════════════════════════════
-       MODAL DE PRODUCTO
-  ═══════════════════════════════════════ -->
-  <div id="productModal" class="product-modal" onclick="cerrarModalFuera(event)">
-    <div class="modal-content">
-      <button class="close-modal" onclick="cerrarModal()" aria-label="Cerrar">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
-          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-        </svg>
-      </button>
-      <div class="modal-body">
-        <img id="modalImg" src="" alt="Producto"/>
-        <div class="modal-info">
-          <h2 id="modalTitle"></h2>
-          <p id="modalDesc"></p>
-          <ul id="modalSpecs"></ul>
-          <div class="modal-price" id="modalPrice"></div>
-          <div class="modal-actions">
-            <button class="btn-carrito" onclick="agregarAlCarrito()">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="flex-shrink:0">
-                <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96C5 14.1 5.9 15 7 15h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1 1 0 0 0 20 3H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
-              </svg>
-              Agregar al carrito
-            </button>
-            <a id="modalWaBtn" class="btn-whatsapp" href="#" target="_blank">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" style="flex-shrink:0">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-                <path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.534 5.845L.057 23.998l6.305-1.654A11.954 11.954 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.643-.518-5.148-1.418l-.368-.219-3.821 1.002.981-3.736-.24-.386A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
-              </svg>
-              Consultar por WhatsApp
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Overlay carrito -->
-  <div id="cartOverlay" class="cart-overlay" onclick="toggleCart()"></div>
-
-  <!-- ═══════════════════════════════════════
-       CARRITO FLOTANTE
-  ═══════════════════════════════════════ -->
-  <div id="cartIcon" class="cart-float" onclick="toggleCart()" role="button" aria-label="Ver carrito">
-    <svg viewBox="0 0 24 24" width="26" height="26" fill="var(--navy-deep)">
-      <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96C5 14.1 5.9 15 7 15h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1 1 0 0 0 20 3H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/>
-    </svg>
-    <span id="cartCount">0</span>
-  </div>
-
-  <div id="cartPanel" class="cart-panel">
-    <div class="cart-header">
-      <h3>Tu Carrito</h3>
-      <button class="cart-close" onclick="toggleCart()" aria-label="Cerrar carrito">&times;</button>
-    </div>
-    <div id="cartItems" class="cart-items"></div>
-    <div class="cart-footer-panel">
-      <div class="cart-total-container">
-        Total estimado: <span id="cartTotal">$0</span>
-      </div>
-      <a id="cartWaBtn" class="btn-finalizar disabled" href="#" target="_blank">
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" style="flex-shrink:0">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
-          <path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.534 5.845L.057 23.998l6.305-1.654A11.954 11.954 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.643-.518-5.148-1.418l-.368-.219-3.821 1.002.981-3.736-.24-.386A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
-        </svg>
-        Finalizar por WhatsApp
-      </a>
-    </div>
-  </div>
-
-  <!-- WhatsApp flotante -->
-  <a href="https://wa.me/3512366414" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" width="28" height="28"/>
-  </a>
-
-  <!-- ═══════════════════════════════════════
-       MODAL DE AUTENTICACIÓN — FIREBASE
-  ═══════════════════════════════════════ -->
-  <div id="authModal" class="auth-modal" onclick="cerrarAuthFuera(event)">
-    <div class="auth-modal-content">
-
-      <button class="auth-close" onclick="closeAuth()" aria-label="Cerrar">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-        </svg>
-      </button>
-
-      <!-- Logo pequeño -->
-      <div class="auth-logo">LeopardX</div>
-
-      <h2 class="auth-title" id="authTitle">Crear Cuenta</h2>
-      <p class="auth-subtitle" id="authSubtitle">Registrate para guardar tu carrito y más</p>
-
-      <form id="authForm" class="auth-form" onsubmit="return false">
-        <div class="auth-field">
-          <label for="authEmail">Correo electrónico</label>
-          <input type="email" id="authEmail" placeholder="tucorreo@mail.com" required autocomplete="email"/>
-        </div>
-        <div class="auth-field">
-          <label for="authPassword">
-            Contraseña
-            <span class="auth-hint">(mínimo 6 caracteres)</span>
-          </label>
-          <div class="auth-password-wrap">
-            <input type="password" id="authPassword" placeholder="••••••" required
-                   minlength="6" autocomplete="current-password"/>
-            <button type="button" class="auth-eye" onclick="togglePasswordVisibility()" aria-label="Ver contraseña">
-              <svg id="eyeIcon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-                <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        <p class="auth-error" id="authError"></p>
-
-        <button type="submit" class="auth-submit" id="authBtn" onclick="submitAuth()">
-          Registrarse
-        </button>
-      </form>
-
-      <p class="auth-switch" id="authSwitch">
-        ¿Ya tenés cuenta? <span onclick="toggleAuthMode()">Iniciá Sesión</span>
-      </p>
-
-    </div>
-  </div>
-
-  <!-- Scripts Firebase (ES modules) -->
-  <script type="module">
-    import { initializeApp }                          from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword,
-             signInWithEmailAndPassword, signOut,
-             onAuthStateChanged }                     from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-
-    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-    
-    /* ── Configuración de Firebase ── */
-const firebaseConfig = {
-    apiKey: "AIzaSyDA4oxTvYgrv7NKdhreFq_0eJFQ8EKlCUA",
-    authDomain: "leopardx.firebaseapp.com",
-    projectId: "leopardx",
-    storageBucket: "leopardx.firebasestorage.app",
-    messagingSenderId: "20322051861",
-    appId: "1:20322051861:web:3764871bfc4b7f30b96b1c",
-    measurementId: "G-XM9ZQT2ZM7"
+    await agregarProducto(producto);
+    location.reload();
   };
 
-    const app  = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
+  window.enviarSolicitud = async function () {
+    const acepta = document.getElementById('aceptaTerminos').checked;
 
-    /* ── Modo: registro o login ── */
-    let isLoginMode = false;
+    if (!acepta) {
+      alert("Debes aceptar los términos");
+      return;
+    }
 
-    window.toggleAuthMode = function () {
-      isLoginMode = !isLoginMode;
-      document.getElementById('authTitle').innerText    = isLoginMode ? "Iniciar Sesión"   : "Crear Cuenta";
-      document.getElementById('authSubtitle').innerText = isLoginMode ? "Bienvenido de nuevo a LeopardX" : "Registrate para guardar tu carrito y más";
-      document.getElementById('authBtn').innerText      = isLoginMode ? "Entrar"           : "Registrarse";
-      document.getElementById('authSwitch').innerHTML   = isLoginMode
-        ? "¿No tenés cuenta? <span onclick='toggleAuthMode()'>Registrate</span>"
-        : "¿Ya tenés cuenta? <span onclick='toggleAuthMode()'>Iniciá Sesión</span>";
-      document.getElementById('authError').innerText = '';
-    };
+    alert("Tu solicitud será revisada y te notificaremos por email.");
 
-    /* ── Enviar formulario ── */
-    window.submitAuth = async function () {
-      const email    = document.getElementById('authEmail').value.trim();
-      const password = document.getElementById('authPassword').value;
-      const errorEl  = document.getElementById('authError');
-      const btn      = document.getElementById('authBtn');
-
-      if (!email || !password) return;
-      if (password.length < 6) {
-        errorEl.innerText = 'La contraseña debe tener al menos 6 caracteres.';
-        return;
-      }
-
-      btn.disabled    = true;
-      btn.innerText   = 'Cargando...';
-      errorEl.innerText = '';
-
-      try {
-        if (isLoginMode) {
-          await signInWithEmailAndPassword(auth, email, password);
-        } else {
-          await createUserWithEmailAndPassword(auth, email, password);
-        }
-        closeAuth();
-      } catch (err) {
-        btn.disabled  = false;
-        btn.innerText = isLoginMode ? 'Entrar' : 'Registrarse';
-        // Mensajes de error en español
-        const errores = {
-          'auth/email-already-in-use':    'Ese correo ya está registrado. Iniciá sesión.',
-          'auth/invalid-email':           'El correo ingresado no es válido.',
-          'auth/wrong-password':          'Contraseña incorrecta. Intentá de nuevo.',
-          'auth/user-not-found':          'No existe una cuenta con ese correo.',
-          'auth/too-many-requests':       'Demasiados intentos. Intentá más tarde.',
-          'auth/network-request-failed':  'Sin conexión. Revisá tu internet.',
-        };
-        errorEl.innerText = errores[err.code] || 'Ocurrió un error. Intentá de nuevo.';
-      }
-    };
-
-    /* ── Cerrar sesión ── */
-    window.cerrarSesion = async function () {
-      await signOut(auth);
-    };
-
-    /* ── Observer: actualiza navbar según estado de sesión ── */
-    onAuthStateChanged(auth, user => {
-      const btnOpen   = document.getElementById('btnOpenAuth');
-      const authUser  = document.getElementById('authUser');
-      const avatar    = document.getElementById('authAvatar');
-      const emailDisp = document.getElementById('authEmailDisplay');
-
-      if (user) {
-        // Usuario logueado
-        btnOpen.style.display  = 'none';
-        authUser.style.display = 'flex';
-        emailDisp.innerText    = user.email;
-        avatar.innerText       = user.email[0].toUpperCase();
-      } else {
-        // No logueado
-        btnOpen.style.display  = '';
-        authUser.style.display = 'none';
-      }
+    await registrarVendedor({
+      nombre: document.getElementById('nombreVendedor').value,
+      email: document.getElementById('emailVendedor').value
     });
-  </script>
-
-  <script src="script.js"></script>
+  };
+</script>
 
 </body>
 </html>
