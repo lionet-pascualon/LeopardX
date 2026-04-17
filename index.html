@@ -1,114 +1,173 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>LeopardX</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- Estilos -->
-  <link rel="stylesheet" href="style.css">
-
-  <!-- Firebase + App -->
-  <script type="module" src="app.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LeopardX | Catálogo Tecnológico</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 </head>
-
 <body>
 
-<!-- NAV -->
-<header class="navbar">
-  <h1 class="logo">LeopardX</h1>
-</header>
+  <header class="navbar">
+    <div class="navbar-inner">
+      <a href="#inicio" class="logo">LeopardX</a>
+      <nav class="nav-links">
+        <a href="#inicio" class="nav-link active">Inicio</a>
+        <a href="#productos" class="nav-link">Productos</a>
+      </nav>
+      
+      <div class="auth-nav" id="authNav">
+        <button class="auth-nav-btn" id="btnOpenAuth" onclick="openAuth()">Ingresar</button>
+        <div class="auth-user" id="authUser" style="display:none">
+          <span class="auth-avatar" id="authAvatar">?</span>
+          <span class="auth-email" id="authEmailDisplay"></span>
+          <button class="auth-logout" id="btnLogout" onclick="cerrarSesion()">Salir</button>
+        </div>
+      </div>
+    </div>
+  </header>
 
-<!-- HERO -->
-<section class="hero">
-  <h2>Catálogo tecnológico</h2>
-  <p>Productos propios y de la comunidad</p>
-</section>
+  <section class="hero" id="inicio">
+    <div class="hero-content">
+      <h1 class="hero-title">Bienvenido a<br><span class="hero-brand">LeopardX</span></h1>
+      <p class="hero-subtitle">Tecnología cargada desde la nube en tiempo real</p>
+      <a href="#productos" class="hero-btn">Ver catálogo</a>
+    </div>
+  </section>
 
-<!-- PRODUCTOS -->
-<section>
-  <h2>Nuestros Productos</h2>
-  <div class="grid" id="productGrid"></div>
-</section>
+  <section class="productos-section" id="productos">
+    <div class="section-header">
+      <h2 class="section-title">Nuestros Productos</h2>
+      <p class="section-sub">Información actualizada desde Firestore</p>
+    </div>
 
-<section>
-  <h2>Otros Vendedores</h2>
-  <div class="grid" id="othersGrid"></div>
-</section>
+    <div class="grid" id="productGrid">
+        </div>
+  </section>
 
-<!-- FORMULARIO PRODUCTO -->
-<section class="form-section">
-  <h2>Publicar producto</h2>
+  <footer class="footer">
+    <p>© 2026 LeopardX · Desarrollado por Milton Pascualon</p>
+  </footer>
 
-  <input id="nombre" placeholder="Nombre del producto">
-  <input id="precio" placeholder="Precio">
-  <input id="img" placeholder="URL imagen">
-  <textarea id="desc" placeholder="Descripción"></textarea>
-  <input id="vendedor" placeholder="Nombre del negocio">
+  <div id="productModal" class="product-modal" onclick="cerrarModalFuera(event)">
+    <div class="modal-content">
+      <button class="close-modal" onclick="cerrarModal()">×</button>
+      <div class="modal-body">
+        <img id="modalImg" src="" alt=""/>
+        <div class="modal-info">
+          <h2 id="modalTitle"></h2>
+          <p id="modalDesc"></p>
+          <ul id="modalSpecs"></ul>
+          <div class="modal-price" id="modalPrice"></div>
+          <button class="btn-carrito" onclick="agregarAlCarrito()">Agregar al carrito</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-  <button onclick="subirProducto()">Publicar</button>
-</section>
+  <div id="authModal" class="auth-modal" onclick="cerrarAuthFuera(event)">
+    <div class="auth-modal-content">
+      <button class="auth-close" onclick="closeAuth()">×</button>
+      <h2 class="auth-title" id="authTitle">Crear Cuenta</h2>
+      <form id="authForm" onsubmit="return false">
+        <input type="email" id="authEmail" placeholder="Tu email..." required />
+        <input type="password" id="authPassword" placeholder="Tu contraseña..." required />
+        <p class="auth-error" id="authError"></p>
+        <button type="submit" class="auth-submit" id="authBtn" onclick="submitAuth()">Registrarse</button>
+      </form>
+      <p class="auth-switch" id="authSwitch">
+        ¿Ya tenés cuenta? <span onclick="toggleAuthMode()">Iniciá Sesión</span>
+      </p>
+    </div>
+  </div>
 
-<!-- FORMULARIO VENDEDOR -->
-<section class="form-section">
-  <h2>Ser vendedor</h2>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-  <input id="nombreVendedor" placeholder="Nombre del negocio">
-  <input id="emailVendedor" placeholder="Email">
-
-  <label>
-    <input type="checkbox" id="aceptaTerminos">
-    Acepto los términos y condiciones
-  </label>
-
-  <button onclick="enviarSolicitud()">Enviar solicitud</button>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <p>© 2026 LeopardX</p>
-</footer>
-
-<!-- FUNCIONES GLOBALES -->
-<script type="module">
-  import { agregarProducto } from './productos.js';
-  import { registrarVendedor } from './vendedores.js';
-
-  window.subirProducto = async function () {
-    const producto = {
-      nombre: document.getElementById('nombre').value,
-      precio: document.getElementById('precio').value,
-      img: document.getElementById('img').value,
-      descripcion: document.getElementById('desc').value,
-      vendedor: document.getElementById('vendedor').value,
-      esVendedor: true
+    const firebaseConfig = {
+        apiKey: "AIzaSyDA4oxTvYgrv7NKdhreFq_0eJFQ8EKlCUA",
+        authDomain: "leopardx.firebaseapp.com",
+        projectId: "leopardx",
+        storageBucket: "leopardx.firebasestorage.app",
+        messagingSenderId: "20322051861",
+        appId: "1:20322051861:web:3764871bfc4b7f30b96b1c"
     };
 
-    if (!producto.nombre || !producto.precio) {
-      alert("Completa los campos");
-      return;
-    }
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-    await agregarProducto(producto);
-    location.reload();
-  };
+    // --- FUNCIÓN PARA CARGAR PRODUCTOS ---
+    window.cargarProductosDesdeFirebase = async function() {
+        const contenedor = document.getElementById('productGrid');
+        try {
+            const querySnapshot = await getDocs(collection(db, "productos"));
+            contenedor.innerHTML = ""; // Limpiamos la grilla
+            
+            querySnapshot.forEach((doc) => {
+                const p = doc.data();
+                const estaAgotado = p.stock <= 0;
+                
+                contenedor.innerHTML += `
+                    <div class="card ${estaAgotado ? 'producto-agotado' : ''}" 
+                         onclick="${estaAgotado ? '' : `abrirModal('${p.nombre}','$${p.precio}','${p.img}')`}">
+                        <div class="card-img">
+                            <img src="${p.img}" alt="${p.nombre}">
+                        </div>
+                        <div class="card-body">
+                            <h3 class="card-title">${p.nombre}</h3>
+                            <div class="card-footer">
+                                <span class="card-price">$${p.precio.toLocaleString('es-AR')}</span>
+                                <button class="card-btn" ${estaAgotado ? 'disabled' : ''}>
+                                    ${estaAgotado ? 'Sin Stock' : 'Ver más'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+        } catch (e) { console.error("Error cargando productos:", e); }
+    };
 
-  window.enviarSolicitud = async function () {
-    const acepta = document.getElementById('aceptaTerminos').checked;
+    // --- LÓGICA DE AUTENTICACIÓN ---
+    let isLoginMode = false;
+    window.toggleAuthMode = () => {
+        isLoginMode = !isLoginMode;
+        document.getElementById('authTitle').innerText = isLoginMode ? "Iniciar Sesión" : "Crear Cuenta";
+        document.getElementById('authBtn').innerText = isLoginMode ? "Entrar" : "Registrarse";
+    };
 
-    if (!acepta) {
-      alert("Debes aceptar los términos");
-      return;
-    }
+    window.submitAuth = async () => {
+        const email = document.getElementById('authEmail').value;
+        const pass = document.getElementById('authPassword').value;
+        try {
+            isLoginMode ? await signInWithEmailAndPassword(auth, email, pass) : await createUserWithEmailAndPassword(auth, email, pass);
+            closeAuth();
+        } catch (err) { document.getElementById('authError').innerText = "Error en los datos"; }
+    };
 
-    alert("Tu solicitud será revisada y te notificaremos por email.");
+    window.cerrarSesion = () => signOut(auth);
 
-    await registrarVendedor({
-      nombre: document.getElementById('nombreVendedor').value,
-      email: document.getElementById('emailVendedor').value
+    // OBSERVER: Qué pasa cuando el usuario entra/sale
+    onAuthStateChanged(auth, user => {
+        const btnOpen = document.getElementById('btnOpenAuth');
+        const authUser = document.getElementById('authUser');
+        if (user) {
+            btnOpen.style.display = 'none';
+            authUser.style.display = 'flex';
+            document.getElementById('authEmailDisplay').innerText = user.email;
+            document.getElementById('authAvatar').innerText = user.email[0].toUpperCase();
+        } else {
+            btnOpen.style.display = '';
+            authUser.style.display = 'none';
+        }
+        // Cargamos los productos siempre al iniciar
+        cargarProductosDesdeFirebase();
     });
-  };
-</script>
+  </script>
 
+  <script src="script.js"></script>
 </body>
 </html>
