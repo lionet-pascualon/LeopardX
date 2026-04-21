@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>LeopardX | Tienda Tecnológica</title>
-  
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
 </head>
 <body>
 
+  <!-- ═══ NAVBAR ═══ -->
   <header class="navbar">
     <div class="navbar-inner">
       <a href="#inicio" class="logo">LeopardX</a>
@@ -19,7 +19,7 @@
         <span class="nav-link" data-filter="Relojes">Relojes</span>
         <span class="nav-link" data-filter="Parlantes">Parlantes</span>
       </nav>
-      
+
       <div class="auth-nav" id="authNav">
         <button class="auth-nav-btn" id="btnOpenAuth" onclick="openAuth()">Ingresar</button>
         <div class="auth-user" id="authUser" style="display:none">
@@ -32,7 +32,7 @@
         <span></span><span></span><span></span>
       </button>
     </div>
-    
+
     <div class="mobile-menu" id="mobileMenu">
       <a href="#" class="mobile-link" data-filter="all">Todos los productos</a>
       <a href="#" class="mobile-link" data-filter="Auriculares">Auriculares</a>
@@ -40,6 +40,7 @@
     </div>
   </header>
 
+  <!-- ═══ HERO ═══ -->
   <section class="hero" id="inicio">
     <div class="hero-glow"></div>
     <div class="hero-grid-lines"></div>
@@ -47,13 +48,13 @@
       <p class="hero-eyebrow">Tecnología de Vanguardia</p>
       <h1 class="hero-title">LEOPARD<span class="hero-brand">X</span></h1>
       <p class="hero-subtitle">Equipamiento premium para tu setup digital.</p>
-      
-      <div class="search-box" style="max-width: 400px; margin: 0 auto;">
-        <input type="text" id="buscador" class="newsletter-input" style="width: 100%;" placeholder="¿Qué estás buscando?">
+      <div class="search-box" style="max-width:400px; margin:0 auto;">
+        <input type="text" id="buscador" class="newsletter-input" style="width:100%;" placeholder="¿Qué estás buscando?">
       </div>
     </div>
   </section>
 
+  <!-- ═══ TABS ═══ -->
   <div class="product-filter-container">
     <div class="tabs">
       <button class="tab-btn active" onclick="filterProducts('nuestros', event)">Nuestros Productos</button>
@@ -61,23 +62,22 @@
     </div>
   </div>
 
+  <!-- ═══ PRODUCTOS ═══ -->
   <main class="productos-section">
     <div class="section-header">
       <h2 id="sectionTitle" class="section-title">Nuestros Productos</h2>
       <p id="sectionSub" class="section-sub">Tocá un producto para ver más detalles</p>
     </div>
-
     <div id="productGrid" class="grid"></div>
-    
     <div id="othersGrid" class="grid" style="display:none">
-       <div class="other-empty">Todavía no hay vendedores independientes en tu zona.</div>
+      <div class="other-empty">Todavía no hay vendedores independientes en tu zona.</div>
     </div>
-
     <div id="noResult" class="no-result" style="display:none">
       No encontramos productos que coincidan con tu búsqueda.
     </div>
   </main>
 
+  <!-- ═══ MODAL PRODUCTO ═══ -->
   <div id="productModal" class="product-modal" onclick="cerrarModalFuera(event)">
     <div class="modal-content">
       <button class="close-modal" onclick="cerrarModal()">×</button>
@@ -97,26 +97,26 @@
     </div>
   </div>
 
+  <!-- ═══ MODAL AUTH ═══ -->
   <div id="authModal" class="auth-modal" onclick="cerrarAuthFuera(event)">
     <div class="auth-modal-content">
       <button class="auth-close" onclick="closeAuth()">×</button>
       <div class="auth-logo">LeopardX</div>
       <h3 class="auth-title" id="authModalTitle">Iniciar Sesión</h3>
       <p class="auth-subtitle">Accedé para gestionar tus compras.</p>
-      
       <form class="auth-form" id="authForm">
         <input type="email" id="authEmail" placeholder="Tu email" required>
         <input type="password" id="authPassword" placeholder="Tu contraseña" required>
         <div id="authError" class="auth-error"></div>
         <button type="submit" class="auth-submit" id="authSubmitBtn">Entrar</button>
       </form>
-      
       <p class="auth-switch">
         <span id="toggleAuthMode">¿No tenés cuenta? Registrate</span>
       </p>
     </div>
   </div>
 
+  <!-- ═══ CARRITO ═══ -->
   <div id="cartOverlay" class="cart-overlay" onclick="toggleCart()"></div>
   <div class="cart-float" onclick="toggleCart()">
     <span id="cartCount">0</span>
@@ -134,68 +134,98 @@
     </div>
   </div>
 
+  <!-- ═══ WHATSAPP FLOTANTE ═══ -->
   <a href="https://wa.me/3512366414" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
-  <svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-  </svg>
-</a>
+    <svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+    </svg>
+  </a>
 
+  <!-- ═══ FOOTER ═══ -->
   <footer class="footer">
     <div class="footer-bottom">
       <div class="footer-logo">LeopardX</div>
       <p>Córdoba, Argentina | UTN</p>
-      <p>Contacto Desarrollador: <a href="mailto:miltonpascualon543@gmail.com" style="color: var(--gold);">miltonpascualon543@gmail.com</a></p>
-      <div style="margin-top: 10px;">
-        <a href="#" class="footer-terms">Términos y Condiciones</a> · 
-        <a href="#" class="footer-terms">Privacidad</a>
+      <p>Contacto Desarrollador: <a href="mailto:miltonpascualon543@gmail.com" style="color:var(--gold);">miltonpascualon543@gmail.com</a></p>
+      <div style="margin-top:10px;">
+        <a href="#" class="footer-terms"
+          onclick="event.preventDefault(); document.getElementById('modalTerminos').style.display='flex'; document.body.style.overflow='hidden'">
+          Términos y Condiciones
+        </a> · 
+        <a href="#" class="footer-terms"
+          onclick="event.preventDefault(); document.getElementById('modalPrivacidad').style.display='flex'; document.body.style.overflow='hidden'">
+          Privacidad
+        </a>
       </div>
-      <p style="margin-top: 15px; opacity: 0.5;">© 2026 LeopardX - Proyecto Académico</p>
+      <p style="margin-top:15px; opacity:0.5;">© 2026 LeopardX - Proyecto Web</p>
     </div>
   </footer>
-  
-      querySnapshot.forEach((doc) => {
-        const p = doc.data();
-        const estaAgotado = p.stock === 0;
-        
-        grid.innerHTML += `
-          <div class="card ${estaAgotado ? 'producto-agotado' : ''}" data-categoria="${p.categoria}">
-            <div class="card-img">
-              <img src="${p.img}" alt="${p.nombre}">
-            </div>
-            <div class="card-body">
-              <div class="card-title-row">
-                <h3 class="card-title">${p.nombre}</h3>
-                ${p.nuevo ? '<span class="card-badge badge-new">NUEVO</span>' : ''}
-              </div>
-              <div class="card-footer">
-                <span class="card-price">$${p.precio.toLocaleString('es-AR')}</span>
-                <button class="card-btn" onclick="abrirModal('${p.nombre}', '$${p.precio.toLocaleString('es-AR')}', '${p.img}')" ${estaAgotado ? 'disabled' : ''}>
-                  ${estaAgotado ? 'Sin Stock' : 'Ver más'}
-                </button>
-              </div>
-            </div>
-          </div>
-        `;
-      });
-    }
-  
-  </script>
 
-<div id="warningModal" class="product-modal" onclick="cerrarWarningFuera(event)">
-  <div class="auth-modal-content" style="max-width: 400px; text-align: center;">
-    <div style="font-size: 40px; margin-bottom: 15px;">🛡️</div>
-    <h3 style="color: var(--gold); margin-bottom: 10px;">Aviso de Seguridad</h3>
-    <p style="font-size: 14px; opacity: 0.8; line-height: 1.5;">
-      Estás explorando productos de <strong>vendedores independientes</strong>. 
-      LeopardX no se hace responsable por transacciones fuera de nuestra tienda oficial.
-    </p>
-    <button class="auth-submit" style="margin-top: 20px;" onclick="cerrarWarning()">Entendido</button>
+  <!-- ═══ MODAL AVISO OTROS VENDEDORES ═══ -->
+  <div id="warningModal" class="product-modal" onclick="cerrarWarningFuera(event)">
+    <div class="auth-modal-content" style="max-width:400px; text-align:center;">
+      <div style="font-size:40px; margin-bottom:15px;">🛡️</div>
+      <h3 style="color:var(--gold); margin-bottom:10px;">Aviso de Seguridad</h3>
+      <p style="font-size:14px; opacity:0.8; line-height:1.5;">
+        Estás explorando productos de <strong>vendedores independientes</strong>.
+        LeopardX no se hace responsable por transacciones fuera de nuestra tienda oficial.
+      </p>
+      <button class="auth-submit" style="margin-top:20px;" onclick="cerrarWarning()">Entendido</button>
+    </div>
   </div>
-</div>
 
-<!-- Antes del cierre de </body>, reemplazá todo el bloque module por: -->
-<script type="module" src="main.js"></script>
-<script src="script.js"></script>
-  
+  <!-- ═══ MODAL TÉRMINOS Y CONDICIONES ═══ -->
+  <div id="modalTerminos" class="auth-modal" onclick="this.style.display='none'; document.body.style.overflow=''">
+    <div class="auth-modal-content" style="max-width:520px; max-height:80vh; overflow-y:auto;">
+      <button class="auth-close" onclick="document.getElementById('modalTerminos').style.display='none'; document.body.style.overflow=''">×</button>
+      <div class="auth-logo">LeopardX</div>
+      <h3 class="auth-title">Términos y Condiciones</h3>
+      <div style="font-size:13px; color:var(--text-muted); line-height:1.8; margin-top:1rem; text-align:left;">
+        <p><strong style="color:var(--gold)">1. Uso del sitio</strong><br>
+        LeopardX es una tienda tecnológica académica. El uso de este sitio implica la aceptación de estos términos.</p>
+        <br>
+        <p><strong style="color:var(--gold)">2. Productos</strong><br>
+        Todos los precios están expresados en pesos argentinos. LeopardX se reserva el derecho de modificar precios sin previo aviso.</p>
+        <br>
+        <p><strong style="color:var(--gold)">3. Vendedores independientes</strong><br>
+        LeopardX no se responsabiliza por transacciones realizadas con vendedores externos a la plataforma oficial.</p>
+        <br>
+        <p><strong style="color:var(--gold)">4. Datos personales</strong><br>
+        Los datos ingresados son utilizados únicamente para gestionar tu cuenta. No se comparten con terceros.</p>
+        <br>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ MODAL PRIVACIDAD ═══ -->
+  <div id="modalPrivacidad" class="auth-modal" onclick="this.style.display='none'; document.body.style.overflow=''">
+    <div class="auth-modal-content" style="max-width:520px; max-height:80vh; overflow-y:auto;">
+      <button class="auth-close" onclick="document.getElementById('modalPrivacidad').style.display='none'; document.body.style.overflow=''">×</button>
+      <div class="auth-logo">LeopardX</div>
+      <h3 class="auth-title">Política de Privacidad</h3>
+      <div style="font-size:13px; color:var(--text-muted); line-height:1.8; margin-top:1rem; text-align:left;">
+        <p><strong style="color:var(--gold)">Datos que recopilamos</strong><br>
+        Solo recopilamos tu email para crear tu cuenta mediante Firebase Authentication.</p>
+        <br>
+        <p><strong style="color:var(--gold)">Cookies</strong><br>
+        Usamos localStorage para guardar tu carrito de forma local en tu dispositivo.</p>
+        <br>
+        <p><strong style="color:var(--gold)">Terceros</strong><br>
+        Utilizamos Firebase (Google) para autenticación y base de datos.</p>
+        <br>
+        <p><strong style="color:var(--gold)">Contacto</strong><br>
+        Para consultas: <a href="mailto:miltonpascualon543@gmail.com" style="color:var(--gold)">miltonpascualon543@gmail.com</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ SCRIPTS ═══
+       ORDEN IMPORTANTE:
+       1. script.js primero (funciones globales: abrirModal, carrito, etc.)
+       2. main.js como módulo (Firebase, auth, catálogo)
+  ═══ -->
+  <script src="script.js"></script>
+  <script type="module" src="main.js"></script>
+
 </body>
 </html>
