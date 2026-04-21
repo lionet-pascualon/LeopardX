@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LeopardX | Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy-deep:   #0A0E1A;
+      --navy-mid:    #111827;
+      --navy-card:   #1A2235;
+      --navy-border: #2A3550;
+      --gold:        #C9A84C;
+      --gold-light:  #E2C97E;
+      --gold-glow:   rgba(201,168,76,0.15);
+      --gold-border: rgba(201,168,76,0.35);
+      --text-bright: #E8ECF4;
+      --text-main:   #C4CEDE;
+      --text-muted:  #6B7A96;
+      --radius-sm:   6px;
+      --radius-md:   10px;
+      --radius-lg:   16px;
+      --red:         #e03535;
+      --green:       #22c55e;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--navy-deep);
+      color: var(--text-main);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ═══ LOGIN SCREEN ═══ */
+    #loginScreen {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem;
+    }
+    .login-box {
+      background: var(--navy-card);
+      border: 1px solid var(--gold-border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      width: 100%; max-width: 380px;
+      text-align: center;
+    }
+    .login-logo {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 2rem; font-weight: 700;
+      color: var(--gold); letter-spacing: 0.1em;
+      margin-bottom: 0.25rem;
+    }
+    .login-badge {
+      display: inline-block;
+      background: var(--gold-glow);
+      border: 1px solid var(--gold-border);
+      color: var(--gold);
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 12px; border-radius: 20px;
+      margin-bottom: 2rem;
+    }
+    .login-box input {
+      width: 100%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--navy-border);
+      border-radius: var(--radius-sm);
+      padding: 12px 14px;
+      font-size: 14px; color: var(--text-bright);
+      font-family: 'DM Sans', sans-serif;
+      outline: none; margin-bottom: 1rem;
+      transition: border-color 0.2s;
+    }
+    .login-box input:focus { border-color: var(--gold); }
+    .login-error {
+      font-size: 12px; color: #f87171;
+      min-height: 16px; margin-bottom: 0.75rem;
+    }
+    .btn-gold {
+      width: 100%;
+      background: var(--gold); color: var(--navy-deep);
+      border: none; border-radius: var(--radius-sm);
+      padding: 13px; font-size: 14px; font-weight: 700;
+      font-family: 'Rajdhani', sans-serif; letter-spacing: 0.05em;
+      cursor: pointer; transition: background 0.2s, opacity 0.2s;
+    }
+    .btn-gold:hover { background: var(--gold-light); }
+    .btn-gold:disabled { opacity: 0.55; cursor: not-allowed; }
+
+    /* ═══ DASHBOARD ═══ */
+    #dashboard { display: none; }
+
+    .topbar {
+      background: var(--navy-mid);
+      border-bottom: 1px solid var(--gold-border);
+      padding: 0 1.5rem; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 10;
+    }
+    .topbar-logo {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.4rem; font-weight: 700; color: var(--gold);
+      letter-spacing: 0.1em;
+    }
+    .topbar-logo span {
+      font-size: 12px; color: var(--text-muted);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400; margin-left: 10px;
+    }
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
+    .admin-email { font-size: 13px; color: var(--text-muted); }
+    .btn-logout {
+      background: none; border: 1px solid rgba(224,53,53,0.3);
+      color: #f87171; border-radius: var(--radius-sm);
+      padding: 6px 14px; font-size: 13px; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-logout:hover { background: rgba(224,53,53,0.1); }
+    .btn-volver {
+      background: var(--gold-glow); border: 1px solid var(--gold-border);
+      color: var(--gold); border-radius: var(--radius-sm);
+      padding: 6px 14px; font-size: 13px; cursor: pointer;
+      text-decoration: none; display: flex; align-items: center; gap: 6px;
+      transition: background 0.2s;
+    }
+    .btn-volver:hover { background: rgba(201,168,76,0.25); }
+
+    .admin-container {
+      max-width: 1000px; margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* ═══ STATS ═══ */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem; margin-bottom: 2rem;
+    }
+    .stat-card {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: var(--radius-md);
+      padding: 1.25rem 1.5rem;
+    }
+    .stat-label { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .stat-value { font-family: 'Rajdhani', sans-serif; font-size: 2rem; font-weight: 700; color: var(--gold); }
+
+    /* ═══ FORMULARIO ═══ */
+    .section-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.3rem; font-weight: 700;
+      color: var(--text-bright); margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .form-card {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem; margin-bottom: 2rem;
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label {
+      font-size: 12px; font-weight: 500;
+      color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .form-group input,
+    .form-group select {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--navy-border);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 14px; color: var(--text-bright);
+      font-family: 'DM Sans', sans-serif;
+      outline: none; width: 100%;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus { border-color: var(--gold); }
+    .form-group select option { background: var(--navy-mid); }
+
+    .form-check {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 14px; color: var(--text-main); cursor: pointer;
+      padding: 10px 0;
+    }
+    .form-check input[type="checkbox"] {
+      width: 18px; height: 18px; cursor: pointer;
+      accent-color: var(--gold);
+    }
+
+    .img-preview {
+      width: 100%; max-height: 160px; object-fit: cover;
+      border-radius: var(--radius-md); margin-top: 8px;
+      border: 1px solid var(--navy-border);
+      display: none;
+    }
+
+    .form-actions { display: flex; gap: 10px; margin-top: 1.25rem; flex-wrap: wrap; }
+    .btn-submit {
+      background: var(--gold); color: var(--navy-deep);
+      border: none; border-radius: var(--radius-sm);
+      padding: 11px 24px; font-size: 14px; font-weight: 700;
+      font-family: 'Rajdhani', sans-serif; letter-spacing: 0.05em;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .btn-submit:hover { background: var(--gold-light); }
+    .btn-cancel {
+      background: none; border: 1px solid var(--navy-border);
+      color: var(--text-muted); border-radius: var(--radius-sm);
+      padding: 11px 24px; font-size: 14px; cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-cancel:hover { border-color: var(--text-muted); color: var(--text-bright); }
+
+    .form-msg {
+      font-size: 13px; padding: 10px 14px;
+      border-radius: var(--radius-sm); margin-top: 0.75rem;
+      display: none;
+    }
+    .form-msg.ok  { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); color: var(--green); }
+    .form-msg.err { background: rgba(224,53,53,0.1);  border: 1px solid rgba(224,53,53,0.3);  color: #f87171; }
+
+    /* ═══ TABLA ═══ */
+    .productos-header {
+      display: flex; align-items: center;
+      justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 10px;
+    }
+    .search-admin {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--navy-border);
+      border-radius: var(--radius-sm);
+      padding: 8px 14px; font-size: 13px;
+      color: var(--text-bright); font-family: 'DM Sans', sans-serif;
+      outline: none; width: 220px; transition: border-color 0.2s;
+    }
+    .search-admin:focus { border-color: var(--gold); }
+
+    .tabla-wrap {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .tabla-productos {
+      width: 100%; border-collapse: collapse;
+    }
+    .tabla-productos thead tr {
+      background: rgba(255,255,255,0.03);
+      border-bottom: 1px solid var(--navy-border);
+    }
+    .tabla-productos th {
+      padding: 12px 16px; text-align: left;
+      font-size: 11px; font-weight: 600;
+      color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em;
+    }
+    .tabla-productos td {
+      padding: 12px 16px; font-size: 13px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      color: var(--text-main);
+    }
+    .tabla-productos tbody tr:last-child td { border-bottom: none; }
+    .tabla-productos tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+    .prod-thumb {
+      width: 44px; height: 44px; object-fit: cover;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--navy-border);
+    }
+    .badge-stock-ok  { color: var(--green); font-weight: 600; }
+    .badge-stock-no  { color: #f87171; font-weight: 600; }
+    .badge-nuevo {
+      background: rgba(59,130,246,0.15); color: #93C5FD;
+      border: 1px solid rgba(59,130,246,0.35);
+      font-size: 10px; padding: 2px 8px; border-radius: 20px;
+    }
+
+    .btn-editar {
+      background: var(--gold-glow); border: 1px solid var(--gold-border);
+      color: var(--gold); border-radius: var(--radius-sm);
+      padding: 5px 12px; font-size: 12px; cursor: pointer;
+      transition: background 0.2s; margin-right: 6px;
+    }
+    .btn-editar:hover { background: rgba(201,168,76,0.25); }
+    .btn-borrar {
+      background: rgba(224,53,53,0.1); border: 1px solid rgba(224,53,53,0.3);
+      color: #f87171; border-radius: var(--radius-sm);
+      padding: 5px 12px; font-size: 12px; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-borrar:hover { background: rgba(224,53,53,0.2); }
+
+    .tabla-empty {
+      text-align: center; padding: 2.5rem;
+      color: var(--text-muted); font-size: 14px;
+    }
+    .loading-row td {
+      text-align: center; padding: 2rem;
+      color: var(--text-muted); font-size: 14px;
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 640px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: 1; }
+      .admin-email { display: none; }
+      .tabla-productos th:nth-child(3),
+      .tabla-productos td:nth-child(3),
+      .tabla-productos th:nth-child(5),
+      .tabla-productos td:nth-child(5) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ PANTALLA DE LOGIN ═══ -->
+  <div id="loginScreen">
+    <div class="login-box">
+      <div class="login-logo">LeopardX</div>
+      <span class="login-badge">Panel Admin</span>
+      <input type="email"    id="adminEmail"    placeholder="Email de administrador">
+      <input type="password" id="adminPassword" placeholder="Contraseña">
+      <div class="login-error" id="loginError"></div>
+      <button class="btn-gold" id="btnLogin">Ingresar</button>
+    </div>
+  </div>
+
+  <!-- ═══ DASHBOARD ═══ -->
+  <div id="dashboard">
+    <div class="topbar">
+      <div class="topbar-logo">
+        LeopardX <span>Panel de Administración</span>
+      </div>
+      <div class="topbar-right">
+        <span class="admin-email" id="adminEmailDisplay"></span>
+        <a href="index.html" class="btn-volver">← Ver tienda</a>
+        <button class="btn-logout" id="btnLogout">Salir</button>
+      </div>
+    </div>
+
+    <div class="admin-container">
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Total productos</div>
+          <div class="stat-value" id="statTotal">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Con stock</div>
+          <div class="stat-value" id="statConStock">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Sin stock</div>
+          <div class="stat-value" id="statSinStock">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Nuevos</div>
+          <div class="stat-value" id="statNuevos">—</div>
+        </div>
+      </div>
+
+      <!-- Formulario agregar / editar -->
+      <div class="section-title" id="formTitle">➕ Agregar producto</div>
+      <div class="form-card">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Nombre *</label>
+            <input type="text" id="fNombre" placeholder="Ej: Auriculares AKG">
+          </div>
+          <div class="form-group">
+            <label>Precio (ARS) *</label>
+            <input type="number" id="fPrecio" placeholder="Ej: 25000" min="0">
+          </div>
+          <div class="form-group">
+            <label>Categoría *</label>
+            <select id="fCategoria">
+              <option value="">— Seleccioná —</option>
+              <option value="Auriculares">Auriculares</option>
+              <option value="Relojes">Relojes</option>
+              <option value="Parlantes">Parlantes</option>
+              <option value="Accesorios">Accesorios</option>
+              <option value="Gaming">Gaming</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Stock *</label>
+            <input type="number" id="fStock" placeholder="Ej: 10" min="0">
+          </div>
+          <div class="form-group full">
+            <label>URL de imagen *</label>
+            <input type="url" id="fImg" placeholder="https://firebasestorage.googleapis.com/...">
+            <img id="imgPreview" class="img-preview" alt="Preview">
+          </div>
+        </div>
+        <label class="form-check">
+          <input type="checkbox" id="fNuevo">
+          Marcar como NUEVO
+        </label>
+        <div class="form-actions">
+          <button class="btn-submit" id="btnGuardar">Guardar producto</button>
+          <button class="btn-cancel" id="btnCancelar" style="display:none">Cancelar edición</button>
+        </div>
+        <div class="form-msg" id="formMsg"></div>
+      </div>
+
+      <!-- Lista de productos -->
+      <div class="productos-header">
+        <div class="section-title" style="margin:0">📦 Productos en tienda</div>
+        <input type="text" class="search-admin" id="searchAdmin" placeholder="Buscar producto...">
+      </div>
+      <div class="tabla-wrap">
+        <table class="tabla-productos">
+          <thead>
+            <tr>
+              <th>Imagen</th>
+              <th>Nombre</th>
+              <th>Categoría</th>
+              <th>Precio</th>
+              <th>Stock</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tablaBody">
+            <tr class="loading-row"><td colspan="6">Cargando productos...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp }    from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut }
+      from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc }
+      from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    // ── Config ──
+    const firebaseConfig = {
+      apiKey: "AIzaSyDA4oxTvYgrv7NKdhreFq_0eJFQ8EKlCUA",
+      authDomain: "leopardx.firebaseapp.com",
+      projectId: "leopardx",
+      storageBucket: "leopardx.firebasestorage.app",
+      messagingSenderId: "20322051861",
+      appId: "1:20322051861:web:3764871bfc4b7f30b96b1c"
+    };
+
+    // ── EMAIL de administrador ──
+const ADMIN_EMAILS = ["miltonpascualon@gmail.com", "cantaruttijean600@gmail.com"];
+
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+
+    let productos = [];   // cache local
+    let editandoId = null; // id del doc que se está editando
+
+    // ── AUTH ──
+    onAuthStateChanged(auth, user => {
+     if (user && ADMIN_EMAILS.includes(user.email)) {
+        document.getElementById('loginScreen').style.display  = 'none';
+        document.getElementById('dashboard').style.display    = 'block';
+        document.getElementById('adminEmailDisplay').textContent = user.email;
+        cargarProductos();
+      } else if (user) {
+        // Logueado pero no es admin
+        signOut(auth);
+        mostrarError('loginError', 'No tenés permisos de administrador.');
+      } else {
+        document.getElementById('loginScreen').style.display  = 'flex';
+        document.getElementById('dashboard').style.display    = 'none';
+      }
+    });
+
+    document.getElementById('btnLogin').addEventListener('click', async () => {
+      const email    = document.getElementById('adminEmail').value.trim();
+      const password = document.getElementById('adminPassword').value;
+      const btn      = document.getElementById('btnLogin');
+      const errEl    = document.getElementById('loginError');
+      errEl.textContent = '';
+      btn.disabled = true; btn.textContent = 'Ingresando...';
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+      } catch (e) {
+        errEl.textContent = 'Email o contraseña incorrectos.';
+        btn.disabled = false; btn.textContent = 'Ingresar';
+      }
+    });
+
+    document.getElementById('btnLogout').addEventListener('click', () => signOut(auth));
+
+    // ── PREVIEW IMAGEN ──
+    document.getElementById('fImg').addEventListener('input', function () {
+      const preview = document.getElementById('imgPreview');
+      if (this.value.startsWith('http')) {
+        preview.src = this.value;
+        preview.style.display = 'block';
+        preview.onerror = () => { preview.style.display = 'none'; };
+      } else {
+        preview.style.display = 'none';
+      }
+    });
+
+    // ── CARGAR PRODUCTOS ──
+    async function cargarProductos() {
+      const tbody = document.getElementById('tablaBody');
+      tbody.innerHTML = '<tr class="loading-row"><td colspan="6">Cargando...</td></tr>';
+      try {
+        const snap = await getDocs(collection(db, "productos"));
+        productos = [];
+        snap.forEach(d => productos.push({ id: d.id, ...d.data() }));
+        renderTabla(productos);
+        actualizarStats(productos);
+      } catch (e) {
+        tbody.innerHTML = `<tr class="loading-row"><td colspan="6" style="color:#f87171">Error al cargar: ${e.message}</td></tr>`;
+      }
+    }
+
+    function renderTabla(lista) {
+      const tbody = document.getElementById('tablaBody');
+      if (lista.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" class="tabla-empty">No hay productos todavía.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = lista.map(p => `
+        <tr>
+          <td><img class="prod-thumb" src="${p.img}" alt="${p.nombre}" onerror="this.style.opacity=0.3"></td>
+          <td>
+            <strong style="color:var(--text-bright)">${p.nombre}</strong>
+            ${p.nuevo ? '<br><span class="badge-nuevo">NUEVO</span>' : ''}
+          </td>
+          <td>${p.categoria || '—'}</td>
+          <td style="color:var(--gold);font-weight:700">$${Number(p.precio).toLocaleString('es-AR')}</td>
+          <td class="${p.stock > 0 ? 'badge-stock-ok' : 'badge-stock-no'}">
+            ${p.stock > 0 ? p.stock + ' uds.' : 'Sin stock'}
+          </td>
+          <td>
+            <button class="btn-editar" onclick="editarProducto('${p.id}')">Editar</button>
+            <button class="btn-borrar" onclick="borrarProducto('${p.id}', '${p.nombre}')">Borrar</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function actualizarStats(lista) {
+      document.getElementById('statTotal').textContent    = lista.length;
+      document.getElementById('statConStock').textContent = lista.filter(p => p.stock > 0).length;
+      document.getElementById('statSinStock').textContent = lista.filter(p => p.stock === 0).length;
+      document.getElementById('statNuevos').textContent   = lista.filter(p => p.nuevo).length;
+    }
+
+    // ── GUARDAR / EDITAR ──
+    document.getElementById('btnGuardar').addEventListener('click', async () => {
+      const nombre    = document.getElementById('fNombre').value.trim();
+      const precio    = Number(document.getElementById('fPrecio').value);
+      const categoria = document.getElementById('fCategoria').value;
+      const stock     = Number(document.getElementById('fStock').value);
+      const img       = document.getElementById('fImg').value.trim();
+      const nuevo     = document.getElementById('fNuevo').checked;
+      const msgEl     = document.getElementById('formMsg');
+
+      if (!nombre || !precio || !categoria || stock === '' || !img) {
+        mostrarMsg(msgEl, 'Completá todos los campos obligatorios.', 'err');
+        return;
+      }
+
+      const datos = { nombre, precio, categoria, stock, img, nuevo };
+      const btn   = document.getElementById('btnGuardar');
+      btn.disabled = true; btn.textContent = 'Guardando...';
+
+      try {
+        if (editandoId) {
+          await updateDoc(doc(db, "productos", editandoId), datos);
+          mostrarMsg(msgEl, '✓ Producto actualizado correctamente.', 'ok');
+        } else {
+          await addDoc(collection(db, "productos"), datos);
+          mostrarMsg(msgEl, '✓ Producto agregado correctamente.', 'ok');
+        }
+        resetForm();
+        await cargarProductos();
+      } catch (e) {
+        mostrarMsg(msgEl, `Error: ${e.message}`, 'err');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = editandoId ? 'Actualizar producto' : 'Guardar producto';
+      }
+    });
+
+    // ── EDITAR ──
+    window.editarProducto = function(id) {
+      const p = productos.find(x => x.id === id);
+      if (!p) return;
+      editandoId = id;
+      document.getElementById('fNombre').value          = p.nombre;
+      document.getElementById('fPrecio').value          = p.precio;
+      document.getElementById('fCategoria').value       = p.categoria || '';
+      document.getElementById('fStock').value           = p.stock;
+      document.getElementById('fImg').value             = p.img;
+      document.getElementById('fNuevo').checked         = p.nuevo || false;
+      document.getElementById('formTitle').textContent  = '✏️ Editando: ' + p.nombre;
+      document.getElementById('btnGuardar').textContent = 'Actualizar producto';
+      document.getElementById('btnCancelar').style.display = 'inline-block';
+
+      // Preview
+      const preview = document.getElementById('imgPreview');
+      preview.src = p.img; preview.style.display = 'block';
+
+      // Scroll al form
+      document.getElementById('formTitle').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('formMsg').style.display = 'none';
+    };
+
+    document.getElementById('btnCancelar').addEventListener('click', resetForm);
+
+    function resetForm() {
+      editandoId = null;
+      document.getElementById('fNombre').value          = '';
+      document.getElementById('fPrecio').value          = '';
+      document.getElementById('fCategoria').value       = '';
+      document.getElementById('fStock').value           = '';
+      document.getElementById('fImg').value             = '';
+      document.getElementById('fNuevo').checked         = false;
+      document.getElementById('imgPreview').style.display = 'none';
+      document.getElementById('formTitle').textContent  = '➕ Agregar producto';
+      document.getElementById('btnGuardar').textContent = 'Guardar producto';
+      document.getElementById('btnCancelar').style.display = 'none';
+      document.getElementById('formMsg').style.display  = 'none';
+    }
+
+    // ── BORRAR ──
+    window.borrarProducto = async function(id, nombre) {
+      if (!confirm(`¿Seguro que querés borrar "${nombre}"? Esta acción no se puede deshacer.`)) return;
+      try {
+        await deleteDoc(doc(db, "productos", id));
+        await cargarProductos();
+      } catch (e) {
+        alert('Error al borrar: ' + e.message);
+      }
+    };
+
+    // ── BUSCADOR ──
+    document.getElementById('searchAdmin').addEventListener('input', function () {
+      const texto = this.value.toLowerCase();
+      const filtrados = productos.filter(p =>
+        p.nombre.toLowerCase().includes(texto) ||
+        (p.categoria || '').toLowerCase().includes(texto)
+      );
+      renderTabla(filtrados);
+    });
+
+    // ── HELPERS ──
+    function mostrarMsg(el, texto, tipo) {
+      el.textContent = texto;
+      el.className   = `form-msg ${tipo}`;
+      el.style.display = 'block';
+      setTimeout(() => { el.style.display = 'none'; }, 4000);
+    }
+    function mostrarError(id, texto) {
+      document.getElementById(id).textContent = texto;
+    }
+  </script>
+
+</body>
+</html>
