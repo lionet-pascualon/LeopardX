@@ -90,3 +90,9 @@ function traducirError(code) {
     'auth/too-many-requests':       'Demasiados intentos. Esperá un momento.',
   };
   return errores[code] || 'Ocurrió un error. Intentá de nuevo.';
+
+  // OPENAUTH:
+window.openAuth = function() {
+  document.getElementById('authModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+};
