@@ -1,5 +1,5 @@
 
-import { auth } from "./firebase.js";
+import { auth } from "/LeopardX/firebase.js";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
