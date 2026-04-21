@@ -92,7 +92,19 @@ function traducirError(code) {
   return errores[code] || 'Ocurrió un error. Intentá de nuevo.';
 
   // OPENAUTH:
-window.openAuth = function() {
+window.openAuth = function () {
   document.getElementById('authModal').style.display = 'flex';
   document.body.style.overflow = 'hidden';
+};
+
+window.closeAuth = function () {
+  document.getElementById('authModal').style.display = 'none';
+  document.body.style.overflow = '';
+  document.getElementById('authError').innerText = '';
+  document.getElementById('authEmail').value = '';
+  document.getElementById('authPassword').value = '';
+};
+
+window.cerrarAuthFuera = function (e) {
+  if (e.target === document.getElementById('authModal')) window.closeAuth();
 };
