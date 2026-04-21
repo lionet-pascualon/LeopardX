@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LeopardX | Panel Vendedor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --navy-deep:   #0A0E1A;
+      --navy-mid:    #111827;
+      --navy-card:   #1A2235;
+      --navy-border: #2A3550;
+      --gold:        #C9A84C;
+      --gold-light:  #E2C97E;
+      --gold-glow:   rgba(201,168,76,0.15);
+      --gold-border: rgba(201,168,76,0.35);
+      --text-bright: #E8ECF4;
+      --text-main:   #C4CEDE;
+      --text-muted:  #6B7A96;
+      --radius-sm:   6px;
+      --radius-md:   10px;
+      --radius-lg:   16px;
+      --green:       #22c55e;
+      --red:         #e03535;
+      --yellow:      #f59e0b;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--navy-deep);
+      color: var(--text-main);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* ═══ AUTH SCREEN ═══ */
+    #authScreen {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1rem;
+    }
+    .auth-box {
+      background: var(--navy-card);
+      border: 1px solid var(--gold-border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      width: 100%; max-width: 400px;
+      text-align: center;
+    }
+    .auth-logo {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 2rem; font-weight: 700;
+      color: var(--gold); letter-spacing: 0.1em; margin-bottom: 0.25rem;
+    }
+    .auth-badge {
+      display: inline-block;
+      background: var(--gold-glow); border: 1px solid var(--gold-border);
+      color: var(--gold); font-size: 11px; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 12px; border-radius: 20px; margin-bottom: 1.5rem;
+    }
+    .auth-tabs {
+      display: flex; background: rgba(255,255,255,0.04);
+      border: 1px solid var(--navy-border);
+      border-radius: 50px; padding: 4px; gap: 4px; margin-bottom: 1.5rem;
+    }
+    .auth-tab {
+      flex: 1; padding: 8px; border: none; border-radius: 50px;
+      background: transparent; color: var(--text-muted);
+      font-family: 'DM Sans', sans-serif; font-size: 13px;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .auth-tab.active { background: var(--gold); color: var(--navy-deep); font-weight: 600; }
+    .auth-box input {
+      width: 100%; background: rgba(255,255,255,0.05);
+      border: 1px solid var(--navy-border); border-radius: var(--radius-sm);
+      padding: 12px 14px; font-size: 14px; color: var(--text-bright);
+      font-family: 'DM Sans', sans-serif; outline: none; margin-bottom: 0.75rem;
+      transition: border-color 0.2s;
+    }
+    .auth-box input:focus { border-color: var(--gold); }
+    .auth-error { font-size: 12px; color: #f87171; min-height: 16px; margin-bottom: 0.5rem; }
+    .btn-gold {
+      width: 100%; background: var(--gold); color: var(--navy-deep);
+      border: none; border-radius: var(--radius-sm);
+      padding: 13px; font-size: 14px; font-weight: 700;
+      font-family: 'Rajdhani', sans-serif; letter-spacing: 0.05em;
+      cursor: pointer; transition: background 0.2s, opacity 0.2s;
+    }
+    .btn-gold:hover { background: var(--gold-light); }
+    .btn-gold:disabled { opacity: 0.55; cursor: not-allowed; }
+    .auth-footer-link {
+      margin-top: 1rem; font-size: 13px; color: var(--text-muted);
+    }
+    .auth-footer-link a { color: var(--gold); text-decoration: underline; }
+
+    /* ═══ DASHBOARD ═══ */
+    #dashboard { display: none; }
+
+    .topbar {
+      background: var(--navy-mid);
+      border-bottom: 1px solid var(--gold-border);
+      padding: 0 1.5rem; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 10;
+    }
+    .topbar-logo {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.4rem; font-weight: 700; color: var(--gold); letter-spacing: 0.1em;
+    }
+    .topbar-logo span {
+      font-size: 12px; color: var(--text-muted);
+      font-family: 'DM Sans', sans-serif; font-weight: 400; margin-left: 8px;
+    }
+    .topbar-right { display: flex; align-items: center; gap: 10px; }
+    .user-email { font-size: 12px; color: var(--text-muted); }
+    .btn-outline {
+      background: none; border: 1px solid var(--navy-border);
+      color: var(--text-muted); border-radius: var(--radius-sm);
+      padding: 6px 14px; font-size: 13px; cursor: pointer;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--text-muted); color: var(--text-bright); }
+    .btn-danger {
+      background: none; border: 1px solid rgba(224,53,53,0.3);
+      color: #f87171; border-radius: var(--radius-sm);
+      padding: 6px 14px; font-size: 13px; cursor: pointer; transition: background 0.2s;
+    }
+    .btn-danger:hover { background: rgba(224,53,53,0.1); }
+
+    .container { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+    /* ═══ ESTADO DE CUENTA ═══ */
+    .account-status {
+      border-radius: var(--radius-md); padding: 1rem 1.25rem;
+      margin-bottom: 1.5rem; display: flex; align-items: center; gap: 12px;
+      font-size: 14px;
+    }
+    .account-status.pendiente {
+      background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.3);
+      color: var(--yellow);
+    }
+    .account-status.aprobado {
+      background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3);
+      color: var(--green);
+    }
+    .account-status.rechazado {
+      background: rgba(224,53,53,0.1); border: 1px solid rgba(224,53,53,0.3);
+      color: #f87171;
+    }
+    .status-icon { font-size: 1.4rem; flex-shrink: 0; }
+
+    /* ═══ FORM ═══ */
+    .section-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.2rem; font-weight: 700;
+      color: var(--text-bright); margin-bottom: 1rem;
+    }
+    .form-card {
+      background: var(--navy-card); border: 1px solid var(--navy-border);
+      border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 2rem;
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label {
+      font-size: 12px; font-weight: 500; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      background: rgba(255,255,255,0.05); border: 1px solid var(--navy-border);
+      border-radius: var(--radius-sm); padding: 10px 14px;
+      font-size: 14px; color: var(--text-bright);
+      font-family: 'DM Sans', sans-serif; outline: none; width: 100%;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: var(--gold); }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+    .form-group select option { background: var(--navy-mid); }
+    .img-preview {
+      width: 100%; max-height: 150px; object-fit: cover;
+      border-radius: var(--radius-md); margin-top: 8px;
+      border: 1px solid var(--navy-border); display: none;
+    }
+    .form-msg {
+      font-size: 13px; padding: 10px 14px; border-radius: var(--radius-sm);
+      margin-top: 0.75rem; display: none;
+    }
+    .form-msg.ok  { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); color: var(--green); }
+    .form-msg.err { background: rgba(224,53,53,0.1);  border: 1px solid rgba(224,53,53,0.3);  color: #f87171; }
+    .btn-submit {
+      background: var(--gold); color: var(--navy-deep);
+      border: none; border-radius: var(--radius-sm);
+      padding: 11px 28px; font-size: 14px; font-weight: 700;
+      font-family: 'Rajdhani', sans-serif; cursor: pointer;
+      margin-top: 1.25rem; transition: background 0.2s;
+    }
+    .btn-submit:hover { background: var(--gold-light); }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* ═══ MIS PRODUCTOS ═══ */
+    .mis-productos { display: grid; gap: 1rem; }
+    .mp-card {
+      background: var(--navy-card); border: 1px solid var(--navy-border);
+      border-radius: var(--radius-md); padding: 1rem;
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .mp-img {
+      width: 70px; height: 70px; object-fit: cover;
+      border-radius: var(--radius-sm); flex-shrink: 0;
+      border: 1px solid var(--navy-border);
+    }
+    .mp-info { flex: 1; min-width: 0; }
+    .mp-nombre { font-weight: 600; color: var(--text-bright); font-size: 15px; margin-bottom: 4px; }
+    .mp-precio { color: var(--gold); font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+    .mp-estado {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; font-weight: 600; padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .mp-estado.pendiente { background: rgba(245,158,11,0.15); color: var(--yellow); border: 1px solid rgba(245,158,11,0.3); }
+    .mp-estado.aprobado  { background: rgba(34,197,94,0.15);  color: var(--green);  border: 1px solid rgba(34,197,94,0.3); }
+    .mp-estado.rechazado { background: rgba(224,53,53,0.15);  color: #f87171;        border: 1px solid rgba(224,53,53,0.3); }
+    .mp-rechazo-msg { font-size: 12px; color: #f87171; margin-top: 6px; font-style: italic; }
+    .mp-actions { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; }
+    .btn-sm-danger {
+      background: none; border: 1px solid rgba(224,53,53,0.3);
+      color: #f87171; border-radius: var(--radius-sm);
+      padding: 5px 12px; font-size: 12px; cursor: pointer; transition: background 0.2s;
+    }
+    .btn-sm-danger:hover { background: rgba(224,53,53,0.15); }
+    .empty-state {
+      text-align: center; padding: 2.5rem; color: var(--text-muted); font-size: 14px;
+    }
+    .loading-text { text-align: center; padding: 1.5rem; color: var(--text-muted); font-size: 14px; }
+
+    /* ═══ BLOQUEADO ═══ */
+    .blocked-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px); z-index: 50;
+      display: flex; align-items: center; justify-content: center; padding: 1rem;
+    }
+    .blocked-box {
+      background: var(--navy-card); border: 2px solid rgba(224,53,53,0.4);
+      border-radius: var(--radius-lg); padding: 2rem; max-width: 420px;
+      text-align: center;
+    }
+    .blocked-box h3 { font-family: 'Rajdhani', sans-serif; color: #f87171; font-size: 1.4rem; margin-bottom: 0.75rem; }
+    .blocked-box p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+    @media (max-width: 600px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: 1; }
+      .user-email { display: none; }
+      .mp-card { flex-direction: column; }
+      .mp-actions { flex-direction: row; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ AUTH SCREEN ═══ -->
+  <div id="authScreen">
+    <div class="auth-box">
+      <div class="auth-logo">LeopardX</div>
+      <span class="auth-badge">Portal Vendedores</span>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabLogin" onclick="switchTab('login')">Iniciar sesión</button>
+        <button class="auth-tab" id="tabRegister" onclick="switchTab('register')">Registrarme</button>
+      </div>
+
+      <div id="panelLogin">
+        <input type="email"    id="loginEmail"    placeholder="Tu email">
+        <input type="password" id="loginPassword" placeholder="Tu contraseña">
+        <div class="auth-error" id="loginError"></div>
+        <button class="btn-gold" id="btnLogin">Ingresar</button>
+      </div>
+
+      <div id="panelRegister" style="display:none">
+        <input type="text"     id="regNombre"   placeholder="Tu nombre completo">
+        <input type="email"    id="regEmail"    placeholder="Tu email">
+        <input type="password" id="regPassword" placeholder="Contraseña (mín. 6 caracteres)">
+        <div class="auth-error" id="registerError"></div>
+        <button class="btn-gold" id="btnRegister">Crear cuenta</button>
+        <p style="font-size:12px; color:var(--text-muted); margin-top:0.75rem; line-height:1.5">
+          Tu cuenta quedará <strong style="color:var(--yellow)">pendiente de aprobación</strong> por el equipo LeopardX antes de poder publicar.
+        </p>
+      </div>
+
+      <div class="auth-footer-link">
+        <a href="index.html">← Volver a la tienda</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ DASHBOARD ═══ -->
+  <div id="dashboard">
+    <div class="topbar">
+      <div class="topbar-logo">LeopardX <span>Portal Vendedores</span></div>
+      <div class="topbar-right">
+        <span class="user-email" id="userEmailDisplay"></span>
+        <a href="index.html" class="btn-outline">← Ver tienda</a>
+        <button class="btn-danger" id="btnLogout">Salir</button>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!-- Estado de la cuenta -->
+      <div id="accountStatus"></div>
+
+      <!-- Formulario publicar producto -->
+      <div id="seccionPublicar" style="display:none">
+        <div class="section-title">📦 Publicar nuevo producto</div>
+        <div class="form-card">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>Nombre del producto *</label>
+              <input type="text" id="pNombre" placeholder="Ej: Auriculares Bluetooth">
+            </div>
+            <div class="form-group">
+              <label>Precio (ARS) *</label>
+              <input type="number" id="pPrecio" placeholder="Ej: 18000" min="0">
+            </div>
+            <div class="form-group">
+              <label>Categoría *</label>
+              <select id="pCategoria">
+                <option value="">— Seleccioná —</option>
+                <option value="Auriculares">Auriculares</option>
+                <option value="Relojes">Relojes</option>
+                <option value="Parlantes">Parlantes</option>
+                <option value="Accesorios">Accesorios</option>
+                <option value="Gaming">Gaming</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Stock disponible *</label>
+              <input type="number" id="pStock" placeholder="Ej: 5" min="1">
+            </div>
+            <div class="form-group full">
+              <label>URL de imagen *</label>
+              <input type="url" id="pImg" placeholder="https://...">
+              <img id="pImgPreview" class="img-preview" alt="Preview">
+            </div>
+            <div class="form-group full">
+              <label>Descripción del producto *</label>
+              <textarea id="pDesc" placeholder="Describí brevemente tu producto, características, estado (nuevo/usado), etc."></textarea>
+            </div>
+            <div class="form-group full">
+              <label>Tu WhatsApp de contacto *</label>
+              <input type="tel" id="pWhatsapp" placeholder="Ej: 3512345678 (sin espacios ni guiones)">
+            </div>
+          </div>
+          <button class="btn-submit" id="btnPublicar">Enviar para revisión</button>
+          <div class="form-msg" id="pubMsg"></div>
+        </div>
+      </div>
+
+      <!-- Mis productos -->
+      <div class="section-title">🗂 Mis publicaciones</div>
+      <div id="misProductos"><p class="loading-text">Cargando...</p></div>
+
+    </div>
+  </div>
+
+  <script>
+    function switchTab(tab) {
+      document.getElementById('panelLogin').style.display    = tab === 'login'    ? 'block' : 'none';
+      document.getElementById('panelRegister').style.display = tab === 'register' ? 'block' : 'none';
+      document.getElementById('tabLogin').classList.toggle('active',    tab === 'login');
+      document.getElementById('tabRegister').classList.toggle('active', tab === 'register');
+    }
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import {
+      getAuth, signInWithEmailAndPassword,
+      createUserWithEmailAndPassword, onAuthStateChanged, signOut
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import {
+      getFirestore, collection, addDoc, getDocs,
+      query, where, doc, getDoc, setDoc, deleteDoc, updateDoc
+    } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDA4oxTvYgrv7NKdhreFq_0eJFQ8EKlCUA",
+      authDomain: "leopardx.firebaseapp.com",
+      projectId: "leopardx",
+      storageBucket: "leopardx.firebasestorage.app",
+      messagingSenderId: "20322051861",
+      appId: "1:20322051861:web:3764871bfc4b7f30b96b1c"
+    };
+
+    const app  = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db   = getFirestore(app);
+
+    // ── AUTH STATE ──
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        document.getElementById('authScreen').style.display  = 'none';
+        document.getElementById('dashboard').style.display   = 'block';
+        document.getElementById('userEmailDisplay').textContent = user.email;
+        await verificarVendedor(user);
+      } else {
+        document.getElementById('authScreen').style.display  = 'flex';
+        document.getElementById('dashboard').style.display   = 'none';
+      }
+    });
+
+    // ── VERIFICAR ESTADO DEL VENDEDOR ──
+    async function verificarVendedor(user) {
+      const vendedorRef  = doc(db, "vendedores", user.uid);
+      const vendedorSnap = await getDoc(vendedorRef);
+      const statusEl     = document.getElementById('accountStatus');
+      const secPublicar  = document.getElementById('seccionPublicar');
+
+      if (!vendedorSnap.exists()) {
+        // Primera vez — crear perfil pendiente
+        await setDoc(vendedorRef, {
+          uid: user.uid, email: user.email,
+          nombre: user.displayName || user.email.split('@')[0],
+          estado: 'pendiente',
+          fechaRegistro: new Date().toISOString()
+        });
+      }
+
+      const vendedor = vendedorSnap.exists() ? vendedorSnap.data() : { estado: 'pendiente' };
+
+      if (vendedor.estado === 'aprobado') {
+        statusEl.innerHTML = `
+          <div class="account-status aprobado">
+            <span class="status-icon">✅</span>
+            <div><strong>Cuenta aprobada.</strong> Podés publicar tus productos y aparecerán en la sección "Otros Vendedores" de LeopardX.</div>
+          </div>`;
+        secPublicar.style.display = 'block';
+      } else if (vendedor.estado === 'rechazado') {
+        statusEl.innerHTML = `
+          <div class="account-status rechazado">
+            <span class="status-icon">❌</span>
+            <div><strong>Cuenta rechazada.</strong> ${vendedor.motivoRechazo || 'Contactá al equipo LeopardX para más información.'}</div>
+          </div>`;
+        secPublicar.style.display = 'none';
+      } else {
+        statusEl.innerHTML = `
+          <div class="account-status pendiente">
+            <span class="status-icon">⏳</span>
+            <div><strong>Cuenta pendiente de aprobación.</strong> El equipo LeopardX revisará tu solicitud. Te avisamos cuando esté lista.</div>
+          </div>`;
+        secPublicar.style.display = 'none';
+      }
+
+      cargarMisProductos(user.uid);
+    }
+
+    // ── LOGIN ──
+    document.getElementById('btnLogin').addEventListener('click', async () => {
+      const email    = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value;
+      const errEl    = document.getElementById('loginError');
+      const btn      = document.getElementById('btnLogin');
+      errEl.textContent = ''; btn.disabled = true; btn.textContent = 'Ingresando...';
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+      } catch (e) {
+        errEl.textContent = traducirError(e.code);
+        btn.disabled = false; btn.textContent = 'Ingresar';
+      }
+    });
+
+    // ── REGISTRO ──
+    document.getElementById('btnRegister').addEventListener('click', async () => {
+      const nombre   = document.getElementById('regNombre').value.trim();
+      const email    = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value;
+      const errEl    = document.getElementById('registerError');
+      const btn      = document.getElementById('btnRegister');
+
+      if (!nombre) { errEl.textContent = 'Ingresá tu nombre completo.'; return; }
+      errEl.textContent = ''; btn.disabled = true; btn.textContent = 'Creando cuenta...';
+
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        // Guardar perfil con nombre
+        await setDoc(doc(db, "vendedores", cred.user.uid), {
+          uid: cred.user.uid, email, nombre,
+          estado: 'pendiente',
+          fechaRegistro: new Date().toISOString()
+        });
+      } catch (e) {
+        errEl.textContent = traducirError(e.code);
+        btn.disabled = false; btn.textContent = 'Crear cuenta';
+      }
+    });
+
+    // ── LOGOUT ──
+    document.getElementById('btnLogout').addEventListener('click', () => signOut(auth));
+
+    // ── PREVIEW IMAGEN ──
+    document.getElementById('pImg').addEventListener('input', function () {
+      const preview = document.getElementById('pImgPreview');
+      if (this.value.startsWith('http')) {
+        preview.src = this.value; preview.style.display = 'block';
+        preview.onerror = () => { preview.style.display = 'none'; };
+      } else { preview.style.display = 'none'; }
+    });
+
+    // ── PUBLICAR PRODUCTO ──
+    document.getElementById('btnPublicar').addEventListener('click', async () => {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      const nombre    = document.getElementById('pNombre').value.trim();
+      const precio    = Number(document.getElementById('pPrecio').value);
+      const categoria = document.getElementById('pCategoria').value;
+      const stock     = Number(document.getElementById('pStock').value);
+      const img       = document.getElementById('pImg').value.trim();
+      const desc      = document.getElementById('pDesc').value.trim();
+      const whatsapp  = document.getElementById('pWhatsapp').value.trim();
+      const msgEl     = document.getElementById('pubMsg');
+      const btn       = document.getElementById('btnPublicar');
+
+      if (!nombre || !precio || !categoria || !stock || !img || !desc || !whatsapp) {
+        mostrarMsg(msgEl, 'Completá todos los campos obligatorios.', 'err'); return;
+      }
+
+      btn.disabled = true; btn.textContent = 'Enviando...';
+
+      try {
+        const vendedorSnap = await getDoc(doc(db, "vendedores", user.uid));
+        const vendedor = vendedorSnap.data();
+
+        await addDoc(collection(db, "productos_vendedores"), {
+          nombre, precio, categoria, stock, img, desc, whatsapp,
+          vendedorUid:    user.uid,
+          vendedorEmail:  user.email,
+          vendedorNombre: vendedor.nombre || user.email,
+          estado:         'pendiente',   // pendiente | aprobado | rechazado
+          fechaEnvio:     new Date().toISOString()
+        });
+
+        mostrarMsg(msgEl, '✓ Producto enviado. El equipo LeopardX lo revisará pronto.', 'ok');
+        // Limpiar form
+        ['pNombre','pPrecio','pCategoria','pStock','pImg','pDesc','pWhatsapp']
+          .forEach(id => document.getElementById(id).value = '');
+        document.getElementById('pImgPreview').style.display = 'none';
+        cargarMisProductos(user.uid);
+      } catch (e) {
+        mostrarMsg(msgEl, 'Error al enviar: ' + e.message, 'err');
+      } finally {
+        btn.disabled = false; btn.textContent = 'Enviar para revisión';
+      }
+    });
+
+    // ── MIS PRODUCTOS ──
+    async function cargarMisProductos(uid) {
+      const contenedor = document.getElementById('misProductos');
+      contenedor.innerHTML = '<p class="loading-text">Cargando tus publicaciones...</p>';
+      try {
+        const q    = query(collection(db, "productos_vendedores"), where("vendedorUid", "==", uid));
+        const snap = await getDocs(q);
+
+        if (snap.empty) {
+          contenedor.innerHTML = '<p class="empty-state">Todavía no publicaste ningún producto.</p>';
+          return;
+        }
+
+        const estadoLabel = {
+          pendiente: { texto: '⏳ Pendiente de revisión', clase: 'pendiente' },
+          aprobado:  { texto: '✅ Aprobado — visible en tienda', clase: 'aprobado' },
+          rechazado: { texto: '❌ Rechazado', clase: 'rechazado' }
+        };
+
+        contenedor.innerHTML = '<div class="mis-productos">' +
+          snap.docs.map(d => {
+            const p   = d.data();
+            const est = estadoLabel[p.estado] || estadoLabel.pendiente;
+            return `
+              <div class="mp-card">
+                <img class="mp-img" src="${p.img}" alt="${p.nombre}" onerror="this.style.opacity=0.3">
+                <div class="mp-info">
+                  <div class="mp-nombre">${p.nombre}</div>
+                  <div class="mp-precio">$${Number(p.precio).toLocaleString('es-AR')}</div>
+                  <span class="mp-estado ${est.clase}">${est.texto}</span>
+                  ${p.estado === 'rechazado' && p.motivoRechazo
+                    ? `<div class="mp-rechazo-msg">Motivo: ${p.motivoRechazo}</div>` : ''}
+                </div>
+                <div class="mp-actions">
+                  <button class="btn-sm-danger" onclick="eliminarPublicacion('${d.id}')">Eliminar</button>
+                </div>
+              </div>`;
+          }).join('') + '</div>';
+      } catch (e) {
+        contenedor.innerHTML = `<p class="empty-state" style="color:#f87171">Error: ${e.message}</p>`;
+      }
+    }
+
+    // ── ELIMINAR PUBLICACIÓN ──
+    window.eliminarPublicacion = async function(id) {
+      if (!confirm('¿Eliminás esta publicación?')) return;
+      try {
+        await deleteDoc(doc(db, "productos_vendedores", id));
+        cargarMisProductos(auth.currentUser.uid);
+      } catch (e) { alert('Error: ' + e.message); }
+    };
+
+    function traducirError(code) {
+      const e = {
+        'auth/invalid-email':        'Email inválido.',
+        'auth/user-not-found':       'No existe cuenta con ese email.',
+        'auth/wrong-password':       'Contraseña incorrecta.',
+        'auth/email-already-in-use': 'Ese email ya está registrado.',
+        'auth/weak-password':        'La contraseña debe tener al menos 6 caracteres.',
+        'auth/invalid-credential':   'Email o contraseña incorrectos.',
+        'auth/too-many-requests':    'Demasiados intentos. Esperá un momento.',
+      };
+      return e[code] || 'Ocurrió un error. Intentá de nuevo.';
+    }
+
+    function mostrarMsg(el, texto, tipo) {
+      el.textContent = texto; el.className = `form-msg ${tipo}`;
+      el.style.display = 'block';
+      setTimeout(() => { el.style.display = 'none'; }, 5000);
+    }
+  </script>
+
+</body>
+</html>
