@@ -141,26 +141,72 @@
   </svg>
 </a>
 
-  <!-- ═══ FOOTER ═══ -->
+   <!-- ═══ FOOTER ═══ -->
   <footer class="footer">
-    <div class="footer-bottom">
-      <div class="footer-logo">LeopardX</div>
-      <p>Córdoba, Argentina | UTN</p>
-      <p>Contacto Desarrollador: <a href="mailto:miltonpascualon543@gmail.com" style="color:var(--gold);">miltonpascualon543@gmail.com</a></p>
-      <div style="margin-top:10px;">
-        <a href="#" class="footer-terms"
-          onclick="event.preventDefault(); document.getElementById('modalTerminos').style.display='flex'; document.body.style.overflow='hidden'">
-          Términos y Condiciones
-        </a> · 
-        <a href="#" class="footer-terms"
-          onclick="event.preventDefault(); document.getElementById('modalPrivacidad').style.display='flex'; document.body.style.overflow='hidden'">
-          Privacidad
-        </a>
-      </div>
-      <p style="margin-top:15px; opacity:0.5;">© 2026 LeopardX - Proyecto Web</p>
-    </div>
-  </footer>
+  <div class="footer-bottom">
+    <div class="footer-logo">LeopardX</div>
+    <p>Córdoba, Argentina | UTN</p>
 
+    <!-- Newsletter -->
+    <div style="margin: 1.25rem auto; max-width: 360px;">
+      <p style="font-size:13px; color:var(--text-muted); margin-bottom:0.6rem;">
+        📩 Suscribite para recibir ofertas exclusivas
+      </p>
+      <form id="newsletterForm" action="https://formspree.io/f/xkoplepe" method="POST"
+        style="display:flex; gap:8px; flex-wrap:wrap; justify-content:center;">
+        <input type="email" name="email" placeholder="Tu email" required
+          style="flex:1; min-width:180px; background:rgba(255,255,255,0.05);
+          border:1px solid var(--navy-border); border-radius:var(--radius-sm);
+          padding:9px 14px; font-size:13px; color:var(--text-bright);
+          font-family:'DM Sans',sans-serif; outline:none;">
+        <button type="submit"
+          style="background:var(--gold); color:var(--navy-deep); border:none;
+          border-radius:var(--radius-sm); padding:9px 20px; font-size:13px;
+          font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif;">
+          Suscribirme
+        </button>
+      </form>
+      <p id="newsletterOk" style="display:none; color:var(--gold); font-size:13px; margin-top:8px;">
+        ✓ ¡Gracias! Te avisamos cuando haya ofertas.
+      </p>
+    </div>
+
+    <p>Contacto Desarrollador: <a href="mailto:miltonpascualon543@gmail.com" style="color:var(--gold);">miltonpascualon543@gmail.com</a></p>
+    <div style="margin-top:10px;">
+      <a href="#" class="footer-terms"
+        onclick="event.preventDefault(); document.getElementById('modalTerminos').style.display='flex'; document.body.style.overflow='hidden'">
+        Términos y Condiciones
+      </a> · 
+      <a href="#" class="footer-terms"
+        onclick="event.preventDefault(); document.getElementById('modalPrivacidad').style.display='flex'; document.body.style.overflow='hidden'">
+        Privacidad
+      </a>
+    </div>
+    <p style="margin-top:15px; opacity:0.5;">© 2026 LeopardX - Proyecto Web</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('newsletterForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn  = this.querySelector('button');
+    btn.textContent = 'Enviando...'; btn.disabled = true;
+    try {
+      const res = await fetch(this.action, {
+        method: 'POST', body: new FormData(this),
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        this.style.display = 'none';
+        document.getElementById('newsletterOk').style.display = 'block';
+      } else {
+        btn.textContent = 'Error, intentá de nuevo'; btn.disabled = false;
+      }
+    } catch {
+      btn.textContent = 'Sin conexión'; btn.disabled = false;
+    }
+  });
+</script>
   <!-- ═══ MODAL AVISO OTROS VENDEDORES ═══ -->
   <div id="warningModal" class="product-modal" onclick="cerrarWarningFuera(event)">
     <div class="auth-modal-content" style="max-width:400px; text-align:center;">
