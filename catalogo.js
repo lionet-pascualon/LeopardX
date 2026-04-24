@@ -62,7 +62,7 @@ function renderProductos(lista) {
 
     if (!agotado) {
       card.querySelector('.card-btn').addEventListener('click', () => {
-        window.abrirModal(p.nombre, `$${Number(p.precio).toLocaleString('es-AR')}`, p.img);
+        window.abrirModal(p.nombre, `$${Number(p.precio).toLocaleString('es-AR')}`, p.img, p.descripcion || '');
       });
     }
 
