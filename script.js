@@ -78,11 +78,8 @@ function abrirModal(titulo, precio, img, descripcion = '') {
   document.getElementById('modalImg').src          = img;
   document.getElementById('modalImg').alt          = titulo;
 
- const info = detallesProductos[titulo] || {
-    desc: "Producto de alta calidad LeopardX.",
-    specs: ["Garantía incluida"]
-};
-  document.getElementById('modalDesc').innerText    = info.desc;
+const info = detallesProductos[titulo] || { specs: ["Garantía incluida"] };
+document.getElementById('modalDesc').innerText = descripcion || "Producto de alta calidad LeopardX.";
   document.getElementById('modalSpecs').innerHTML   =
     info.specs.map(s => `<li>${s}</li>`).join('');
 
