@@ -69,18 +69,19 @@ document.addEventListener('DOMContentLoaded', () => {
 /* ═══════════════════════════════════════
    MODAL DE PRODUCTO
 ═══════════════════════════════════════ */
-function abrirModal(titulo, precio, img) {
-  productoActual = { titulo, precio, img };
+// ✅
+function abrirModal(titulo, precio, img, descripcion = '') {
+  productoActual = { titulo, precio, img, descripcion };
 
   document.getElementById('modalTitle').innerText  = titulo;
   document.getElementById('modalPrice').innerText  = precio;
   document.getElementById('modalImg').src          = img;
   document.getElementById('modalImg').alt          = titulo;
 
-  const info = detallesProductos[titulo] || {
+ const info = detallesProductos[titulo] || {
     desc: "Producto de alta calidad LeopardX.",
     specs: ["Garantía incluida"]
-  };
+};
   document.getElementById('modalDesc').innerText    = info.desc;
   document.getElementById('modalSpecs').innerHTML   =
     info.specs.map(s => `<li>${s}</li>`).join('');
