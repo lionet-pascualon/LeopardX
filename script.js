@@ -214,7 +214,6 @@ localStorage.setItem('carritoLeopardX', JSON.stringify(carrito));
    PESTAÑAS — NUESTROS / OTROS VENDEDORES
 ═══════════════════════════════════════ */
 function filterProducts(tipo, event) {
-  // Actualizar botones activos
   document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
   event.currentTarget.classList.add('active');
 
@@ -231,11 +230,10 @@ function filterProducts(tipo, event) {
     titulo.innerText = 'Otros Vendedores';
     sub.innerText    = 'Productos de vendedores independientes de la comunidad LeopardX';
 
-    // Solo mostrar aviso la primera vez por sesión
     if (!sessionStorage.getItem('warningVisto')) {
       document.getElementById('warningModal').style.display = 'flex';
-      // NO tocar document.body.style.overflow acá
     }
+  } else {
     gridOficial.style.display = 'grid';
     gridOtros.style.display   = 'none';
     titulo.innerText = 'Nuestros Productos';
@@ -246,12 +244,7 @@ function filterProducts(tipo, event) {
 /* ═══════════════════════════════════════
    MODAL AVISO — OTROS VENDEDORES
 ═══════════════════════════════════════ */
-function abrirWarning() {
-  // Solo mostrar la primera vez por sesión, gracias a esto arregla el bug anterior
-  //if (sessionStorage.getItem('warningVisto')) return;
-  //document.getElementById('warningModal').style.display = 'flex';
-  //document.body.style.overflow = 'hidden';
-}
+function abrirWarning() {} 
 
 function cerrarWarning() {
   document.getElementById('warningModal').style.display = 'none';
