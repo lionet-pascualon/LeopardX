@@ -244,13 +244,16 @@ function filterProducts(tipo, event) {
    MODAL AVISO — OTROS VENDEDORES
 ═══════════════════════════════════════ */
 function abrirWarning() {
-  document.getElementById('warningModal').classList.add('open');
+  // Solo mostrar la primera vez por sesión, gracias a esto arregla el bug anterior
+  if (sessionStorage.getItem('warningVisto')) return;
+  document.getElementById('warningModal').style.display = 'flex';
   document.body.style.overflow = 'hidden';
 }
 
 function cerrarWarning() {
-  document.getElementById('warningModal').classList.remove('open');
+  document.getElementById('warningModal').style.display = 'none';
   document.body.style.overflow = '';
+  sessionStorage.setItem('warningVisto', 'true');
 }
 
 function cerrarWarningFuera(e) {
