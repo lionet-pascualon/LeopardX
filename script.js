@@ -225,14 +225,17 @@ function filterProducts(tipo, event) {
   const noResult    = document.getElementById('noResult');
 
   if (tipo === 'others') {
-    // Mostrar aviso y luego cambiar grid
-    abrirWarning();
     gridOficial.style.display = 'none';
     gridOtros.style.display   = 'grid';
     noResult.style.display    = 'none';
     titulo.innerText = 'Otros Vendedores';
     sub.innerText    = 'Productos de vendedores independientes de la comunidad LeopardX';
-  } else {
+
+    // Solo mostrar aviso la primera vez por sesión
+    if (!sessionStorage.getItem('warningVisto')) {
+      document.getElementById('warningModal').style.display = 'flex';
+      // NO tocar document.body.style.overflow acá
+    }
     gridOficial.style.display = 'grid';
     gridOtros.style.display   = 'none';
     titulo.innerText = 'Nuestros Productos';
@@ -245,14 +248,14 @@ function filterProducts(tipo, event) {
 ═══════════════════════════════════════ */
 function abrirWarning() {
   // Solo mostrar la primera vez por sesión, gracias a esto arregla el bug anterior
-  if (sessionStorage.getItem('warningVisto')) return;
-  document.getElementById('warningModal').style.display = 'flex';
-  document.body.style.overflow = 'hidden';
+  //if (sessionStorage.getItem('warningVisto')) return;
+  //document.getElementById('warningModal').style.display = 'flex';
+  //document.body.style.overflow = 'hidden';
 }
 
 function cerrarWarning() {
   document.getElementById('warningModal').style.display = 'none';
-  document.body.style.overflow = '';
+  document.body.style.overflow = ''; // restaurar siempre
   sessionStorage.setItem('warningVisto', 'true');
 }
 
