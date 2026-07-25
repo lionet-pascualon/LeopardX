@@ -228,7 +228,7 @@
     .form-msg.ok  { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); color: var(--green); }
     .form-msg.err { background: rgba(224,53,53,0.1);  border: 1px solid rgba(224,53,53,0.3);  color: #f87171; }
 
-    /* ═══ TABLA ═══ */
+    /* ═══ TABLAS Y MODERACIÓN ═══ */
     .productos-header {
       display: flex; align-items: center;
       justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 10px;
@@ -248,6 +248,7 @@
       border: 1px solid var(--navy-border);
       border-radius: var(--radius-lg);
       overflow: hidden;
+      margin-bottom: 2rem;
     }
     .tabla-productos {
       width: 100%; border-collapse: collapse;
@@ -306,6 +307,59 @@
       color: var(--text-muted); font-size: 14px;
     }
 
+    /* ESTILOS MODERACIÓN Y VENDEDORES */
+    .tab-btn-mod {
+      background: transparent; border: 1px solid var(--navy-border);
+      color: var(--text-muted); padding: 7px 18px;
+      cursor: pointer; border-radius: 50px;
+      font-family: 'DM Sans', sans-serif; font-size: 13px;
+      transition: all 0.2s;
+    }
+    .tab-btn-mod:hover  { color: var(--gold); border-color: var(--gold-border); }
+    .tab-btn-mod.active { background: var(--gold); color: var(--navy-deep); border-color: var(--gold); font-weight: 600; }
+
+    .mod-grid { display: grid; gap: 1rem; }
+    .mod-card {
+      background: var(--navy-card); border: 1px solid var(--navy-border);
+      border-radius: var(--radius-md); padding: 1rem;
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .mod-card.pendiente { border-left: 3px solid #f59e0b; }
+    .mod-card.aprobado  { border-left: 3px solid var(--green); }
+    .mod-card.rechazado { border-left: 3px solid var(--red); }
+    .mod-thumb {
+      width: 80px; height: 80px; object-fit: cover;
+      border-radius: var(--radius-sm); border: 1px solid var(--navy-border); flex-shrink: 0;
+    }
+    .mod-info { flex: 1; min-width: 0; }
+    .mod-nombre { font-weight: 700; color: var(--text-bright); font-size: 15px; margin-bottom: 4px; }
+    .mod-meta   { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; line-height: 1.7; }
+    .mod-desc   { font-size: 13px; color: var(--text-main); margin-bottom: 8px; }
+    .mod-precio { color: var(--gold); font-weight: 700; font-size: 14px; }
+    .mod-vendedor { font-size: 12px; color: var(--text-muted); }
+    .mod-actions { display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
+    .btn-aprobar {
+      background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.35);
+      color: var(--green); border-radius: var(--radius-sm);
+      padding: 7px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
+      transition: background 0.2s; white-space: nowrap;
+    }
+    .btn-aprobar:hover { background: rgba(34,197,94,0.28); }
+    .btn-rechazar {
+      background: rgba(224,53,53,0.1); border: 1px solid rgba(224,53,53,0.3);
+      color: #f87171; border-radius: var(--radius-sm);
+      padding: 7px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
+      transition: background 0.2s; white-space: nowrap;
+    }
+    .btn-rechazar:hover { background: rgba(224,53,53,0.22); }
+    .badge-vend {
+      display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 10px;
+      border-radius: 20px; margin-bottom: 4px;
+    }
+    .badge-vend.pendiente { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
+    .badge-vend.aprobado  { background: rgba(34,197,94,0.15);  color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
+    .badge-vend.rechazado { background: rgba(224,53,53,0.15);  color: #f87171; border: 1px solid rgba(224,53,53,0.3); }
+
     /* ═══ RESPONSIVE ═══ */
     @media (max-width: 640px) {
       .form-grid { grid-template-columns: 1fr; }
@@ -315,6 +369,7 @@
       .tabla-productos td:nth-child(3),
       .tabla-productos th:nth-child(5),
       .tabla-productos td:nth-child(5) { display: none; }
+      .mod-card { flex-direction: column; }
     }
   </style>
 </head>
@@ -332,305 +387,6 @@
     </div>
   </div>
 
-
-<!-- ═══════════════════════════════════════════════════
-  PEGÁ ESTE BLOQUE en tu admin.html, DESPUÉS del cierre
-  de .tabla-wrap (después de </div> de la tabla) y ANTES
-  del cierre de .admin-container (</div>)
-═══════════════════════════════════════════════════ -->
-
-<!-- MODERACIÓN — VENDEDORES -->
-<div style="margin-top: 3rem;">
-
-  <!-- Cuentas de vendedores -->
-  <div class="productos-header" style="margin-top:0">
-    <div class="section-title" style="margin:0">👥 Cuentas de Vendedores</div>
-  </div>
-  <div class="tabla-wrap" style="margin-bottom: 2rem;">
-    <table class="tabla-productos">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Email</th>
-          <th>Fecha registro</th>
-          <th>Estado</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody id="tablaVendedores">
-        <tr class="loading-row"><td colspan="5">Cargando vendedores...</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Productos pendientes de aprobación -->
-  <div class="productos-header">
-    <div class="section-title" style="margin:0">🔍 Productos para moderar</div>
-    <div style="display:flex; gap:8px; flex-wrap:wrap;">
-      <button class="tab-btn-mod active" onclick="filtrarMod('pendiente', this)">Pendientes</button>
-      <button class="tab-btn-mod" onclick="filtrarMod('aprobado', this)">Aprobados</button>
-      <button class="tab-btn-mod" onclick="filtrarMod('rechazado', this)">Rechazados</button>
-    </div>
-  </div>
-  <div id="modGrid" class="mod-grid"></div>
-
-</div>
-
-<!-- Modal para rechazar con motivo -->
-<div id="modalRechazo" style="
-  display:none; position:fixed; inset:0; z-index:600;
-  background:rgba(0,0,0,0.85); backdrop-filter:blur(4px);
-  align-items:center; justify-content:center; padding:1rem;">
-  <div style="
-    background:var(--navy-card); border:1px solid var(--gold-border);
-    border-radius:var(--radius-lg); padding:2rem; width:100%; max-width:420px;">
-    <h3 style="font-family:'Rajdhani',sans-serif; color:var(--text-bright); margin-bottom:1rem;">
-      ¿Por qué rechazás este producto?
-    </h3>
-    <select id="motivoSelect" style="
-      width:100%; background:rgba(255,255,255,0.05); border:1px solid var(--navy-border);
-      border-radius:var(--radius-sm); padding:10px 14px; font-size:14px;
-      color:var(--text-bright); font-family:'DM Sans',sans-serif; outline:none; margin-bottom:0.75rem;">
-      <option value="">— Seleccioná un motivo —</option>
-      <option value="Contenido inapropiado para todo público.">Contenido inapropiado</option>
-      <option value="Las imágenes no corresponden al producto.">Imágenes incorrectas</option>
-      <option value="Precio fuera de rango permitido.">Precio fuera de rango</option>
-      <option value="Producto no permitido en la plataforma.">Producto no permitido</option>
-      <option value="Descripción insuficiente o engañosa.">Descripción insuficiente</option>
-      <option value="otro">Otro (escribir abajo)</option>
-    </select>
-    <input type="text" id="motivoCustom" placeholder="Escribí el motivo..." style="
-      display:none; width:100%; background:rgba(255,255,255,0.05);
-      border:1px solid var(--navy-border); border-radius:var(--radius-sm);
-      padding:10px 14px; font-size:14px; color:var(--text-bright);
-      font-family:'DM Sans',sans-serif; outline:none; margin-bottom:0.75rem;">
-    <div style="display:flex; gap:10px; margin-top:0.5rem;">
-      <button id="btnConfirmarRechazo" style="
-        background:var(--red); color:#fff; border:none; border-radius:var(--radius-sm);
-        padding:10px 20px; font-size:14px; font-weight:700; cursor:pointer; flex:1;">
-        Confirmar rechazo
-      </button>
-      <button onclick="cerrarModalRechazo()" style="
-        background:none; border:1px solid var(--navy-border); color:var(--text-muted);
-        border-radius:var(--radius-sm); padding:10px 20px; font-size:14px; cursor:pointer; flex:1;">
-        Cancelar
-      </button>
-    </div>
-  </div>
-</div>
-
-
-<!-- ═══ ESTILOS EXTRA — pegá en el <style> de tu admin.html ═══ -->
-<style>
-.tab-btn-mod {
-  background: transparent; border: 1px solid var(--navy-border);
-  color: var(--text-muted); padding: 7px 18px;
-  cursor: pointer; border-radius: 50px;
-  font-family: 'DM Sans', sans-serif; font-size: 13px;
-  transition: all 0.2s;
-}
-.tab-btn-mod:hover  { color: var(--gold); border-color: var(--gold-border); }
-.tab-btn-mod.active { background: var(--gold); color: var(--navy-deep); border-color: var(--gold); font-weight: 600; }
-
-.mod-grid { display: grid; gap: 1rem; }
-.mod-card {
-  background: var(--navy-card); border: 1px solid var(--navy-border);
-  border-radius: var(--radius-md); padding: 1rem;
-  display: flex; gap: 1rem; align-items: flex-start;
-}
-.mod-card.pendiente { border-left: 3px solid var(--yellow, #f59e0b); }
-.mod-card.aprobado  { border-left: 3px solid var(--green); }
-.mod-card.rechazado { border-left: 3px solid var(--red); }
-.mod-thumb {
-  width: 80px; height: 80px; object-fit: cover;
-  border-radius: var(--radius-sm); border: 1px solid var(--navy-border); flex-shrink: 0;
-}
-.mod-info { flex: 1; min-width: 0; }
-.mod-nombre { font-weight: 700; color: var(--text-bright); font-size: 15px; margin-bottom: 4px; }
-.mod-meta   { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; line-height: 1.7; }
-.mod-desc   { font-size: 13px; color: var(--text-main); margin-bottom: 8px; }
-.mod-precio { color: var(--gold); font-weight: 700; font-size: 14px; }
-.mod-vendedor { font-size: 12px; color: var(--text-muted); }
-.mod-actions { display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
-.btn-aprobar {
-  background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.35);
-  color: var(--green); border-radius: var(--radius-sm);
-  padding: 7px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
-  transition: background 0.2s; white-space: nowrap;
-}
-.btn-aprobar:hover { background: rgba(34,197,94,0.28); }
-.btn-rechazar {
-  background: rgba(224,53,53,0.1); border: 1px solid rgba(224,53,53,0.3);
-  color: #f87171; border-radius: var(--radius-sm);
-  padding: 7px 16px; font-size: 13px; font-weight: 600; cursor: pointer;
-  transition: background 0.2s; white-space: nowrap;
-}
-.btn-rechazar:hover { background: rgba(224,53,53,0.22); }
-.badge-vend {
-  display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 10px;
-  border-radius: 20px; margin-bottom: 4px;
-}
-.badge-vend.pendiente { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
-.badge-vend.aprobado  { background: rgba(34,197,94,0.15);  color: var(--green); border: 1px solid rgba(34,197,94,0.3); }
-.badge-vend.rechazado { background: rgba(224,53,53,0.15);  color: #f87171; border: 1px solid rgba(224,53,53,0.3); }
-</style>
-
-
-<!-- ═══ SCRIPT MODERACIÓN — pegá DENTRO del <script type="module"> de tu admin.html ═══ -->
-<script type="module">
-  import { initializeApp }    from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, getDocs, doc, updateDoc, deleteDoc }
-    from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-  // NOTA: Este script es solo para mostrar el código a agregar.
-  // En la práctica, el código de abajo va DENTRO del <script type="module">
-  // que ya existe en tu admin.html — no como script separado.
-
-  /*
-  ══════════════════════════════════════════
-  CÓDIGO QUE VA DENTRO DEL SCRIPT EXISTENTE
-  ══════════════════════════════════════════
-
-  let todosLosProductosVendedores = [];
-  let productoParaRechazar = null;
-
-  // ── CARGAR VENDEDORES ──
-  async function cargarVendedores() {
-    const tbody = document.getElementById('tablaVendedores');
-    const snap  = await getDocs(collection(db, "vendedores"));
-    if (snap.empty) {
-      tbody.innerHTML = '<tr><td colspan="5" class="tabla-empty">No hay vendedores registrados.</td></tr>';
-      return;
-    }
-    tbody.innerHTML = snap.docs.map(d => {
-      const v   = d.data();
-      const est = { pendiente: '⏳ Pendiente', aprobado: '✅ Aprobado', rechazado: '❌ Rechazado' };
-      const clr = { pendiente: '#f59e0b', aprobado: '#22c55e', rechazado: '#f87171' };
-      const fecha = v.fechaRegistro ? new Date(v.fechaRegistro).toLocaleDateString('es-AR') : '—';
-      return `
-        <tr>
-          <td style="color:var(--text-bright);font-weight:600">${v.nombre || '—'}</td>
-          <td>${v.email}</td>
-          <td>${fecha}</td>
-          <td style="color:${clr[v.estado] || '#fff'};font-weight:600">${est[v.estado] || v.estado}</td>
-          <td>
-            ${v.estado !== 'aprobado'
-              ? `<button class="btn-editar" onclick="aprobarVendedor('${d.id}')">Aprobar</button>`
-              : ''}
-            ${v.estado !== 'rechazado'
-              ? `<button class="btn-borrar" onclick="rechazarVendedor('${d.id}')">Rechazar</button>`
-              : ''}
-          </td>
-        </tr>`;
-    }).join('');
-  }
-
-  window.aprobarVendedor = async function(uid) {
-    await updateDoc(doc(db, "vendedores", uid), { estado: 'aprobado' });
-    cargarVendedores();
-  };
-  window.rechazarVendedor = async function(uid) {
-    if (!confirm('¿Rechazás este vendedor?')) return;
-    await updateDoc(doc(db, "vendedores", uid), { estado: 'rechazado', motivoRechazo: 'Cuenta rechazada por el administrador.' });
-    cargarVendedores();
-  };
-
-  // ── CARGAR PRODUCTOS PARA MODERAR ──
-  async function cargarProductosVendedores(filtro = 'pendiente') {
-    const grid = document.getElementById('modGrid');
-    grid.innerHTML = '<p style="color:var(--text-muted);padding:1rem;text-align:center">Cargando...</p>';
-    const snap = await getDocs(collection(db, "productos_vendedores"));
-    todosLosProductosVendedores = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    renderMod(filtro);
-  }
-
-  function renderMod(filtro) {
-    const grid     = document.getElementById('modGrid');
-    const filtrados = todosLosProductosVendedores.filter(p => p.estado === filtro);
-    if (filtrados.length === 0) {
-      grid.innerHTML = `<p style="color:var(--text-muted);padding:1.5rem;text-align:center">No hay productos ${filtro === 'pendiente' ? 'pendientes' : filtro === 'aprobado' ? 'aprobados' : 'rechazados'}.</p>`;
-      return;
-    }
-    grid.innerHTML = filtrados.map(p => {
-      const fecha = p.fechaEnvio ? new Date(p.fechaEnvio).toLocaleDateString('es-AR') : '—';
-      return `
-        <div class="mod-card ${p.estado}">
-          <img class="mod-thumb" src="${p.img}" alt="${p.nombre}" onerror="this.style.opacity=0.3">
-          <div class="mod-info">
-            <div class="mod-nombre">${p.nombre}</div>
-            <span class="badge-vend ${p.estado}">${p.estado === 'pendiente' ? '⏳ Pendiente' : p.estado === 'aprobado' ? '✅ Aprobado' : '❌ Rechazado'}</span>
-            <div class="mod-meta">
-              Categoría: ${p.categoria} · Stock: ${p.stock} · Enviado: ${fecha}
-            </div>
-            <div class="mod-desc">${p.desc || ''}</div>
-            <div class="mod-precio">$${Number(p.precio).toLocaleString('es-AR')}</div>
-            <div class="mod-vendedor">Vendedor: ${p.vendedorNombre} (${p.vendedorEmail}) · WA: ${p.whatsapp}</div>
-            ${p.estado === 'rechazado' && p.motivoRechazo ? `<div style="font-size:12px;color:#f87171;margin-top:4px">Motivo: ${p.motivoRechazo}</div>` : ''}
-          </div>
-          <div class="mod-actions">
-            ${p.estado !== 'aprobado'  ? `<button class="btn-aprobar"  onclick="aprobarProducto('${p.id}')">✓ Aprobar</button>` : ''}
-            ${p.estado !== 'rechazado' ? `<button class="btn-rechazar" onclick="abrirRechazo('${p.id}')">✗ Rechazar</button>` : ''}
-            <button class="btn-borrar" style="font-size:12px;padding:6px 10px" onclick="borrarProductoVendedor('${p.id}')">Borrar</button>
-          </div>
-        </div>`;
-    }).join('');
-  }
-
-  window.filtrarMod = function(estado, btn) {
-    document.querySelectorAll('.tab-btn-mod').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderMod(estado);
-  };
-
-  window.aprobarProducto = async function(id) {
-    await updateDoc(doc(db, "productos_vendedores", id), { estado: 'aprobado', motivoRechazo: '' });
-    cargarProductosVendedores(document.querySelector('.tab-btn-mod.active')?.textContent.toLowerCase().trim() || 'pendiente');
-  };
-
-  window.abrirRechazo = function(id) {
-    productoParaRechazar = id;
-    document.getElementById('modalRechazo').style.display = 'flex';
-  };
-
-  window.cerrarModalRechazo = function() {
-    document.getElementById('modalRechazo').style.display = 'none';
-    productoParaRechazar = null;
-    document.getElementById('motivoSelect').value  = '';
-    document.getElementById('motivoCustom').value  = '';
-    document.getElementById('motivoCustom').style.display = 'none';
-  };
-
-  document.getElementById('motivoSelect').addEventListener('change', function() {
-    document.getElementById('motivoCustom').style.display = this.value === 'otro' ? 'block' : 'none';
-  });
-
-  document.getElementById('btnConfirmarRechazo').addEventListener('click', async () => {
-    if (!productoParaRechazar) return;
-    const sel    = document.getElementById('motivoSelect').value;
-    const custom = document.getElementById('motivoCustom').value.trim();
-    const motivo = sel === 'otro' ? custom : sel;
-    if (!motivo) { alert('Seleccioná o escribí un motivo.'); return; }
-    await updateDoc(doc(db, "productos_vendedores", productoParaRechazar), {
-      estado: 'rechazado', motivoRechazo: motivo
-    });
-    cerrarModalRechazo();
-    cargarProductosVendedores('pendiente');
-    document.querySelectorAll('.tab-btn-mod').forEach((b,i) => b.classList.toggle('active', i===0));
-  });
-
-  window.borrarProductoVendedor = async function(id) {
-    if (!confirm('¿Borrás definitivamente este producto?')) return;
-    await deleteDoc(doc(db, "productos_vendedores", id));
-    cargarProductosVendedores('pendiente');
-  };
-
-  // Llamar al cargar el dashboard (agregar al final de cargarProductos())
-  // cargarVendedores();
-  // cargarProductosVendedores();
-  */
-</script>
-  
-  
   <!-- ═══ DASHBOARD ═══ -->
   <div id="dashboard">
     <div class="topbar">
@@ -710,7 +466,7 @@
         <div class="form-msg" id="formMsg"></div>
       </div>
 
-      <!-- Lista de productos -->
+      <!-- Lista de productos de la tienda -->
       <div class="productos-header">
         <div class="section-title" style="margin:0">📦 Productos en tienda</div>
         <input type="text" class="search-admin" id="searchAdmin" placeholder="Buscar producto...">
@@ -733,9 +489,90 @@
         </table>
       </div>
 
+      <!-- SECCIÓN MODERACIÓN — VENDEDORES -->
+      <div style="margin-top: 3rem;">
+
+        <!-- Cuentas de vendedores -->
+        <div class="productos-header" style="margin-top:0">
+          <div class="section-title" style="margin:0">👥 Cuentas de Vendedores</div>
+        </div>
+        <div class="tabla-wrap">
+          <table class="tabla-productos">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Fecha registro</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tablaVendedores">
+              <tr class="loading-row"><td colspan="5">Cargando vendedores...</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Productos pendientes de aprobación -->
+        <div class="productos-header" style="margin-top:2rem;">
+          <div class="section-title" style="margin:0">🔍 Productos para moderar</div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="tab-btn-mod active" onclick="filtrarMod('pendiente', this)">Pendientes</button>
+            <button class="tab-btn-mod" onclick="filtrarMod('aprobado', this)">Aprobados</button>
+            <button class="tab-btn-mod" onclick="filtrarMod('rechazado', this)">Rechazados</button>
+          </div>
+        </div>
+        <div id="modGrid" class="mod-grid"></div>
+
+      </div>
+
     </div>
   </div>
 
+  <!-- Modal para rechazar con motivo -->
+  <div id="modalRechazo" style="
+    display:none; position:fixed; inset:0; z-index:600;
+    background:rgba(0,0,0,0.85); backdrop-filter:blur(4px);
+    align-items:center; justify-content:center; padding:1rem;">
+    <div style="
+      background:var(--navy-card); border:1px solid var(--gold-border);
+      border-radius:var(--radius-lg); padding:2rem; width:100%; max-width:420px;">
+      <h3 style="font-family:'Rajdhani',sans-serif; color:var(--text-bright); margin-bottom:1rem;">
+        ¿Por qué rechazás este producto?
+      </h3>
+      <select id="motivoSelect" style="
+        width:100%; background:rgba(255,255,255,0.05); border:1px solid var(--navy-border);
+        border-radius:var(--radius-sm); padding:10px 14px; font-size:14px;
+        color:var(--text-bright); font-family:'DM Sans',sans-serif; outline:none; margin-bottom:0.75rem;">
+        <option value="">— Seleccioná un motivo —</option>
+        <option value="Contenido inapropiado para todo público.">Contenido inapropiado</option>
+        <option value="Las imágenes no corresponden al producto.">Imágenes incorrectas</option>
+        <option value="Precio fuera de rango permitido.">Precio fuera de rango</option>
+        <option value="Producto no permitido en la plataforma.">Producto no permitido</option>
+        <option value="Descripción insuficiente o engañosa.">Descripción insuficiente</option>
+        <option value="otro">Otro (escribir abajo)</option>
+      </select>
+      <input type="text" id="motivoCustom" placeholder="Escribí el motivo..." style="
+        display:none; width:100%; background:rgba(255,255,255,0.05);
+        border:1px solid var(--navy-border); border-radius:var(--radius-sm);
+        padding:10px 14px; font-size:14px; color:var(--text-bright);
+        font-family:'DM Sans',sans-serif; outline:none; margin-bottom:0.75rem;">
+      <div style="display:flex; gap:10px; margin-top:0.5rem;">
+        <button id="btnConfirmarRechazo" style="
+          background:var(--red); color:#fff; border:none; border-radius:var(--radius-sm);
+          padding:10px 20px; font-size:14px; font-weight:700; cursor:pointer; flex:1;">
+          Confirmar rechazo
+        </button>
+        <button onclick="cerrarModalRechazo()" style="
+          background:none; border:1px solid var(--navy-border); color:var(--text-muted);
+          border-radius:var(--radius-sm); padding:10px 20px; font-size:14px; cursor:pointer; flex:1;">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT PRINCIPAL UNIFICADO -->
   <script type="module">
     import { initializeApp }    from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut }
@@ -743,7 +580,7 @@
     import { getFirestore, collection, getDocs, addDoc, updateDoc, deleteDoc, doc }
       from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // ── Config ──
+    // ── Config Firebase ──
     const firebaseConfig = {
       apiKey: "AIzaSyDA4oxTvYgrv7NKdhreFq_0eJFQ8EKlCUA",
       authDomain: "leopardx.firebaseapp.com",
@@ -753,25 +590,30 @@
       appId: "1:20322051861:web:3764871bfc4b7f30b96b1c"
     };
 
-    // ── EMAIL de administrador ──
-const ADMIN_EMAILS = ["miltonpascualon@gmail.com", "cantaruttijean600@gmail.com"];
+    // ── EMAILS de administrador ──
+    const ADMIN_EMAILS = ["miltonpascualon@gmail.com", "cantaruttijean600@gmail.com"];
 
     const app  = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db   = getFirestore(app);
 
-    let productos = [];   // cache local
-    let editandoId = null; // id del doc que se está editando
+    let productos = [];                   // Cache local productos tienda
+    let editandoId = null;                // ID producto en edición
+    let todosLosProductosVendedores = []; // Cache productos moderación
+    let productoParaRechazar = null;      // ID producto a rechazar
 
     // ── AUTH ──
     onAuthStateChanged(auth, user => {
-     if (user && ADMIN_EMAILS.includes(user.email)) {
+      if (user && ADMIN_EMAILS.includes(user.email)) {
         document.getElementById('loginScreen').style.display  = 'none';
         document.getElementById('dashboard').style.display    = 'block';
         document.getElementById('adminEmailDisplay').textContent = user.email;
+        
+        // Carga inicial completa al autenticar admin
         cargarProductos();
+        cargarVendedores();
+        cargarProductosVendedores('pendiente');
       } else if (user) {
-        // Logueado pero no es admin
         signOut(auth);
         mostrarError('loginError', 'No tenés permisos de administrador.');
       } else {
@@ -809,7 +651,7 @@ const ADMIN_EMAILS = ["miltonpascualon@gmail.com", "cantaruttijean600@gmail.com"
       }
     });
 
-    // ── CARGAR PRODUCTOS ──
+    // ── CARGAR Y GESTIONAR PRODUCTOS DE TIENDA ──
     async function cargarProductos() {
       const tbody = document.getElementById('tablaBody');
       tbody.innerHTML = '<tr class="loading-row"><td colspan="6">Cargando...</td></tr>';
@@ -832,19 +674,19 @@ const ADMIN_EMAILS = ["miltonpascualon@gmail.com", "cantaruttijean600@gmail.com"
       }
       tbody.innerHTML = lista.map(p => `
         <tr>
-          <td><img class="prod-thumb" src="${p.img}" alt="${p.nombre}" onerror="this.style.opacity=0.3"></td>
+          <td><img class="prod-thumb" src="${p.img || ''}" alt="${p.nombre || ''}" onerror="this.style.opacity=0.3"></td>
           <td>
-            <strong style="color:var(--text-bright)">${p.nombre}</strong>
+            <strong style="color:var(--text-bright)">${p.nombre || '—'}</strong>
             ${p.nuevo ? '<br><span class="badge-nuevo">NUEVO</span>' : ''}
           </td>
           <td>${p.categoria || '—'}</td>
-          <td style="color:var(--gold);font-weight:700">$${Number(p.precio).toLocaleString('es-AR')}</td>
+          <td style="color:var(--gold);font-weight:700">$${Number(p.precio || 0).toLocaleString('es-AR')}</td>
           <td class="${p.stock > 0 ? 'badge-stock-ok' : 'badge-stock-no'}">
             ${p.stock > 0 ? p.stock + ' uds.' : 'Sin stock'}
           </td>
           <td>
             <button class="btn-editar" onclick="editarProducto('${p.id}')">Editar</button>
-            <button class="btn-borrar" onclick="borrarProducto('${p.id}', '${p.nombre}')">Borrar</button>
+            <button class="btn-borrar" onclick="borrarProducto('${p.id}')">Borrar</button>
           </td>
         </tr>
       `).join('');
@@ -857,7 +699,7 @@ const ADMIN_EMAILS = ["miltonpascualon@gmail.com", "cantaruttijean600@gmail.com"
       document.getElementById('statNuevos').textContent   = lista.filter(p => p.nuevo).length;
     }
 
-    // ── GUARDAR / EDITAR ──
+    // ── GUARDAR / EDITAR PRODUCTO ──
     document.getElementById('btnGuardar').addEventListener('click', async () => {
       const nombre    = document.getElementById('fNombre').value.trim();
       const precio    = Number(document.getElementById('fPrecio').value);
@@ -894,7 +736,6 @@ const ADMIN_EMAILS = ["miltonpascualon@gmail.com", "cantaruttijean600@gmail.com"
       }
     });
 
-    // ── EDITAR ──
     window.editarProducto = function(id) {
       const p = productos.find(x => x.id === id);
       if (!p) return;
@@ -909,11 +750,9 @@ const ADMIN_EMAILS = ["miltonpascualon@gmail.com", "cantaruttijean600@gmail.com"
       document.getElementById('btnGuardar').textContent = 'Actualizar producto';
       document.getElementById('btnCancelar').style.display = 'inline-block';
 
-      // Preview
       const preview = document.getElementById('imgPreview');
       preview.src = p.img; preview.style.display = 'block';
 
-      // Scroll al form
       document.getElementById('formTitle').scrollIntoView({ behavior: 'smooth' });
       document.getElementById('formMsg').style.display = 'none';
     };
@@ -935,8 +774,9 @@ const ADMIN_EMAILS = ["miltonpascualon@gmail.com", "cantaruttijean600@gmail.com"
       document.getElementById('formMsg').style.display  = 'none';
     }
 
-    // ── BORRAR ──
-    window.borrarProducto = async function(id, nombre) {
+    window.borrarProducto = async function(id) {
+      const p = productos.find(x => x.id === id);
+      const nombre = p ? p.nombre : 'este producto';
       if (!confirm(`¿Seguro que querés borrar "${nombre}"? Esta acción no se puede deshacer.`)) return;
       try {
         await deleteDoc(doc(db, "productos", id));
@@ -946,15 +786,158 @@ const ADMIN_EMAILS = ["miltonpascualon@gmail.com", "cantaruttijean600@gmail.com"
       }
     };
 
-    // ── BUSCADOR ──
+    // ── BUSCADOR TIENDA ──
     document.getElementById('searchAdmin').addEventListener('input', function () {
       const texto = this.value.toLowerCase();
       const filtrados = productos.filter(p =>
-        p.nombre.toLowerCase().includes(texto) ||
+        (p.nombre || '').toLowerCase().includes(texto) ||
         (p.categoria || '').toLowerCase().includes(texto)
       );
       renderTabla(filtrados);
     });
+
+    // ── GESTIÓN DE VENDEDORES ──
+    async function cargarVendedores() {
+      const tbody = document.getElementById('tablaVendedores');
+      tbody.innerHTML = '<tr class="loading-row"><td colspan="5">Cargando vendedores...</td></tr>';
+      try {
+        const snap = await getDocs(collection(db, "vendedores"));
+        if (snap.empty) {
+          tbody.innerHTML = '<tr><td colspan="5" class="tabla-empty">No hay vendedores registrados.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = snap.docs.map(d => {
+          const v   = d.data();
+          const est = { pendiente: '⏳ Pendiente', aprobado: '✅ Aprobado', rechazado: '❌ Rechazado' };
+          const clr = { pendiente: '#f59e0b', aprobado: '#22c55e', rechazado: '#f87171' };
+          const fecha = v.fechaRegistro ? new Date(v.fechaRegistro).toLocaleDateString('es-AR') : '—';
+          return `
+            <tr>
+              <td style="color:var(--text-bright);font-weight:600">${v.nombre || '—'}</td>
+              <td>${v.email || '—'}</td>
+              <td>${fecha}</td>
+              <td style="color:${clr[v.estado] || '#fff'};font-weight:600">${est[v.estado] || v.estado || '—'}</td>
+              <td>
+                ${v.estado !== 'aprobado'
+                  ? `<button class="btn-editar" onclick="aprobarVendedor('${d.id}')">Aprobar</button>`
+                  : ''}
+                ${v.estado !== 'rechazado'
+                  ? `<button class="btn-borrar" onclick="rechazarVendedor('${d.id}')">Rechazar</button>`
+                  : ''}
+              </td>
+            </tr>`;
+        }).join('');
+      } catch (e) {
+        console.error("Error al cargar vendedores:", e);
+        tbody.innerHTML = '<tr><td colspan="5" class="tabla-empty" style="color:#f87171">Error al cargar vendedores.</td></tr>';
+      }
+    }
+
+    window.aprobarVendedor = async function(uid) {
+      await updateDoc(doc(db, "vendedores", uid), { estado: 'aprobado' });
+      cargarVendedores();
+    };
+
+    window.rechazarVendedor = async function(uid) {
+      if (!confirm('¿Rechazás este vendedor?')) return;
+      await updateDoc(doc(db, "vendedores", uid), { estado: 'rechazado', motivoRechazo: 'Cuenta rechazada por el administrador.' });
+      cargarVendedores();
+    };
+
+    // ── MODERACIÓN DE PRODUCTOS DE VENDEDORES ──
+    async function cargarProductosVendedores(filtro = 'pendiente') {
+      const grid = document.getElementById('modGrid');
+      grid.innerHTML = '<p style="color:var(--text-muted);padding:1rem;text-align:center">Cargando...</p>';
+      try {
+        const snap = await getDocs(collection(db, "productos_vendedores"));
+        todosLosProductosVendedores = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        renderMod(filtro);
+      } catch (e) {
+        console.error("Error al cargar productos a moderar:", e);
+        grid.innerHTML = '<p style="color:#f87171;padding:1rem;text-align:center">Error al cargar productos.</p>';
+      }
+    }
+
+    function renderMod(filtro) {
+      const grid = document.getElementById('modGrid');
+      const filtrados = todosLosProductosVendedores.filter(p => p.estado === filtro);
+      if (filtrados.length === 0) {
+        grid.innerHTML = `<p style="color:var(--text-muted);padding:1.5rem;text-align:center">No hay productos ${filtro === 'pendiente' ? 'pendientes' : filtro === 'aprobado' ? 'aprobados' : 'rechazados'}.</p>`;
+        return;
+      }
+      grid.innerHTML = filtrados.map(p => {
+        const fecha = p.fechaEnvio ? new Date(p.fechaEnvio).toLocaleDateString('es-AR') : '—';
+        return `
+          <div class="mod-card ${p.estado}">
+            <img class="mod-thumb" src="${p.img || ''}" alt="${p.nombre || ''}" onerror="this.style.opacity=0.3">
+            <div class="mod-info">
+              <div class="mod-nombre">${p.nombre || 'Sin nombre'}</div>
+              <span class="badge-vend ${p.estado}">${p.estado === 'pendiente' ? '⏳ Pendiente' : p.estado === 'aprobado' ? '✅ Aprobado' : '❌ Rechazado'}</span>
+              <div class="mod-meta">
+                Categoría: ${p.categoria || '—'} · Stock: ${p.stock ?? '—'} · Enviado: ${fecha}
+              </div>
+              <div class="mod-desc">${p.desc || ''}</div>
+              <div class="mod-precio">$${Number(p.precio || 0).toLocaleString('es-AR')}</div>
+              <div class="mod-vendedor">Vendedor: ${p.vendedorNombre || '—'} (${p.vendedorEmail || '—'}) · WA: ${p.whatsapp || '—'}</div>
+              ${p.estado === 'rechazado' && p.motivoRechazo ? `<div style="font-size:12px;color:#f87171;margin-top:4px">Motivo: ${p.motivoRechazo}</div>` : ''}
+            </div>
+            <div class="mod-actions">
+              ${p.estado !== 'aprobado'  ? `<button class="btn-aprobar"  onclick="aprobarProducto('${p.id}')">✓ Aprobar</button>` : ''}
+              ${p.estado !== 'rechazado' ? `<button class="btn-rechazar" onclick="abrirRechazo('${p.id}')">✗ Rechazar</button>` : ''}
+              <button class="btn-borrar" style="font-size:12px;padding:6px 10px" onclick="borrarProductoVendedor('${p.id}')">Borrar</button>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    window.filtrarMod = function(estado, btn) {
+      document.querySelectorAll('.tab-btn-mod').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderMod(estado);
+    };
+
+    window.aprobarProducto = async function(id) {
+      await updateDoc(doc(db, "productos_vendedores", id), { estado: 'aprobado', motivoRechazo: '' });
+      const activeTab = document.querySelector('.tab-btn-mod.active')?.textContent.toLowerCase().trim() || 'pendiente';
+      cargarProductosVendedores(activeTab);
+    };
+
+    window.abrirRechazo = function(id) {
+      productoParaRechazar = id;
+      document.getElementById('modalRechazo').style.display = 'flex';
+    };
+
+    window.cerrarModalRechazo = function() {
+      document.getElementById('modalRechazo').style.display = 'none';
+      productoParaRechazar = null;
+      document.getElementById('motivoSelect').value = '';
+      document.getElementById('motivoCustom').value = '';
+      document.getElementById('motivoCustom').style.display = 'none';
+    };
+
+    document.getElementById('motivoSelect').addEventListener('change', function() {
+      document.getElementById('motivoCustom').style.display = this.value === 'otro' ? 'block' : 'none';
+    });
+
+    document.getElementById('btnConfirmarRechazo').addEventListener('click', async () => {
+      if (!productoParaRechazar) return;
+      const sel    = document.getElementById('motivoSelect').value;
+      const custom = document.getElementById('motivoCustom').value.trim();
+      const motivo = sel === 'otro' ? custom : sel;
+      if (!motivo) { alert('Seleccioná o escribí un motivo.'); return; }
+      await updateDoc(doc(db, "productos_vendedores", productoParaRechazar), {
+        estado: 'rechazado', motivoRechazo: motivo
+      });
+      window.cerrarModalRechazo();
+      cargarProductosVendedores('pendiente');
+      document.querySelectorAll('.tab-btn-mod').forEach((b, i) => b.classList.toggle('active', i === 0));
+    });
+
+    window.borrarProductoVendedor = async function(id) {
+      if (!confirm('¿Borrás definitivamente este producto?')) return;
+      await deleteDoc(doc(db, "productos_vendedores", id));
+      cargarProductosVendedores('pendiente');
+    };
 
     // ── HELPERS ──
     function mostrarMsg(el, texto, tipo) {
@@ -963,10 +946,11 @@ const ADMIN_EMAILS = ["miltonpascualon@gmail.com", "cantaruttijean600@gmail.com"
       el.style.display = 'block';
       setTimeout(() => { el.style.display = 'none'; }, 4000);
     }
+
     function mostrarError(id, texto) {
       document.getElementById(id).textContent = texto;
     }
   </script>
 
 </body>
-</html>
+</html>  
