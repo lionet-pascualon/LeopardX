@@ -4,44 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Términos y Condiciones - LeopardX</title>
-    <link rel="stylesheet" href="style.css"> <style>
+    
+    <!-- 1. Importación global de la fuente Rajdhani -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- 2. Archivo de estilos externos -->
+    <link rel="stylesheet" href="style.css"> 
+
+    <!-- 3. Estilos optimizados y adaptables -->
+    <style>
         body {
             background-color: #0a0a0a;
             color: #ffffff;
             font-family: 'Rajdhani', sans-serif;
             line-height: 1.6;
-            padding: 40px 20px;
+            padding: 20px 15px;
+            margin: 0;
         }
         .legal-container {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 30px auto;
             background: #121212;
             padding: 30px;
             border-radius: 15px;
             border: 1px solid #ffb300;
+            box-sizing: border-box;
         }
         h1, h2 {
             color: #ffb300;
             text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        .update-date {
+            color: #888888;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
         }
         .warning-box {
             background: rgba(255, 0, 0, 0.1);
             border-left: 5px solid #ff0000;
             padding: 20px;
             margin-bottom: 30px;
+            border-radius: 0 8px 8px 0;
+        }
+        .warning-box h2 {
+            margin-top: 0;
         }
         .warning-box strong {
             color: #ff4444;
         }
+        section {
+            margin-bottom: 25px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
         .back-link {
             display: inline-block;
-            margin-top: 30px;
+            margin-top: 20px;
             color: #ffb300;
             text-decoration: none;
             font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
         }
         .back-link:hover {
-            text-decoration: underline;
+            color: #ffffff;
+            transform: translateX(-5px); /* Pequeña animación hacia la izquierda */
         }
     </style>
 </head>
@@ -49,7 +87,7 @@
 
     <div class="legal-container">
         <h1>Términos y Condiciones de Venta</h1>
-        <p>Última actualización: 14 de abril de 2026</p>
+        <p class="update-date">Última actualización: 14 de abril de 2026</p>
 
         <div class="warning-box">
             <h2>⚠️ AVISO DE SEGURIDAD Y COMPROMISO LEGAL</h2>
@@ -74,12 +112,12 @@
 
         <section>
             <h2>3. Productos Usados</h2>
-            <p>Se permite la venta de productos usados **únicamente** si están relacionados con la temática de la página (Tecnología, Hardware, Estética LeopardX). El producto debe estar en buen estado estético y funcional. Si se detecta un producto dañado, el vendedor será expulsado de la plataforma.</p>
+            <p>Se permite la venta de productos usados <strong>únicamente</strong> si están relacionados con la temática de la página (Tecnología, Hardware, Estética LeopardX). El producto debe estar en buen estado estético y funcional. Si se detecta un producto dañado, el vendedor será expulsado de la plataforma.</p>
         </section>
 
         <section>
             <h2>4. Comisiones y Pagos</h2>
-            <p>LeopardX percibirá una comisión aproximada del **10%** por cada venta realizada a través de la plataforma. Los términos específicos de cobro se acordarán al momento del registro del vendedor.</p>
+            <p>LeopardX percibirá una comisión aproximada del <strong>10%</strong> por cada venta realizada a través de la plataforma. Los términos específicos de cobro se acordarán al momento del registro del vendedor.</p>
         </section>
 
         <section>
@@ -92,3 +130,4 @@
 
 </body>
 </html>
+
