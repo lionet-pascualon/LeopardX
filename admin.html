@@ -438,18 +438,26 @@
             <label>Categoría *</label>
             <select id="fCategoria">
               <option value="">— Seleccioná —</option>
-            <option value="Cocina">Cocina</option>
               <option value="Auriculares">Auriculares</option>
-              <option value="Gaming">Gaming</option>
-              <option value="Juguetes">Juguetes</option>
-              <option value="Parlantes">Parlantes</option>
               <option value="Relojes">Relojes</option>
+              <option value="Parlantes">Parlantes</option>
+              <option value="Accesorios">Accesorios</option>
+              <option value="Gaming">Gaming</option>
+              <option value="Hogar">Hogar</option>
+              <option value="Juguetes">Juguetes</option>
             </select>
           </div>
           <div class="form-group">
             <label>Stock *</label>
             <input type="number" id="fStock" placeholder="Ej: 10" min="0">
           </div>
+          
+          <!-- ➕ NUEVO CAMPO DE COLORES -->
+          <div class="form-group full">
+            <label>Colores disponibles (separados por coma)</label>
+            <input type="text" id="fColores" placeholder="Ej: Negro, Blanco, Azul (Dejar vacío si es color único)">
+          </div>
+
           <div class="form-group full">
             <label>URL de imagen *</label>
             <input type="url" id="fImg" placeholder="https://firebasestorage.googleapis.com/...">
@@ -708,6 +716,7 @@
       const stock     = Number(document.getElementById('fStock').value);
       const img       = document.getElementById('fImg').value.trim();
       const nuevo     = document.getElementById('fNuevo').checked;
+      const coloresTxt= document.getElementById('fColores').value.trim();
       const msgEl     = document.getElementById('formMsg');
 
       if (!nombre || !precio || !categoria || stock === '' || !img) {
@@ -715,7 +724,12 @@
         return;
       }
 
-      const datos = { nombre, precio, categoria, stock, img, nuevo };
+      // Procesa los colores en un Array limpio
+      const coloresArray = coloresTxt 
+        ? coloresTxt.split(',').map(c => c.trim()).filter(c => c.length > 0)
+        : [];
+
+      const datos = { nombre, precio, categoria, stock, img, nuevo, colores: coloresArray };
       const btn   = document.getElementById('btnGuardar');
       btn.disabled = true; btn.textContent = 'Guardando...';
 
@@ -746,6 +760,7 @@
       document.getElementById('fCategoria').value       = p.categoria || '';
       document.getElementById('fStock').value           = p.stock;
       document.getElementById('fImg').value             = p.img;
+      document.getElementById('fColores').value         = p.colores ? p.colores.join(', ') : '';
       document.getElementById('fNuevo').checked         = p.nuevo || false;
       document.getElementById('formTitle').textContent  = '✏️ Editando: ' + p.nombre;
       document.getElementById('btnGuardar').textContent = 'Actualizar producto';
@@ -767,6 +782,7 @@
       document.getElementById('fCategoria').value       = '';
       document.getElementById('fStock').value           = '';
       document.getElementById('fImg').value             = '';
+      document.getElementById('fColores').value         = '';
       document.getElementById('fNuevo').checked         = false;
       document.getElementById('imgPreview').style.display = 'none';
       document.getElementById('formTitle').textContent  = '➕ Agregar producto';
@@ -954,4 +970,4 @@
   </script>
 
 </body>
-</html>  
+</html>
