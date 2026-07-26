@@ -106,6 +106,92 @@ document.addEventListener('keydown', e => {
   }
 });
 
+// 1. Variable global para recordar qué color seleccionó el usuario
+let colorSeleccionado = '';
+
+// 2. Función auxiliar para dibujar las pastillas (VA AFUERA, NO ADENTRO DE ABRIRMODAL)
+function renderizarColoresModal(colores) {
+  const container = document.getElementById('modalColorsContainer');
+  const labelColor = document.getElementById('selectedColorName');
+  
+  // Si los elementos HTML no existen todavía en el index, evitamos errores
+  if (!container || !labelColor) return;
+  
+  container.innerHTML = '';
+  
+  // Si el producto no tiene colores definidos
+  if (!colores || colores.length === 0) {
+    colorSeleccionado = 'Único';
+    labelColor.textContent = 'Único';
+    container.innerHTML = '<span style="font-size:13px; color:var(--text-muted)">Color único disponible</span>';
+    return;
+  }
+
+  // Seleccionamos por defecto el primer color
+  colorSeleccionado = colores[0];
+  labelColor.textContent = colorSeleccionado;
+
+  // Generamos una pastilla por cada color
+  colores.forEach((color, index) => {
+    const pill = document.createElement('button');
+    pill.type = 'button';
+    pill.className = `color-pill ${index === 0 ? 'active' : ''}`;
+    pill.textContent = color;
+
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.color-pill').forEach(btn => btn.classList.remove('active'));
+      pill.classList.add('active');
+      colorSeleccionado = color;
+      labelColor.textContent = color;
+    });
+
+    container.appendChild(pill);
+  });
+}
+
+
+// 3. Tu función abrirModal (AQUÍ ADENTRO SÓLO LLAMAMOS A LA FUNCIÓN DE ARRIBA)
+function abrirModal(titulo, precio, img, descripcion = '', colores = []) {
+  productoActual = { titulo, precio, img, descripcion };
+
+  document.getElementById('modalTitle').innerText  = titulo;
+  document.getElementById('modalPrice').innerText  = precio;
+  document.getElementById('modalImg').src          = img;
+  document.getElementById('modalImg').alt          = titulo;
+
+  const info = detallesProductos[titulo] || { specs: ["Garantía incluida"] };
+  document.getElementById('modalDesc').innerText = descripcion || "Producto de alta calidad LeopardX.";
+  document.getElementById('modalSpecs').innerHTML   =
+    info.specs.map(s => `<li>${s}</li>`).join('');
+
+  // 👈 AQUÍ LLAMAMOS A LA FUNCIÓN DE LOS COLORES
+  // Si vienen colores como argumento se usan, si no, busca en detallesProductos
+  const listaColores = colores.length > 0 ? colores : (info.colores || []);
+  renderizarColoresModal(listaColores);
+
+  const waText = encodeURIComponent(`Hola! Me interesa el producto: ${titulo} — Precio: ${precio}`);
+  document.getElementById('modalWaBtn').href = `https://wa.me/3512366414?text=${waText}`;
+
+  document.getElementById('productModal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function cerrarModal() {
+  document.getElementById('productModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function cerrarModalFuera(e) {
+  if (e.target === document.getElementById('productModal')) cerrarModal();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    cerrarModal();
+    cerrarWarning();
+  }
+});
+
 /* ═══════════════════════════════════════
    CARRITO
 ═══════════════════════════════════════ */
