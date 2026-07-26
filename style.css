@@ -785,3 +785,35 @@ img { max-width: 100%; display: block; }
     background-color: #555 !important;
     cursor: not-allowed;
 }
+
+/* ═══ PASTILLAS DE COLOR ═══ */
+.colors-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.color-pill {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--navy-border);
+  color: var(--text-main);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.color-pill:hover {
+  border-color: var(--gold-border);
+  color: var(--text-bright);
+}
+
+.color-pill.active {
+  background: var(--gold);
+  color: var(--navy-deep);
+  border-color: var(--gold);
+  font-weight: 700;
+  box-shadow: 0 0 10px rgba(201, 168, 76, 0.3);
+}
