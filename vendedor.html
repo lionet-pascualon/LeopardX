@@ -3,21 +3,22 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>LeopardX | Panel Vendedor</title>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <title>Krovix | Panel Vendedor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --navy-deep:   #0A0E1A;
-      --navy-mid:    #111827;
-      --navy-card:   #1A2235;
-      --navy-border: #2A3550;
-      --gold:        #C9A84C;
-      --gold-light:  #E2C97E;
-      --gold-glow:   rgba(201,168,76,0.15);
-      --gold-border: rgba(201,168,76,0.35);
-      --text-bright: #E8ECF4;
-      --text-main:   #C4CEDE;
-      --text-muted:  #6B7A96;
+      --navy-deep:   #0B0709;
+      --navy-mid:    #140B0E;
+      --navy-card:   #1C1013;
+      --navy-border: #3A1A20;
+      --gold:        #C8102E;   /* Rojo ruby principal (nombre de variable mantenido) */
+      --gold-light:  #E8364F;   /* Rojo ruby claro */
+      --gold-glow:   rgba(200,16,46,0.18);
+      --gold-border: rgba(200,16,46,0.4);
+      --text-bright: #F5F5F5;
+      --text-main:   #D4D4D8;
+      --text-muted:  #8A8F98;
+      --brand-font:  'Russo One', sans-serif;
       --radius-sm:   6px;
       --radius-md:   10px;
       --radius-lg:   16px;
@@ -48,19 +49,20 @@
       text-align: center;
     }
     .auth-logo {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 2rem; font-weight: 700;
-      color: var(--gold); letter-spacing: 0.1em; margin-bottom: 0.25rem;
+      font-family: var(--brand-font);
+      font-size: 2rem; font-weight: 400;
+      color: var(--text-bright); letter-spacing: 0.06em; margin-bottom: 0.25rem;
+      text-shadow: 0 0 14px rgba(200,16,46,0.5);
     }
     .auth-badge {
       display: inline-block;
       background: var(--gold-glow); border: 1px solid var(--gold-border);
-      color: var(--gold); font-size: 11px; font-weight: 600;
+      color: var(--gold-light); font-size: 11px; font-weight: 600;
       letter-spacing: 0.1em; text-transform: uppercase;
       padding: 3px 12px; border-radius: 20px; margin-bottom: 1.5rem;
     }
     .auth-tabs {
-      display: flex; background: rgba(255,255,255,0.04);
+      display: flex; background: rgba(255,255,255,0.03);
       border: 1px solid var(--navy-border);
       border-radius: 50px; padding: 4px; gap: 4px; margin-bottom: 1.5rem;
     }
@@ -70,9 +72,9 @@
       font-family: 'DM Sans', sans-serif; font-size: 13px;
       cursor: pointer; transition: all 0.2s;
     }
-    .auth-tab.active { background: var(--gold); color: var(--navy-deep); font-weight: 600; }
+    .auth-tab.active { background: var(--gold); color: var(--text-bright); font-weight: 600; }
     .auth-box input {
-      width: 100%; background: rgba(255,255,255,0.05);
+      width: 100%; background: rgba(255,255,255,0.04);
       border: 1px solid var(--navy-border); border-radius: var(--radius-sm);
       padding: 12px 14px; font-size: 14px; color: var(--text-bright);
       font-family: 'DM Sans', sans-serif; outline: none; margin-bottom: 0.75rem;
@@ -81,7 +83,7 @@
     .auth-box input:focus { border-color: var(--gold); }
     .auth-error { font-size: 12px; color: #f87171; min-height: 16px; margin-bottom: 0.5rem; }
     .btn-gold {
-      width: 100%; background: var(--gold); color: var(--navy-deep);
+      width: 100%; background: var(--gold); color: var(--text-bright);
       border: none; border-radius: var(--radius-sm);
       padding: 13px; font-size: 14px; font-weight: 700;
       font-family: 'Rajdhani', sans-serif; letter-spacing: 0.05em;
@@ -92,7 +94,7 @@
     .auth-footer-link {
       margin-top: 1rem; font-size: 13px; color: var(--text-muted);
     }
-    .auth-footer-link a { color: var(--gold); text-decoration: underline; }
+    .auth-footer-link a { color: var(--gold-light); text-decoration: underline; }
 
     /* ═══ DASHBOARD ═══ */
     #dashboard { display: none; }
@@ -105,12 +107,14 @@
       position: sticky; top: 0; z-index: 10;
     }
     .topbar-logo {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 1.4rem; font-weight: 700; color: var(--gold); letter-spacing: 0.1em;
+      font-family: var(--brand-font);
+      font-size: 1.2rem; font-weight: 400; color: var(--text-bright); letter-spacing: 0.06em;
+      text-shadow: 0 0 12px rgba(200,16,46,0.5);
     }
     .topbar-logo span {
       font-size: 12px; color: var(--text-muted);
       font-family: 'DM Sans', sans-serif; font-weight: 400; margin-left: 8px;
+      text-shadow: none;
     }
     .topbar-right { display: flex; align-items: center; gap: 10px; }
     .user-email { font-size: 12px; color: var(--text-muted); }
@@ -121,7 +125,7 @@
       text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
       transition: all 0.2s;
     }
-    .btn-outline:hover { border-color: var(--text-muted); color: var(--text-bright); }
+    .btn-outline:hover { border-color: var(--gold-border); color: var(--text-bright); }
     .btn-danger {
       background: none; border: 1px solid rgba(224,53,53,0.3);
       color: #f87171; border-radius: var(--radius-sm);
@@ -153,9 +157,9 @@
 
     /* ═══ FORM ═══ */
     .section-title {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 1.2rem; font-weight: 700;
-      color: var(--text-bright); margin-bottom: 1rem;
+      font-family: var(--brand-font);
+      font-size: 1.05rem; font-weight: 400;
+      color: var(--text-bright); margin-bottom: 1rem; letter-spacing: 0.04em;
     }
     .form-card {
       background: var(--navy-card); border: 1px solid var(--navy-border);
@@ -169,7 +173,7 @@
       text-transform: uppercase; letter-spacing: 0.05em;
     }
     .form-group input, .form-group select, .form-group textarea {
-      background: rgba(255,255,255,0.05); border: 1px solid var(--navy-border);
+      background: rgba(255,255,255,0.04); border: 1px solid var(--navy-border);
       border-radius: var(--radius-sm); padding: 10px 14px;
       font-size: 14px; color: var(--text-bright);
       font-family: 'DM Sans', sans-serif; outline: none; width: 100%;
@@ -192,7 +196,7 @@
     .form-msg.ok  { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); color: var(--green); }
     .form-msg.err { background: rgba(224,53,53,0.1);  border: 1px solid rgba(224,53,53,0.3);  color: #f87171; }
     .btn-submit {
-      background: var(--gold); color: var(--navy-deep);
+      background: var(--gold); color: var(--text-bright);
       border: none; border-radius: var(--radius-sm);
       padding: 11px 28px; font-size: 14px; font-weight: 700;
       font-family: 'Rajdhani', sans-serif; cursor: pointer;
@@ -215,7 +219,7 @@
     }
     .mp-info { flex: 1; min-width: 0; }
     .mp-nombre { font-weight: 600; color: var(--text-bright); font-size: 15px; margin-bottom: 4px; }
-    .mp-precio { color: var(--gold); font-weight: 700; font-size: 14px; margin-bottom: 6px; }
+    .mp-precio { color: var(--gold-light); font-weight: 700; font-size: 14px; margin-bottom: 6px; }
     .mp-estado {
       display: inline-flex; align-items: center; gap: 6px;
       font-size: 12px; font-weight: 600; padding: 3px 10px;
@@ -248,7 +252,7 @@
       border-radius: var(--radius-lg); padding: 2rem; max-width: 420px;
       text-align: center;
     }
-    .blocked-box h3 { font-family: 'Rajdhani', sans-serif; color: #f87171; font-size: 1.4rem; margin-bottom: 0.75rem; }
+    .blocked-box h3 { font-family: var(--brand-font); font-weight: 400; color: #f87171; font-size: 1.3rem; margin-bottom: 0.75rem; }
     .blocked-box p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
 
     @media (max-width: 600px) {
@@ -265,7 +269,7 @@
   <!-- ═══ AUTH SCREEN ═══ -->
   <div id="authScreen">
     <div class="auth-box">
-      <div class="auth-logo">LeopardX</div>
+      <div class="auth-logo">Krovix</div>
       <span class="auth-badge">Portal Vendedores</span>
 
       <div class="auth-tabs">
@@ -287,7 +291,7 @@
         <div class="auth-error" id="registerError"></div>
         <button class="btn-gold" id="btnRegister">Crear cuenta</button>
         <p style="font-size:12px; color:var(--text-muted); margin-top:0.75rem; line-height:1.5">
-          Tu cuenta quedará <strong style="color:var(--yellow)">pendiente de aprobación</strong> por el equipo LeopardX antes de poder publicar.
+          Tu cuenta quedará <strong style="color:var(--yellow)">pendiente de aprobación</strong> por el equipo Krovix antes de poder publicar.
         </p>
       </div>
 
@@ -300,7 +304,7 @@
   <!-- ═══ DASHBOARD ═══ -->
   <div id="dashboard">
     <div class="topbar">
-      <div class="topbar-logo">LeopardX <span>Portal Vendedores</span></div>
+      <div class="topbar-logo">Krovix <span>Portal Vendedores</span></div>
       <div class="topbar-right">
         <span class="user-email" id="userEmailDisplay"></span>
         <a href="index.html" class="btn-outline">← Ver tienda</a>
@@ -436,21 +440,21 @@
         statusEl.innerHTML = `
           <div class="account-status aprobado">
             <span class="status-icon">✅</span>
-            <div><strong>Cuenta aprobada.</strong> Podés publicar tus productos y aparecerán en la sección "Otros Vendedores" de LeopardX.</div>
+            <div><strong>Cuenta aprobada.</strong> Podés publicar tus productos y aparecerán en la sección "Otros Vendedores" de Krovix.</div>
           </div>`;
         secPublicar.style.display = 'block';
       } else if (vendedor.estado === 'rechazado') {
         statusEl.innerHTML = `
           <div class="account-status rechazado">
             <span class="status-icon">❌</span>
-            <div><strong>Cuenta rechazada.</strong> ${vendedor.motivoRechazo || 'Contactá al equipo LeopardX para más información.'}</div>
+            <div><strong>Cuenta rechazada.</strong> ${vendedor.motivoRechazo || 'Contactá al equipo Krovix para más información.'}</div>
           </div>`;
         secPublicar.style.display = 'none';
       } else {
         statusEl.innerHTML = `
           <div class="account-status pendiente">
             <span class="status-icon">⏳</span>
-            <div><strong>Cuenta pendiente de aprobación.</strong> El equipo LeopardX revisará tu solicitud. Te avisamos cuando esté lista.</div>
+            <div><strong>Cuenta pendiente de aprobación.</strong> El equipo Krovix revisará tu solicitud. Te avisamos cuando esté lista.</div>
           </div>`;
         secPublicar.style.display = 'none';
       }
@@ -544,7 +548,7 @@
           fechaEnvio:     new Date().toISOString()
         });
 
-        mostrarMsg(msgEl, '✓ Producto enviado. El equipo LeopardX lo revisará pronto.', 'ok');
+        mostrarMsg(msgEl, '✓ Producto enviado. El equipo Krovix lo revisará pronto.', 'ok');
         // Limpiar form
         ['pNombre','pPrecio','pCategoria','pStock','pImg','pDesc','pWhatsapp']
           .forEach(id => document.getElementById(id).value = '');
